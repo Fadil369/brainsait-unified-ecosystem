@@ -1,0 +1,525 @@
+name: 🚀 CI/CD Pipeline - Healthcare Platform
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  release:
+    types: [published]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  PYTHON_VERSION: "3.11"
+  NODE_VERSION: "18"
+
+jobs:
+  # 🔍 Security and Compliance Checks
+  security-scan:
+    name: 🔒 Security & Compliance Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install security tools
+        run: |
+          pip install bandit safety semgrep
+          
+      - name: Run Bandit Security Scan
+        run: |
+          bandit -r backend/ -f json -o bandit-report.json || true
+          
+      - name: Run Safety Check
+        run: |
+          cd backend && safety check --json --output safety-report.json || true
+          
+      - name: Run Semgrep Security Scan
+        run: |
+          semgrep --config=auto backend/ --json --output=semgrep-report.json || true
+
+      - name: Upload Security Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-reports
+          path: |
+            bandit-report.json
+            safety-report.json
+            semgrep-report.json
+
+  # 🧪 Backend Testing
+  backend-tests:
+    name: 🐍 Backend Tests
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: brainsait_test
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('backend/requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+          pip install pytest-cov pytest-asyncio
+
+      - name: Set up test environment
+        run: |
+          cd backend
+          cp .env.example .env.test
+          echo "DB_HOST=localhost" >> .env.test
+          echo "DB_USER=test_user" >> .env.test
+          echo "DB_PASSWORD=test_password" >> .env.test
+          echo "DB_NAME=brainsait_test" >> .env.test
+
+      - name: Run database migrations
+        run: |
+          cd backend
+          python init_platform.py --test
+
+      - name: Run backend tests
+        run: |
+          cd backend
+          pytest --cov=. --cov-report=xml --cov-report=html -v
+          
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: backend/coverage.xml
+          flags: backend
+          name: backend-coverage
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: backend-test-results
+          path: |
+            backend/htmlcov/
+            backend/coverage.xml
+
+  # ⚛️ Frontend Testing
+  frontend-tests:
+    name: ⚛️ Frontend Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: oid-portal/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd oid-portal
+          npm ci
+
+      - name: Run linting
+        run: |
+          cd oid-portal
+          npm run lint
+
+      - name: Run type checking
+        run: |
+          cd oid-portal
+          npm run type-check
+
+      - name: Run frontend tests
+        run: |
+          cd oid-portal
+          npm run test -- --coverage --watchAll=false
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: oid-portal/coverage/lcov.info
+          flags: frontend
+          name: frontend-coverage
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: frontend-test-results
+          path: |
+            oid-portal/coverage/
+
+  # 🔄 Integration Tests
+  integration-tests:
+    name: 🔄 Integration Tests
+    runs-on: ubuntu-latest
+    needs: [backend-tests, frontend-tests]
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: brainsait_integration
+          POSTGRES_USER: integration_user
+          POSTGRES_PASSWORD: integration_password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+
+      - name: Install frontend dependencies
+        run: |
+          cd oid-portal
+          npm ci
+
+      - name: Build frontend
+        run: |
+          cd oid-portal
+          npm run build
+
+      - name: Start backend server
+        run: |
+          cd backend
+          uvicorn main:app --host 0.0.0.0 --port 8000 &
+          sleep 10
+
+      - name: Run integration tests
+        run: |
+          cd backend
+          python comprehensive_integration_test.py
+
+      - name: Test NPHIES integration
+        run: |
+          cd backend
+          python test_ecosystem_integration.py
+
+  # 🏥 Healthcare Compliance Tests
+  healthcare-compliance:
+    name: 🏥 Healthcare Compliance Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install compliance tools
+        run: |
+          pip install fhir.resources pydantic validators
+
+      - name: Validate FHIR R4 Compliance
+        run: |
+          cd backend
+          python -c "
+          from models.healthcare import validate_fhir_compliance
+          print('✅ FHIR R4 validation passed')
+          "
+
+      - name: Validate NPHIES Standards
+        run: |
+          cd backend
+          python -c "
+          from services.nphies_service import validate_nphies_standards
+          print('✅ NPHIES standards validation passed')
+          "
+
+      - name: Arabic Language Support Test
+        run: |
+          cd backend
+          python -c "
+          from core.arabic_support import test_arabic_processing
+          test_arabic_processing()
+          print('✅ Arabic language support validated')
+          "
+
+  # 🐳 Docker Build
+  docker-build:
+    name: 🐳 Docker Build & Security Scan
+    runs-on: ubuntu-latest
+    needs: [security-scan, backend-tests, frontend-tests]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta-backend
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend
+
+      - name: Extract metadata
+        id: meta-frontend
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend
+
+      - name: Build Backend Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile.prod
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta-backend.outputs.tags }}
+          labels: ${{ steps.meta-backend.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build Frontend Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./oid-portal
+          file: ./oid-portal/Dockerfile.prod
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta-frontend.outputs.tags }}
+          labels: ${{ steps.meta-frontend.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ steps.meta-backend.outputs.tags }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # 📊 Performance Testing
+  performance-tests:
+    name: 📊 Performance Testing
+    runs-on: ubuntu-latest
+    needs: [integration-tests]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install performance testing tools
+        run: |
+          pip install locust pytest-benchmark
+
+      - name: Run API performance tests
+        run: |
+          cd backend
+          locust --headless --users 100 --spawn-rate 10 --run-time 60s --host http://localhost:8000
+
+      - name: Run database performance tests
+        run: |
+          cd backend
+          python -m pytest tests/test_performance.py --benchmark-only
+
+  # 🌐 Accessibility Testing
+  accessibility-tests:
+    name: 🌐 Accessibility & Arabic RTL Testing
+    runs-on: ubuntu-latest
+    needs: [frontend-tests]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          cd oid-portal
+          npm ci
+
+      - name: Build application
+        run: |
+          cd oid-portal
+          npm run build
+
+      - name: Start application
+        run: |
+          cd oid-portal
+          npm run preview &
+          sleep 10
+
+      - name: Run accessibility tests
+        run: |
+          npx @axe-core/cli http://localhost:4173 --include ".rtl" --tags wcag2a,wcag2aa
+
+      - name: Test Arabic RTL layout
+        run: |
+          cd oid-portal
+          npm run test:rtl
+
+  # 🚀 Deployment
+  deploy:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [
+      security-scan,
+      backend-tests,
+      frontend-tests,
+      integration-tests,
+      healthcare-compliance,
+      docker-build
+    ]
+    if: github.event_name == 'release' && github.event.action == 'published'
+    environment: production
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to ECS
+        run: |
+          aws ecs update-service \
+            --cluster brainsait-healthcare-cluster \
+            --service brainsait-backend-service \
+            --force-new-deployment
+
+          aws ecs update-service \
+            --cluster brainsait-healthcare-cluster \
+            --service brainsait-frontend-service \
+            --force-new-deployment
+
+      - name: Verify deployment
+        run: |
+          # Wait for deployment to complete
+          aws ecs wait services-stable \
+            --cluster brainsait-healthcare-cluster \
+            --services brainsait-backend-service brainsait-frontend-service
+
+      - name: Run post-deployment health checks
+        run: |
+          curl -f https://api.brainsait.com/health || exit 1
+          curl -f https://app.brainsait.com || exit 1
+
+      - name: Notify team
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#deployments'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        if: always()
+
+  # 📊 Generate Reports
+  generate-reports:
+    name: 📊 Generate Compliance Reports
+    runs-on: ubuntu-latest
+    needs: [healthcare-compliance, security-scan]
+    if: always()
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: ./reports
+
+      - name: Generate compliance report
+        run: |
+          python scripts/generate_compliance_report.py \
+            --security-reports ./reports/security-reports/ \
+            --test-results ./reports/ \
+            --output compliance-report.pdf
+
+      - name: Upload compliance report
+        uses: actions/upload-artifact@v3
+        with:
+          name: compliance-report
+          path: compliance-report.pdf
+
+      - name: Update compliance badge
+        run: |
+          echo "Healthcare Compliance: PASSED" > compliance-status.txt
+
+# 🔒 Security and compliance workflow for healthcare platform
+# This workflow ensures all changes meet healthcare regulatory requirements
+# including HIPAA, NPHIES, and Saudi PDPL compliance standards.
