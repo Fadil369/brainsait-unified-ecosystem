@@ -14,7 +14,7 @@ import rtlPlugin from "stylis-plugin-rtl";
 import Layout from "./components/Layout";
 import RevolutionaryHealthcareDashboard from "./components/RevolutionaryHealthcareDashboard";
 import UnifiedPortalRouter from "./components/UnifiedPortalRouter";
-import UnifiedWorkspace from "./components/UnifiedWorkspace"; // Main workspace entry point
+import UnifiedWorkspace from "./pages/UnifiedWorkspace"; // Main workspace entry point
 import OidTree from "./pages/OidTree"; // Now uses optimal modular architecture
 
 // Essential utility pages
