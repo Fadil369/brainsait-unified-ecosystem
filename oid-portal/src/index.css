@@ -1,3 +1,28 @@
+/* Optimized Font Loading for Arabic Typography - Performance First */
+@font-face {
+  font-family: 'Noto Sans Arabic';
+  src: url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+  font-display: swap;
+  font-weight: 300 700;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+  font-family: 'Cairo';
+  src: url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap');
+  font-display: swap;
+  font-weight: 300 700;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  font-display: swap;
+  font-weight: 300 700;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* Import BrainSAIT Healthcare Design System */
 @import url('./styles/design-tokens.css');
 @import url('./styles/arabic-typography.css');
@@ -6,31 +31,65 @@
 @import url('./styles/accessibility.css');
 @import url('./styles/mobile-clinical.css');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Import Revolutionary Glass-Morphism System */
+@import url('./styles/glass-morphism-system.css');
 
-/* Legacy color mappings for Tailwind compatibility */
+/* Legacy color mappings for compatibility */
 :root {
-  --primary: var(--healthcare-primary);
-  --primary-light: var(--healthcare-primary-light);
-  --secondary: var(--healthcare-secondary);
-  --dark-bg: var(--clinical-bg-primary);
-  --darker-bg: var(--clinical-bg-secondary);
-  --content-bg: var(--clinical-bg-tertiary);
-  --text-primary: var(--clinical-text-primary);
-  --text-secondary: var(--clinical-text-secondary);
-  --danger: var(--healthcare-critical);
-  --success: var(--healthcare-success);
-  --border-color: var(--clinical-border-primary);
-  --card-bg: var(--clinical-bg-tertiary);
+  --primary: #00b4d8;
+  --primary-light: #48cae4;
+  --secondary: #f72585;
+  --dark-bg: #0f1419;
+  --darker-bg: #1a1f2e;
+  --content-bg: #2d3748;
+  --text-primary: #ffffff;
+  --text-secondary: #b0bec5;
+  --danger: #f72585;
+  --success: #06d6a0;
+  --border-color: #2d3748;
+  --card-bg: #1a1f2e;
+  
+  /* Dynamic Theming Variables - Enhanced for Glass-Morphism */
+  --theme-mode: 'dark'; /* 'light' | 'dark' | 'auto' */
+  --theme-intensity: 1; /* 0.5 - 1.5 for theme intensity scaling */
+  --theme-blur-preference: 1; /* 0 - 2 for blur intensity preference */
+  --theme-motion-preference: 1; /* 0 - 1 for motion preference */
+  --theme-contrast-preference: 1; /* 1 - 2 for contrast preference */
+  
+  /* Adaptive Color System */
+  --adaptive-bg-primary: var(--clinical-bg-primary);
+  --adaptive-bg-secondary: var(--clinical-bg-secondary);
+  --adaptive-bg-tertiary: var(--clinical-bg-tertiary);
+  --adaptive-text-primary: var(--clinical-text-primary);
+  --adaptive-text-secondary: var(--clinical-text-secondary);
+  --adaptive-border-primary: var(--clinical-border-primary);
+  
+  /* Performance Optimization Variables */
+  --perf-gpu-acceleration: translateZ(0);
+  --perf-will-change: auto;
+  --perf-contain: none;
+  --perf-content-visibility: visible;
+  
+  /* Enhanced Animation Controls */
+  --anim-duration-multiplier: 1;
+  --anim-easing-primary: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --anim-easing-secondary: cubic-bezier(0.4, 0, 0.2, 1);
+  --anim-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Glass Effect Controls */
+  --glass-enabled: 1; /* 0 to disable all glass effects */
+  --glass-quality: 'high'; /* 'low' | 'medium' | 'high' | 'ultra' */
+  --glass-performance-mode: 'auto'; /* 'auto' | 'performance' | 'quality' */
 }
 
 body {
-  @apply bg-dark-bg text-text-primary m-0 p-0;
-  font-family: var(--font-english-primary);
+  background-color: var(--dark-bg);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif;
   min-height: 100vh;
-  line-height: var(--leading-normal);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color-scheme: dark;
@@ -39,7 +98,7 @@ body {
 /* Arabic text support */
 body[dir="rtl"],
 body.arabic {
-  font-family: var(--font-arabic-primary);
+  font-family: 'Noto Sans Arabic', 'Cairo', 'Tajawal', 'Arial', sans-serif;
   direction: rtl;
   text-align: right;
 }
@@ -51,195 +110,102 @@ body.arabic {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--clinical-bg-secondary);
-  border-radius: var(--radius-sm);
+  background: var(--darker-bg);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--clinical-border-interactive);
-  border-radius: var(--radius-sm);
-  transition: all var(--duration-fast) var(--ease-clinical);
+  background: var(--border-color);
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--healthcare-primary);
-  box-shadow: 0 0 4px var(--healthcare-primary-50);
+  background: var(--primary);
+  box-shadow: 0 0 4px var(--primary);
 }
 
 ::-webkit-scrollbar-corner {
-  background: var(--clinical-bg-secondary);
+  background: var(--darker-bg);
 }
 
-/* Enhanced Healthcare Components */
-@layer components {
-  .card {
-    background-color: var(--clinical-bg-tertiary);
-    border: 1px solid var(--clinical-border-primary);
-    border-radius: var(--radius-clinical-card);
-    box-shadow: var(--shadow-clinical-card);
-    overflow: hidden;
-    transition: var(--transition-clinical-fast);
-  }
-  
-  .card:hover {
-    border-color: var(--clinical-border-interactive);
-    box-shadow: var(--shadow-clinical-dropdown);
-  }
-  
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-clinical-sm) var(--space-clinical-md);
-    border-radius: var(--radius-clinical-button);
-    font-size: var(--text-base);
-    font-weight: var(--font-medium);
-    font-family: var(--font-arabic-primary);
-    line-height: 1;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: var(--transition-clinical-fast);
-    position: relative;
-    overflow: hidden;
-    user-select: none;
-    gap: var(--space-2);
-  }
-  
-  .btn:focus {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: var(--focus-ring-offset);
-  }
-  
-  .btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-  
-  .btn-primary {
-    background-color: var(--healthcare-primary);
-    color: var(--clinical-text-primary);
-    border: 1px solid var(--healthcare-primary);
-  }
-  
-  .btn-primary:hover {
-    background-color: var(--healthcare-primary-dark);
-    border-color: var(--healthcare-primary-dark);
-  }
-  
-  .btn-secondary {
-    background-color: var(--healthcare-secondary);
-    color: var(--clinical-text-primary);
-    border: 1px solid var(--healthcare-secondary);
-  }
-  
-  .btn-secondary:hover {
-    background-color: var(--healthcare-secondary-dark);
-    border-color: var(--healthcare-secondary-dark);
-  }
-  
-  .btn-outline {
-    background-color: transparent;
-    color: var(--clinical-text-primary);
-    border: 1px solid var(--clinical-border-primary);
-  }
-  
-  .btn-outline:hover {
-    background-color: var(--clinical-bg-interactive);
-    border-color: var(--clinical-border-interactive);
-  }
-  
-  .btn-danger {
-    background-color: var(--healthcare-critical);
-    color: var(--clinical-text-primary);
-    border: 1px solid var(--healthcare-critical);
-  }
-  
-  .btn-danger:hover {
-    background-color: var(--healthcare-critical-dark);
-    border-color: var(--healthcare-critical-dark);
-  }
-  
-  .input {
-    background-color: var(--clinical-bg-secondary);
-    border: 1px solid var(--clinical-border-primary);
-    border-radius: var(--radius-clinical-input);
-    padding: var(--space-clinical-sm) var(--space-clinical-md);
-    color: var(--clinical-text-primary);
-    font-size: var(--text-base);
-    font-family: var(--font-arabic-primary);
-    line-height: var(--leading-normal);
-    width: 100%;
-    transition: var(--transition-clinical-fast);
-  }
-  
-  .input:focus {
-    outline: none;
-    border-color: var(--healthcare-primary);
-    box-shadow: 0 0 0 var(--focus-ring-width) var(--healthcare-primary-50);
-    background-color: var(--clinical-bg-tertiary);
-  }
-  
-  .input::placeholder {
-    color: var(--clinical-text-tertiary);
-    opacity: 1;
-  }
-  
-  .label {
-    display: block;
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-    color: var(--clinical-text-secondary);
-    margin-bottom: var(--space-1);
-    font-family: var(--font-arabic-primary);
-  }
-  
-  /* Enhanced Healthcare Chat UI Components */
-  .chat-container {
-    background-color: var(--clinical-bg-tertiary);
-    border: 1px solid var(--clinical-border-primary);
-    border-radius: var(--radius-clinical-card);
-    box-shadow: var(--shadow-clinical-card);
-    padding: var(--space-clinical-md);
-    font-family: var(--font-arabic-primary);
-  }
-  
-  .chat-message {
-    padding: var(--space-clinical-sm);
-    border-radius: var(--radius-clinical-card);
-    margin-bottom: var(--space-clinical-sm);
-    max-width: 80%;
-    line-height: var(--leading-relaxed);
-    word-wrap: break-word;
-  }
-  
-  .chat-message-user {
-    background-color: var(--healthcare-primary);
-    color: var(--clinical-text-primary);
-    margin-left: auto;
-    border-bottom-right-radius: var(--radius-sm);
-  }
-  
-  .chat-message-ai {
-    background-color: var(--clinical-bg-secondary);
-    color: var(--clinical-text-primary);
-    border-bottom-left-radius: var(--radius-sm);
-    border: 1px solid var(--clinical-border-primary);
-  }
-  
-  .chat-input {
-    display: flex;
-    align-items: center;
-    background-color: var(--clinical-bg-secondary);
-    border: 1px solid var(--clinical-border-primary);
-    border-radius: var(--radius-clinical-input);
-    overflow: hidden;
-    transition: var(--transition-clinical-fast);
-  }
-  
-  .chat-input:focus-within {
-    border-color: var(--healthcare-primary);
-    box-shadow: 0 0 0 var(--focus-ring-width) var(--healthcare-primary-50);
-  }
+/* Basic component styles */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  gap: 8px;
+}
+
+.btn:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  border: 1px solid var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: #0077b6;
+  border-color: #0077b6;
+}
+
+.input {
+  background-color: var(--darker-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.4;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.2);
+  background-color: var(--content-bg);
+}
+
+.input::placeholder {
+  color: var(--text-secondary);
+  opacity: 1;
 }

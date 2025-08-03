@@ -15,6 +15,7 @@ import Layout from "./components/Layout";
 import OidTree from "./pages/OidTree";  // Now uses optimal modular architecture
 import UnifiedWorkspace from "./components/UnifiedWorkspace";  // Main workspace entry point
 import UnifiedPortalRouter from "./components/UnifiedPortalRouter";
+import RevolutionaryHealthcareDashboard from "./components/RevolutionaryHealthcareDashboard";
 
 // Essential utility pages
 import ChatAssistant from "./pages/ChatAssistant";
@@ -231,6 +232,9 @@ function AppContent() {
           <Router>
             <Layout>
               <Routes>
+                {/* REVOLUTIONARY HEALTHCARE DASHBOARD */}
+                <Route path="/revolutionary" element={<RevolutionaryHealthcareDashboard />} />
+                
                 {/* UNIFIED HEALTHCARE WORKSPACE - Single Entry Point */}
                 <Route path="/" element={<UnifiedWorkspace />} />
                 <Route path="/workspace" element={<UnifiedWorkspace />} />

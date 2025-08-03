@@ -1,0 +1,638 @@
+/**
+ * BrainSAIT Healthcare Platform - REVOLUTIONARY GLASS-MORPHISM DESIGN SYSTEM
+ * ULTIMATE UNIFIED, INTEGRATED, INTELLIGENCE ECOSYSTEM
+ * 
+ * This system creates a disruptive change in healthcare UI/UX like never seen before
+ * - Professional, smooth, simple, dynamic, futuristic, vibrant glass-like design
+ * - Perfect layout spacing fit for any screens with mobile-first approach
+ * - Arabic RTL support with healthcare compliance (NPHIES, FHIR R4)
+ * - Neural-inspired fluid animations and micro-interactions
+ * - Advanced performance optimization with hardware acceleration
+ */
+
+/* =================================
+   REVOLUTIONARY DESIGN TOKENS
+   ================================= */
+
+:root {
+  /* NEURAL GLASS FOUNDATION */
+  --neuro-glass-primary: rgba(14, 165, 233, 0.12);
+  --neuro-glass-secondary: rgba(99, 102, 241, 0.08);
+  --neuro-glass-accent: rgba(168, 85, 247, 0.06);
+  --neuro-glass-surface: rgba(255, 255, 255, 0.03);
+  --neuro-glass-overlay: rgba(15, 23, 42, 0.85);
+  
+  /* FUTURISTIC BLUR SYSTEM */
+  --neural-blur-micro: 8px;
+  --neural-blur-nano: 12px;
+  --neural-blur-small: 16px;
+  --neural-blur-medium: 24px;
+  --neural-blur-large: 32px;
+  --neural-blur-xl: 40px;
+  --neural-blur-ultra: 56px;
+  
+  /* DYNAMIC GRADIENT OVERLAYS */
+  --gradient-neural-primary: linear-gradient(135deg, 
+    rgba(14, 165, 233, 0.15) 0%,
+    rgba(99, 102, 241, 0.12) 45%,
+    rgba(168, 85, 247, 0.08) 100%);
+  
+  --gradient-neural-secondary: linear-gradient(225deg,
+    rgba(168, 85, 247, 0.1) 0%,
+    rgba(99, 102, 241, 0.08) 50%,
+    rgba(14, 165, 233, 0.06) 100%);
+  
+  --gradient-neural-healthcare: linear-gradient(315deg,
+    rgba(0, 168, 107, 0.12) 0%,
+    rgba(0, 102, 204, 0.1) 50%,
+    rgba(46, 125, 50, 0.08) 100%);
+  
+  /* ULTRA-MODERN SHADOWS */
+  --shadow-neural-float: 
+    0 4px 20px rgba(14, 165, 233, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  
+  --shadow-neural-elevated: 
+    0 8px 32px rgba(14, 165, 233, 0.2),
+    0 4px 16px rgba(99, 102, 241, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  
+  --shadow-neural-immersive: 
+    0 16px 64px rgba(14, 165, 233, 0.25),
+    0 8px 32px rgba(99, 102, 241, 0.2),
+    0 4px 16px rgba(168, 85, 247, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+  
+  /* NEURAL BORDER SYSTEM */
+  --border-neural-primary: 1px solid rgba(255, 255, 255, 0.15);
+  --border-neural-secondary: 1px solid rgba(255, 255, 255, 0.1);
+  --border-neural-accent: 2px solid rgba(14, 165, 233, 0.3);
+  --border-neural-glow: 1px solid rgba(168, 85, 247, 0.4);
+  
+  /* DYNAMIC SPACING SYSTEM - Mobile-First */
+  --space-neural-xs: clamp(0.25rem, 1vw, 0.5rem);
+  --space-neural-sm: clamp(0.5rem, 2vw, 1rem);
+  --space-neural-md: clamp(1rem, 3vw, 1.5rem);
+  --space-neural-lg: clamp(1.5rem, 4vw, 2rem);
+  --space-neural-xl: clamp(2rem, 5vw, 3rem);
+  --space-neural-2xl: clamp(3rem, 6vw, 4rem);
+  
+  /* NEURAL RADIUS SYSTEM */
+  --radius-neural-micro: 6px;
+  --radius-neural-small: 12px;
+  --radius-neural-medium: 16px;
+  --radius-neural-large: 20px;
+  --radius-neural-xl: 24px;
+  --radius-neural-ultra: 32px;
+  
+  /* PERFORMANCE OPTIMIZATION */
+  --neural-gpu-layer: translateZ(0);
+  --neural-will-change: transform, opacity, backdrop-filter;
+  --neural-contain: layout style paint;
+  
+  /* NEURAL ANIMATIONS */
+  --anim-neural-fast: 150ms cubic-bezier(0.23, 1, 0.32, 1);
+  --anim-neural-smooth: 250ms cubic-bezier(0.23, 1, 0.32, 1);
+  --anim-neural-fluid: 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  --anim-neural-bounce: 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* HEALTHCARE-SPECIFIC NEURAL COLORS */
+  --neural-medical-primary: rgba(0, 102, 204, 0.12);
+  --neural-medical-secondary: rgba(0, 168, 107, 0.1);
+  --neural-critical-alert: rgba(239, 68, 68, 0.15);
+  --neural-warning-alert: rgba(245, 158, 11, 0.12);
+  --neural-success-alert: rgba(34, 197, 94, 0.1);
+  --neural-info-alert: rgba(59, 130, 246, 0.1);
+}
+
+/* =================================
+   NEURAL GLASS FOUNDATION CLASSES
+   ================================= */
+
+/* Primary Neural Glass - Main content containers */
+.neural-glass-primary {
+  background: var(--gradient-neural-primary);
+  -webkit-backdrop-filter: blur(var(--neural-blur-medium)) saturate(200%) brightness(110%);
+  backdrop-filter: blur(var(--neural-blur-medium)) saturate(200%) brightness(110%);
+  border: var(--border-neural-primary);
+  border-radius: var(--radius-neural-large);
+  box-shadow: var(--shadow-neural-float);
+  position: relative;
+  overflow: hidden;
+  
+  /* Performance optimization */
+  transform: var(--neural-gpu-layer);
+  will-change: var(--neural-will-change);
+  contain: var(--neural-contain);
+  
+  transition: all var(--anim-neural-smooth);
+}
+
+.neural-glass-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.4) 50%, 
+    transparent 100%);
+}
+
+.neural-glass-primary:hover {
+  -webkit-backdrop-filter: blur(var(--neural-blur-large)) saturate(220%) brightness(115%);
+  backdrop-filter: blur(var(--neural-blur-large)) saturate(220%) brightness(115%);
+  box-shadow: var(--shadow-neural-elevated);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: var(--neural-gpu-layer) translateY(-2px);
+}
+
+/* Secondary Neural Glass - Supporting elements */
+.neural-glass-secondary {
+  background: var(--gradient-neural-secondary);
+  -webkit-backdrop-filter: blur(var(--neural-blur-small)) saturate(180%) brightness(105%);
+  backdrop-filter: blur(var(--neural-blur-small)) saturate(180%) brightness(105%);
+  border: var(--border-neural-secondary);
+  border-radius: var(--radius-neural-medium);
+  box-shadow: 
+    0 2px 16px rgba(99, 102, 241, 0.1),
+    0 1px 4px rgba(0, 0, 0, 0.05);
+  
+  transform: var(--neural-gpu-layer);
+  transition: all var(--anim-neural-smooth);
+}
+
+/* Healthcare-specific Neural Glass */
+.neural-glass-healthcare {
+  background: var(--gradient-neural-healthcare);
+  -webkit-backdrop-filter: blur(var(--neural-blur-medium)) saturate(190%) brightness(108%);
+  backdrop-filter: blur(var(--neural-blur-medium)) saturate(190%) brightness(108%);
+  border: 1px solid rgba(0, 168, 107, 0.2);
+  border-radius: var(--radius-neural-large);
+  box-shadow: 
+    0 4px 20px rgba(0, 168, 107, 0.15),
+    0 2px 8px rgba(0, 102, 204, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  
+  transform: var(--neural-gpu-layer);
+  transition: all var(--anim-neural-smooth);
+}
+
+/* Immersive Neural Glass - Modal and overlay elements */
+.neural-glass-immersive {
+  background: var(--neuro-glass-overlay);
+  -webkit-backdrop-filter: blur(var(--neural-blur-ultra)) saturate(150%);
+  backdrop-filter: blur(var(--neural-blur-ultra)) saturate(150%);
+  border: var(--border-neural-accent);
+  border-radius: var(--radius-neural-xl);
+  box-shadow: var(--shadow-neural-immersive);
+  
+  transform: var(--neural-gpu-layer);
+  transition: all var(--anim-neural-fluid);
+}
+
+/* =================================
+   NEURAL INTERACTIVE STATES
+   ================================= */
+
+/* Focus states with neural glow */
+.neural-glass-primary:focus,
+.neural-glass-secondary:focus,
+.neural-glass-healthcare:focus {
+  outline: none;
+  border-color: rgba(14, 165, 233, 0.5);
+  box-shadow: 
+    var(--shadow-neural-elevated),
+    0 0 0 4px rgba(14, 165, 233, 0.2);
+}
+
+/* Active states with neural pulse */
+.neural-glass-primary:active,
+.neural-glass-secondary:active,
+.neural-glass-healthcare:active {
+  transform: var(--neural-gpu-layer) scale(0.98);
+  -webkit-backdrop-filter: blur(var(--neural-blur-small)) saturate(200%);
+  backdrop-filter: blur(var(--neural-blur-small)) saturate(200%);
+}
+
+/* =================================
+   NEURAL CARD SYSTEM
+   ================================= */
+
+.neural-card {
+  background: var(--gradient-neural-primary);
+  -webkit-backdrop-filter: blur(var(--neural-blur-medium)) saturate(200%) brightness(110%);
+  backdrop-filter: blur(var(--neural-blur-medium)) saturate(200%) brightness(110%);
+  border: var(--border-neural-primary);
+  border-radius: var(--radius-neural-large);
+  box-shadow: var(--shadow-neural-float);
+  position: relative;
+  overflow: hidden;
+  transform: var(--neural-gpu-layer);
+  will-change: var(--neural-will-change);
+  contain: var(--neural-contain);
+  transition: all var(--anim-neural-smooth);
+  
+  padding: var(--space-neural-lg);
+  margin-bottom: var(--space-neural-md);
+}
+
+.neural-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-neural-md);
+  padding-bottom: var(--space-neural-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.neural-card-title {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.neural-card-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* =================================
+   NEURAL BUTTON SYSTEM
+   ================================= */
+
+.neural-btn {
+  position: relative;
+  padding: var(--space-neural-sm) var(--space-neural-lg);
+  background: var(--gradient-neural-primary);
+  -webkit-backdrop-filter: blur(var(--neural-blur-small)) saturate(180%);
+  backdrop-filter: blur(var(--neural-blur-small)) saturate(180%);
+  border: var(--border-neural-primary);
+  border-radius: var(--radius-neural-medium);
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+  cursor: pointer;
+  overflow: hidden;
+  
+  transform: var(--neural-gpu-layer);
+  transition: all var(--anim-neural-smooth);
+  
+  /* Touch optimization for mobile */
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+}
+
+.neural-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    transparent 100%);
+  transition: left var(--anim-neural-smooth);
+}
+
+.neural-btn:hover {
+  -webkit-backdrop-filter: blur(var(--neural-blur-medium)) saturate(200%);
+  backdrop-filter: blur(var(--neural-blur-medium)) saturate(200%);
+  box-shadow: var(--shadow-neural-elevated);
+  transform: var(--neural-gpu-layer) translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.neural-btn:hover::before {
+  left: 100%;
+}
+
+.neural-btn:active {
+  transform: var(--neural-gpu-layer) scale(0.95);
+}
+
+/* =================================
+   NEURAL FORM SYSTEM
+   ================================= */
+
+.neural-input {
+  width: 100%;
+  padding: var(--space-neural-md);
+  background: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(var(--neural-blur-nano)) saturate(150%);
+  backdrop-filter: blur(var(--neural-blur-nano)) saturate(150%);
+  border: var(--border-neural-secondary);
+  border-radius: var(--radius-neural-medium);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  
+  /* Mobile optimization */
+  min-height: 44px;
+  touch-action: manipulation;
+  
+  transition: all var(--anim-neural-smooth);
+}
+
+.neural-input:focus {
+  outline: none;
+  border-color: rgba(14, 165, 233, 0.5);
+  -webkit-backdrop-filter: blur(var(--neural-blur-small)) saturate(180%);
+  backdrop-filter: blur(var(--neural-blur-small)) saturate(180%);
+  box-shadow: 
+    0 0 0 4px rgba(14, 165, 233, 0.15),
+    0 2px 16px rgba(14, 165, 233, 0.1);
+}
+
+.neural-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* =================================
+   NEURAL NAVIGATION SYSTEM
+   ================================= */
+
+.neural-nav {
+  background: var(--gradient-neural-primary);
+  -webkit-backdrop-filter: blur(var(--neural-blur-xl)) saturate(200%);
+  backdrop-filter: blur(var(--neural-blur-xl)) saturate(200%);
+  border: var(--border-neural-primary);
+  border-radius: var(--radius-neural-large);
+  box-shadow: var(--shadow-neural-float);
+  position: relative;
+  overflow: hidden;
+  transform: var(--neural-gpu-layer);
+  will-change: var(--neural-will-change);
+  contain: var(--neural-contain);
+  transition: all var(--anim-neural-smooth);
+  
+  padding: var(--space-neural-sm) var(--space-neural-md);
+  margin-bottom: var(--space-neural-lg);
+}
+
+.neural-nav-item {
+  position: relative;
+  padding: var(--space-neural-sm) var(--space-neural-md);
+  margin: 0 var(--space-neural-xs);
+  border-radius: var(--radius-neural-medium);
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-weight: 500;
+  
+  /* Mobile touch optimization */
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  
+  transition: all var(--anim-neural-smooth);
+}
+
+.neural-nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.95);
+  -webkit-backdrop-filter: blur(var(--neural-blur-small));
+  backdrop-filter: blur(var(--neural-blur-small));
+}
+
+.neural-nav-item.active {
+  background: var(--gradient-neural-primary);
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 2px 12px rgba(14, 165, 233, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* =================================
+   NEURAL MOBILE-FIRST OPTIMIZATIONS
+   ================================= */
+
+/* Ultra-responsive design for all screen sizes */
+@media (max-width: 640px) {
+  .neural-card {
+    padding: var(--space-neural-md);
+    margin-bottom: var(--space-neural-sm);
+    border-radius: var(--radius-neural-medium);
+  }
+  
+  .neural-btn {
+    padding: var(--space-neural-md) var(--space-neural-lg);
+    font-size: 1rem;
+    min-height: 48px; /* Larger touch targets on mobile */
+  }
+  
+  .neural-input {
+    padding: var(--space-neural-md);
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 48px;
+  }
+  
+  .neural-nav {
+    padding: var(--space-neural-xs) var(--space-neural-sm);
+    -webkit-backdrop-filter: blur(var(--neural-blur-large));
+    backdrop-filter: blur(var(--neural-blur-large));
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .neural-card {
+    padding: var(--space-neural-lg) var(--space-neural-xl);
+  }
+  
+  .neural-btn {
+    min-height: 46px;
+  }
+  
+  .neural-input {
+    min-height: 46px;
+  }
+}
+
+/* Desktop enhancements */
+@media (min-width: 1025px) {
+  .neural-glass-primary:hover {
+    -webkit-backdrop-filter: blur(var(--neural-blur-xl)) saturate(220%) brightness(120%);
+    backdrop-filter: blur(var(--neural-blur-xl)) saturate(220%) brightness(120%);
+  }
+  
+  .neural-card:hover {
+    transform: var(--neural-gpu-layer) translateY(-4px);
+  }
+}
+
+/* =================================
+   NEURAL ACCESSIBILITY ENHANCEMENTS
+   ================================= */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .neural-glass-primary,
+  .neural-glass-secondary,
+  .neural-glass-healthcare {
+    border-width: 2px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+  
+  .neural-btn {
+    border-width: 2px;
+    background: rgba(14, 165, 233, 0.3);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .neural-glass-primary,
+  .neural-glass-secondary,
+  .neural-glass-healthcare,
+  .neural-btn,
+  .neural-input,
+  .neural-nav-item {
+    transition: none;
+  }
+  
+  .neural-btn::before {
+    display: none;
+  }
+}
+
+/* =================================
+   NEURAL RTL (ARABIC) SUPPORT
+   ================================= */
+
+[dir="rtl"] .neural-card-header {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .neural-nav-item {
+  margin: 0 var(--space-neural-xs);
+  text-align: right;
+}
+
+[dir="rtl"] .neural-btn::before {
+  left: 100%;
+}
+
+[dir="rtl"] .neural-btn:hover::before {
+  left: -100%;
+}
+
+/* =================================
+   NEURAL HEALTHCARE SPECIFIC STYLES
+   ================================= */
+
+/* Medical status indicators with neural glow */
+.neural-status-critical {
+  -webkit-backdrop-filter: blur(var(--neural-blur-medium)) saturate(200%) brightness(110%);
+  backdrop-filter: blur(var(--neural-blur-medium)) saturate(200%) brightness(110%);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: var(--radius-neural-large);
+  background: var(--neural-critical-alert);
+  box-shadow: 
+    0 4px 20px rgba(239, 68, 68, 0.2),
+    0 0 0 2px rgba(239, 68, 68, 0.1);
+  position: relative;
+  overflow: hidden;
+  transform: var(--neural-gpu-layer);
+  will-change: var(--neural-will-change);
+  contain: var(--neural-contain);
+  transition: all var(--anim-neural-smooth);
+  animation: neural-pulse 2s ease-in-out infinite;
+}
+
+.neural-status-warning {
+  -webkit-backdrop-filter: blur(var(--neural-blur-medium)) saturate(200%) brightness(110%);
+  backdrop-filter: blur(var(--neural-blur-medium)) saturate(200%) brightness(110%);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: var(--radius-neural-large);
+  background: var(--neural-warning-alert);
+  box-shadow: 
+    0 4px 20px rgba(245, 158, 11, 0.2),
+    0 0 0 2px rgba(245, 158, 11, 0.1);
+  position: relative;
+  overflow: hidden;
+  transform: var(--neural-gpu-layer);
+  will-change: var(--neural-will-change);
+  contain: var(--neural-contain);
+  transition: all var(--anim-neural-smooth);
+}
+
+.neural-status-success {
+  -webkit-backdrop-filter: blur(var(--neural-blur-medium)) saturate(200%) brightness(110%);
+  backdrop-filter: blur(var(--neural-blur-medium)) saturate(200%) brightness(110%);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  border-radius: var(--radius-neural-large);
+  background: var(--neural-success-alert);
+  box-shadow: 
+    0 4px 20px rgba(34, 197, 94, 0.2),
+    0 0 0 2px rgba(34, 197, 94, 0.1);
+  position: relative;
+  overflow: hidden;
+  transform: var(--neural-gpu-layer);
+  will-change: var(--neural-will-change);
+  contain: var(--neural-contain);
+  transition: all var(--anim-neural-smooth);
+}
+
+/* Neural pulse animation for critical alerts */
+@keyframes neural-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 4px 20px rgba(239, 68, 68, 0.2),
+      0 0 0 2px rgba(239, 68, 68, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 4px 20px rgba(239, 68, 68, 0.4),
+      0 0 0 4px rgba(239, 68, 68, 0.2);
+  }
+}
+
+/* =================================
+   NEURAL PERFORMANCE OPTIMIZATIONS
+   ================================= */
+
+/* GPU acceleration for smooth animations */
+.neural-glass-primary,
+.neural-glass-secondary,
+.neural-glass-healthcare,
+.neural-glass-immersive,
+.neural-btn,
+.neural-input,
+.neural-nav-item {
+  -webkit-transform: var(--neural-gpu-layer);
+  transform: var(--neural-gpu-layer);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
+
+/* Optimize backdrop-filter for better performance */
+@supports (backdrop-filter: blur(1px)) {
+  .neural-glass-primary,
+  .neural-glass-secondary,
+  .neural-glass-healthcare,
+  .neural-glass-immersive {
+    -webkit-backdrop-filter: var(--neural-backdrop-filter, blur(20px));
+    backdrop-filter: var(--neural-backdrop-filter, blur(20px));
+  }
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(1px)) {
+  .neural-glass-primary,
+  .neural-glass-secondary,
+  .neural-glass-healthcare {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}

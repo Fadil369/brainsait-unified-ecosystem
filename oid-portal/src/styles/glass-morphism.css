@@ -1,0 +1,865 @@
+/**
+ * BrainSAIT Healthcare Design System - Revolutionary Glass-Morphism System
+ * Comprehensive glass effects optimized for Arabic-first healthcare interfaces
+ * Seamlessly integrates with Material-UI components and existing design tokens
+ * Performance-optimized with hardware acceleration and smooth transitions
+ */
+
+/* =================================
+   GLASS-MORPHISM FOUNDATION TOKENS
+   ================================= */
+
+:root {
+  /* Glass Effect Variables - Dynamically customizable */
+  --glass-blur-radius: 20px;
+  --glass-blur-radius-strong: 40px;
+  --glass-blur-radius-subtle: 10px;
+  --glass-blur-radius-minimal: 5px;
+  
+  /* Glass Opacity Levels */
+  --glass-opacity-primary: 0.15;
+  --glass-opacity-secondary: 0.10;
+  --glass-opacity-tertiary: 0.05;
+  --glass-opacity-overlay: 0.25;
+  --glass-opacity-modal: 0.35;
+  
+  /* Glass Border Opacity */
+  --glass-border-opacity: 0.2;
+  --glass-border-opacity-strong: 0.3;
+  --glass-border-opacity-subtle: 0.1;
+  
+  /* Glass Shadow System */
+  --glass-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --glass-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+  --glass-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+  --glass-shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.18), 0 6px 12px rgba(0, 0, 0, 0.12);
+  --glass-shadow-2xl: 0 16px 32px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.15);
+  
+  /* Glass Color Overlays */
+  --glass-primary-overlay: rgba(0, 102, 204, var(--glass-opacity-primary));
+  --glass-secondary-overlay: rgba(0, 168, 107, var(--glass-opacity-secondary));
+  --glass-tertiary-overlay: rgba(255, 255, 255, var(--glass-opacity-tertiary));
+  --glass-dark-overlay: rgba(0, 0, 0, var(--glass-opacity-primary));
+  
+  /* Healthcare Glass Colors */
+  --glass-medical-overlay: rgba(0, 102, 204, var(--glass-opacity-secondary));
+  --glass-critical-overlay: rgba(211, 47, 47, var(--glass-opacity-primary));
+  --glass-warning-overlay: rgba(245, 124, 0, var(--glass-opacity-primary));
+  --glass-success-overlay: rgba(46, 125, 50, var(--glass-opacity-primary));
+  --glass-info-overlay: rgba(25, 118, 210, var(--glass-opacity-primary));
+  
+  /* Glass Performance Optimizations */
+  --glass-will-change: backdrop-filter, background-color, border-color, box-shadow;
+  --glass-transform-gpu: translateZ(0);
+  --glass-contain: layout style paint;
+  
+  /* Glass Transition System */
+  --glass-transition-fast: all 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --glass-transition-normal: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --glass-transition-slow: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --glass-transition-backdrop: backdrop-filter 200ms ease-out;
+  
+  /* Glass Interactive States */
+  --glass-hover-blur: 25px;
+  --glass-hover-opacity: 0.2;
+  --glass-focus-blur: 30px;
+  --glass-focus-opacity: 0.25;
+  --glass-active-blur: 15px;
+  --glass-active-opacity: 0.3;
+}
+
+/* =================================
+   GLASS-MORPHISM BASE MIXINS
+   ================================= */
+
+/* Primary Glass Effect - Main content areas */
+.glass-primary {
+  background: linear-gradient(
+    135deg,
+    var(--glass-primary-overlay) 0%,
+    var(--glass-tertiary-overlay) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity));
+  box-shadow: var(--glass-shadow-md);
+  border-radius: var(--radius-clinical-card);
+  position: relative;
+  overflow: hidden;
+  
+  /* Performance Optimizations */
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  transition: var(--glass-transition-normal);
+}
+
+/* Secondary Glass Effect - Secondary content areas */
+.glass-secondary {
+  background: linear-gradient(
+    135deg,
+    var(--glass-secondary-overlay) 0%,
+    var(--glass-tertiary-overlay) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur-radius-subtle)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius-subtle)) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity-subtle));
+  box-shadow: var(--glass-shadow-sm);
+  border-radius: var(--radius-clinical-button);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  transition: var(--glass-transition-fast);
+}
+
+/* Tertiary Glass Effect - Subtle accents */
+.glass-tertiary {
+  background: var(--glass-tertiary-overlay);
+  backdrop-filter: blur(var(--glass-blur-radius-minimal)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius-minimal)) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity-subtle));
+  border-radius: var(--radius-md);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  
+  transition: var(--glass-transition-fast);
+}
+
+/* Strong Glass Effect - Modal overlays and important content */
+.glass-strong {
+  background: linear-gradient(
+    135deg,
+    var(--glass-dark-overlay) 0%,
+    var(--glass-primary-overlay) 50%,
+    var(--glass-tertiary-overlay) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur-radius-strong)) saturate(200%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius-strong)) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity-strong));
+  box-shadow: var(--glass-shadow-xl);
+  border-radius: var(--radius-xl);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  transition: var(--glass-transition-slow);
+}
+
+/* =================================
+   HEALTHCARE GLASS VARIANTS
+   ================================= */
+
+/* Medical Glass - For healthcare-specific content */
+.glass-medical {
+  background: linear-gradient(
+    135deg,
+    var(--glass-medical-overlay) 0%,
+    var(--glass-tertiary-overlay) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  border: 1px solid rgba(0, 102, 204, var(--glass-border-opacity));
+  box-shadow: var(--glass-shadow-md), 0 0 20px rgba(0, 102, 204, 0.1);
+  border-radius: var(--radius-clinical-card);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  transition: var(--glass-transition-normal);
+}
+
+/* Critical Glass - For emergency/critical content */
+.glass-critical {
+  background: linear-gradient(
+    135deg,
+    var(--glass-critical-overlay) 0%,
+    var(--glass-tertiary-overlay) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  border: 1px solid rgba(211, 47, 47, var(--glass-border-opacity));
+  box-shadow: var(--glass-shadow-lg), 0 0 20px rgba(211, 47, 47, 0.15);
+  border-radius: var(--radius-clinical-card);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  transition: var(--glass-transition-normal);
+  
+  /* Pulsing animation for critical alerts */
+  animation: glass-critical-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glass-critical-pulse {
+  0%, 100% {
+    box-shadow: var(--glass-shadow-lg), 0 0 20px rgba(211, 47, 47, 0.15);
+  }
+  50% {
+    box-shadow: var(--glass-shadow-xl), 0 0 30px rgba(211, 47, 47, 0.25);
+  }
+}
+
+/* Warning Glass - For warning content */
+.glass-warning {
+  background: linear-gradient(
+    135deg,
+    var(--glass-warning-overlay) 0%,
+    var(--glass-tertiary-overlay) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  border: 1px solid rgba(245, 124, 0, var(--glass-border-opacity));
+  box-shadow: var(--glass-shadow-md), 0 0 15px rgba(245, 124, 0, 0.1);
+  border-radius: var(--radius-clinical-card);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  transition: var(--glass-transition-normal);
+}
+
+/* Success Glass - For success states */
+.glass-success {
+  background: linear-gradient(
+    135deg,
+    var(--glass-success-overlay) 0%,
+    var(--glass-tertiary-overlay) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  border: 1px solid rgba(46, 125, 50, var(--glass-border-opacity));
+  box-shadow: var(--glass-shadow-md), 0 0 15px rgba(46, 125, 50, 0.1);
+  border-radius: var(--radius-clinical-card);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  transition: var(--glass-transition-normal);
+}
+
+/* Info Glass - For informational content */
+.glass-info {
+  background: linear-gradient(
+    135deg,
+    var(--glass-info-overlay) 0%,
+    var(--glass-tertiary-overlay) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  border: 1px solid rgba(25, 118, 210, var(--glass-border-opacity));
+  box-shadow: var(--glass-shadow-md), 0 0 15px rgba(25, 118, 210, 0.1);
+  border-radius: var(--radius-clinical-card);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  transition: var(--glass-transition-normal);
+}
+
+/* =================================
+   GLASS INTERACTIVE STATES
+   ================================= */
+
+/* Hover States */
+.glass-primary:hover,
+.glass-secondary:hover,
+.glass-medical:hover {
+  backdrop-filter: blur(var(--glass-hover-blur)) saturate(200%);
+  -webkit-backdrop-filter: blur(var(--glass-hover-blur)) saturate(200%);
+  background-opacity: var(--glass-hover-opacity);
+  box-shadow: var(--glass-shadow-lg);
+  transform: var(--glass-transform-gpu) translateY(-2px);
+  border-color: rgba(255, 255, 255, var(--glass-border-opacity-strong));
+}
+
+.glass-tertiary:hover {
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(160%);
+  box-shadow: var(--glass-shadow-md);
+}
+
+.glass-strong:hover {
+  backdrop-filter: blur(calc(var(--glass-blur-radius-strong) + 5px)) saturate(220%);
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur-radius-strong) + 5px)) saturate(220%);
+  box-shadow: var(--glass-shadow-2xl);
+}
+
+/* Focus States */
+.glass-primary:focus,
+.glass-secondary:focus,
+.glass-medical:focus,
+.glass-tertiary:focus,
+.glass-strong:focus {
+  outline: var(--focus-ring-width) solid var(--healthcare-primary);
+  outline-offset: var(--focus-ring-offset);
+  backdrop-filter: blur(var(--glass-focus-blur)) saturate(220%);
+  -webkit-backdrop-filter: blur(var(--glass-focus-blur)) saturate(220%);
+  background-opacity: var(--glass-focus-opacity);
+  box-shadow: var(--glass-shadow-xl), 0 0 0 4px var(--healthcare-primary-50);
+}
+
+/* Active States */
+.glass-primary:active,
+.glass-secondary:active,
+.glass-medical:active {
+  backdrop-filter: blur(var(--glass-active-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-active-blur)) saturate(160%);
+  background-opacity: var(--glass-active-opacity);
+  transform: var(--glass-transform-gpu) translateY(1px);
+  box-shadow: var(--glass-shadow-sm);
+}
+
+/* =================================
+   MATERIAL-UI INTEGRATION
+   ================================= */
+
+/* Material-UI Paper Integration */
+.MuiPaper-root.glass-paper {
+  background: linear-gradient(
+    135deg,
+    var(--glass-primary-overlay) 0%,
+    var(--glass-tertiary-overlay) 100%
+  ) !important;
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity));
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+}
+
+/* Material-UI Card Integration */
+.MuiCard-root.glass-card {
+  background: linear-gradient(
+    135deg,
+    var(--glass-secondary-overlay) 0%,
+    var(--glass-tertiary-overlay) 100%
+  ) !important;
+  backdrop-filter: blur(var(--glass-blur-radius-subtle)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius-subtle)) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity-subtle));
+  box-shadow: var(--glass-shadow-md) !important;
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  transition: var(--glass-transition-normal) !important;
+}
+
+.MuiCard-root.glass-card:hover {
+  backdrop-filter: blur(var(--glass-hover-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-hover-blur)) saturate(180%);
+  box-shadow: var(--glass-shadow-lg) !important;
+  transform: var(--glass-transform-gpu) translateY(-4px);
+}
+
+/* Material-UI AppBar Integration */
+.MuiAppBar-root.glass-appbar {
+  background: linear-gradient(
+    135deg,
+    var(--glass-dark-overlay) 0%,
+    var(--glass-primary-overlay) 100%
+  ) !important;
+  backdrop-filter: blur(var(--glass-blur-radius-strong)) saturate(200%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius-strong)) saturate(200%);
+  border-bottom: 1px solid rgba(255, 255, 255, var(--glass-border-opacity));
+  box-shadow: var(--glass-shadow-lg) !important;
+  
+  will-change: var(--glass-will-change);
+  contain: var(--glass-contain);
+}
+
+/* Material-UI Drawer Integration */
+.MuiDrawer-paper.glass-drawer {
+  background: linear-gradient(
+    135deg,
+    var(--glass-dark-overlay) 0%,
+    var(--glass-primary-overlay) 50%,
+    var(--glass-tertiary-overlay) 100%
+  ) !important;
+  backdrop-filter: blur(var(--glass-blur-radius-strong)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius-strong)) saturate(180%);
+  border-right: 1px solid rgba(255, 255, 255, var(--glass-border-opacity));
+  
+  will-change: var(--glass-will-change);
+  contain: var(--glass-contain);
+}
+
+[dir="rtl"] .MuiDrawer-paper.glass-drawer {
+  border-right: none;
+  border-left: 1px solid rgba(255, 255, 255, var(--glass-border-opacity));
+}
+
+/* Material-UI Dialog Integration */
+.MuiDialog-paper.glass-dialog {
+  background: linear-gradient(
+    135deg,
+    var(--glass-dark-overlay) 0%,
+    var(--glass-primary-overlay) 100%
+  ) !important;
+  backdrop-filter: blur(var(--glass-blur-radius-strong)) saturate(200%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius-strong)) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity-strong));
+  box-shadow: var(--glass-shadow-2xl) !important;
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+}
+
+/* Material-UI Backdrop Integration */
+.MuiBackdrop-root.glass-backdrop {
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(150%);
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* =================================
+   SPECIALIZED GLASS COMPONENTS
+   ================================= */
+
+/* Glass Navigation Items */
+.glass-nav-item {
+  background: var(--glass-tertiary-overlay);
+  backdrop-filter: blur(var(--glass-blur-radius-minimal)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius-minimal)) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity-subtle));
+  border-radius: var(--radius-clinical-button);
+  padding: var(--space-clinical-sm) var(--space-clinical-md);
+  margin-bottom: var(--space-1);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  
+  transition: var(--glass-transition-fast);
+  cursor: pointer;
+}
+
+.glass-nav-item:hover {
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(160%);
+  background: var(--glass-secondary-overlay);
+  border-color: rgba(255, 255, 255, var(--glass-border-opacity));
+  transform: var(--glass-transform-gpu) translateX(4px);
+}
+
+[dir="rtl"] .glass-nav-item:hover {
+  transform: var(--glass-transform-gpu) translateX(-4px);
+}
+
+.glass-nav-item.active {
+  background: var(--glass-primary-overlay);
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  border-color: rgba(255, 255, 255, var(--glass-border-opacity-strong));
+  box-shadow: var(--glass-shadow-md);
+}
+
+/* Glass Status Panels */
+.glass-status-panel {
+  background: linear-gradient(
+    135deg,
+    var(--glass-info-overlay) 0%,
+    var(--glass-tertiary-overlay) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(170%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(170%);
+  border: 1px solid rgba(25, 118, 210, var(--glass-border-opacity));
+  border-radius: var(--radius-clinical-card);
+  padding: var(--space-clinical-md);
+  box-shadow: var(--glass-shadow-md), 0 0 15px rgba(25, 118, 210, 0.1);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  transition: var(--glass-transition-normal);
+}
+
+/* Glass Metrics Cards */
+.glass-metric-card {
+  background: linear-gradient(
+    135deg,
+    var(--glass-success-overlay) 0%,
+    var(--glass-tertiary-overlay) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(160%);
+  border: 1px solid rgba(46, 125, 50, var(--glass-border-opacity));
+  border-radius: var(--radius-clinical-card);
+  padding: var(--space-clinical-lg);
+  box-shadow: var(--glass-shadow-md);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  transition: var(--glass-transition-normal);
+  cursor: pointer;
+}
+
+.glass-metric-card:hover {
+  backdrop-filter: blur(var(--glass-hover-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-hover-blur)) saturate(180%);
+  box-shadow: var(--glass-shadow-lg);
+  transform: var(--glass-transform-gpu) translateY(-3px) scale(1.02);
+}
+
+/* Glass Search Bar */
+.glass-search-bar {
+  background: var(--glass-tertiary-overlay);
+  backdrop-filter: blur(var(--glass-blur-radius-subtle)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius-subtle)) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity-subtle));
+  border-radius: var(--radius-clinical-button);
+  padding: var(--space-clinical-sm) var(--space-clinical-md);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  
+  transition: var(--glass-transition-fast);
+}
+
+.glass-search-bar:focus-within {
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  background: var(--glass-secondary-overlay);
+  border-color: var(--healthcare-primary);
+  box-shadow: var(--glass-shadow-md), 0 0 0 2px var(--healthcare-primary-50);
+}
+
+/* Glass Toast Notifications */
+.glass-toast {
+  background: linear-gradient(
+    135deg,
+    var(--glass-dark-overlay) 0%,
+    var(--glass-primary-overlay) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity));
+  border-radius: var(--radius-clinical-card);
+  box-shadow: var(--glass-shadow-lg);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  animation: glass-toast-slide-in 300ms ease-out forwards;
+}
+
+@keyframes glass-toast-slide-in {
+  from {
+    opacity: 0;
+    transform: var(--glass-transform-gpu) translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: var(--glass-transform-gpu) translateY(0) scale(1);
+  }
+}
+
+/* =================================
+   OID TREE GLASS INTEGRATION
+   ================================= */
+
+/* Glass OID Tree Container */
+.glass-oid-tree {
+  background: linear-gradient(
+    135deg,
+    var(--glass-medical-overlay) 0%,
+    var(--glass-tertiary-overlay) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  border: 1px solid rgba(0, 102, 204, var(--glass-border-opacity));
+  border-radius: var(--radius-clinical-card);
+  box-shadow: var(--glass-shadow-lg);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  contain: var(--glass-contain);
+  
+  transition: var(--glass-transition-normal);
+}
+
+/* Glass OID Tree Node */
+.glass-tree-node {
+  background: var(--glass-tertiary-overlay);
+  backdrop-filter: blur(var(--glass-blur-radius-minimal)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius-minimal)) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity-subtle));
+  border-radius: var(--radius-clinical-button);
+  margin-bottom: var(--space-1);
+  
+  will-change: var(--glass-will-change);
+  transform: var(--glass-transform-gpu);
+  
+  transition: var(--glass-transition-fast);
+}
+
+.glass-tree-node:hover {
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(160%);
+  background: var(--glass-secondary-overlay);
+  border-color: rgba(255, 255, 255, var(--glass-border-opacity));
+  box-shadow: var(--glass-shadow-sm);
+  transform: var(--glass-transform-gpu) translateX(2px);
+}
+
+[dir="rtl"] .glass-tree-node:hover {
+  transform: var(--glass-transform-gpu) translateX(-2px);
+}
+
+.glass-tree-node.selected {
+  background: var(--glass-primary-overlay);
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  border-color: rgba(0, 102, 204, var(--glass-border-opacity-strong));
+  box-shadow: var(--glass-shadow-md), 0 0 15px rgba(0, 102, 204, 0.2);
+}
+
+/* =================================
+   ARABIC RTL GLASS OPTIMIZATIONS
+   ================================= */
+
+/* RTL-aware glass navigation */
+[dir="rtl"] .glass-nav-item {
+  text-align: right;
+}
+
+[dir="rtl"] .glass-search-bar {
+  text-align: right;
+}
+
+/* RTL glass shadows optimization */
+[dir="rtl"] .glass-primary,
+[dir="rtl"] .glass-secondary,
+[dir="rtl"] .glass-medical {
+  box-shadow: 
+    var(--glass-shadow-md),
+    -2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+[dir="ltr"] .glass-primary,
+[dir="ltr"] .glass-secondary,
+[dir="ltr"] .glass-medical {
+  box-shadow: 
+    var(--glass-shadow-md),
+    2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Arabic text enhancement in glass containers */
+.glass-primary .arabic-text,
+.glass-secondary .arabic-text,
+.glass-medical .arabic-text {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font-weight: var(--font-medium);
+}
+
+/* =================================
+   RESPONSIVE GLASS OPTIMIZATIONS
+   ================================= */
+
+/* Mobile glass optimizations */
+@media (max-width: 768px) {
+  :root {
+    --glass-blur-radius: 15px;
+    --glass-blur-radius-strong: 25px;
+    --glass-blur-radius-subtle: 8px;
+    --glass-opacity-primary: 0.2;
+    --glass-opacity-secondary: 0.15;
+  }
+  
+  .glass-primary,
+  .glass-secondary,
+  .glass-medical {
+    border-radius: var(--radius-clinical-button);
+    padding: var(--space-clinical-sm);
+  }
+  
+  .glass-strong {
+    border-radius: var(--radius-clinical-card);
+  }
+  
+  .glass-nav-item {
+    padding: var(--space-clinical-xs) var(--space-clinical-sm);
+    margin-bottom: var(--space-1);
+  }
+  
+  .glass-metric-card {
+    padding: var(--space-clinical-md);
+  }
+  
+  /* Reduce blur on mobile for performance */
+  .glass-primary,
+  .glass-secondary,
+  .glass-medical,
+  .glass-tertiary {
+    backdrop-filter: blur(var(--glass-blur-radius-subtle)) saturate(150%);
+    -webkit-backdrop-filter: blur(var(--glass-blur-radius-subtle)) saturate(150%);
+  }
+}
+
+/* Tablet glass optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --glass-blur-radius: 18px;
+    --glass-blur-radius-strong: 35px;
+  }
+  
+  .glass-metric-card {
+    padding: var(--space-clinical-lg);
+  }
+}
+
+/* Desktop glass enhancements */
+@media (min-width: 1025px) {
+  :root {
+    --glass-blur-radius: 22px;
+    --glass-blur-radius-strong: 45px;
+  }
+  
+  .glass-primary:hover,
+  .glass-secondary:hover,
+  .glass-medical:hover {
+    transform: var(--glass-transform-gpu) translateY(-3px) scale(1.01);
+  }
+  
+  .glass-metric-card:hover {
+    transform: var(--glass-transform-gpu) translateY(-4px) scale(1.03);
+  }
+}
+
+/* =================================
+   ACCESSIBILITY ENHANCEMENTS
+   ================================= */
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  :root {
+    --glass-border-opacity: 0.8;
+    --glass-border-opacity-strong: 1;
+    --glass-opacity-primary: 0.3;
+    --glass-opacity-secondary: 0.25;
+  }
+  
+  .glass-primary,
+  .glass-secondary,
+  .glass-medical,
+  .glass-tertiary,
+  .glass-strong {
+    border-width: 2px;
+    box-shadow: var(--glass-shadow-lg);
+  }
+  
+  .glass-nav-item,
+  .glass-tree-node {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .glass-primary,
+  .glass-secondary,
+  .glass-medical,
+  .glass-tertiary,
+  .glass-strong,
+  .glass-nav-item,
+  .glass-tree-node,
+  .glass-metric-card,
+  .glass-search-bar,
+  .glass-status-panel {
+    transition: none;
+    animation: none;
+  }
+  
+  .glass-primary:hover,
+  .glass-secondary:hover,
+  .glass-medical:hover,
+  .glass-metric-card:hover,
+  .glass-tree-node:hover {
+    transform: var(--glass-transform-gpu);
+  }
+  
+  .glass-critical {
+    animation: none;
+  }
+  
+  .glass-toast {
+    animation: none;
+  }
+}
+
+/* Focus enhancements for accessibility */
+.glass-primary:focus-visible,
+.glass-secondary:focus-visible,
+.glass-medical:focus-visible,
+.glass-tertiary:focus-visible,
+.glass-strong:focus-visible,
+.glass-nav-item:focus-visible,
+.glass-tree-node:focus-visible {
+  outline: 3px solid var(--healthcare-primary);
+  outline-offset: 2px;
+  box-shadow: 
+    var(--glass-shadow-lg),
+    0 0 0 6px var(--healthcare-primary-50);
+}
+
+/* =================================
+   PERFORMANCE OPTIMIZATIONS
+   ================================= */
+
+/* Optimize glass effects for better performance */
+.glass-container {
+  isolation: isolate;
+  contain: layout style paint;
+}
+
+.glass-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  will-change: auto;
+}
+
+/* Intersection observer optimizations */
+.glass-lazy {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.glass-lazy.glass-visible {
+  backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-radius)) saturate(180%);
+  transition: var(--glass-transition-backdrop);
+}
+
+/* GPU layer promotion for smooth animations */
+.glass-gpu-layer {
+  transform: var(--glass-transform-gpu);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Preload critical glass styles */
+.glass-preload {
+  content-visibility: auto;
+  contain-intrinsic-size: 200px;
+}

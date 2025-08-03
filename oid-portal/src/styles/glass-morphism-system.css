@@ -1,0 +1,2032 @@
+/* 
+BrainSAIT Healthcare Platform - Glass Morphism Design System
+Revolutionary ULTIMATE UNIFIED, INTEGRATED, INTELLIGENCE ECOSYSTEM
+Optimized for Arabic RTL layouts and medical interface standards
+*/
+
+/* ===== CSS CUSTOM PROPERTIES ===== */
+:root {
+  /* === Next-Generation Glass Properties === */
+  --glass-layers: 5; /* Dynamic depth layering system */
+  --glass-intelligence: 1; /* AI-driven opacity adaptation (0-1) */
+  --glass-clinical-urgency: 1; /* Medical urgency opacity scaling (0-2) */
+  --glass-neural-pulse: 0.8; /* Neural network pulse intensity */
+  --glass-quantum-blur: 8px; /* Quantum-inspired blur effects */
+  --glass-holographic-shift: 0.02; /* Holographic color shifting */
+  --glass-bio-resonance: 60bpm; /* Biometric resonance frequency */
+  
+  /* === Primary Color Palette === */
+  --brainsait-primary: #00D4FF;
+  --brainsait-primary-dark: #0099CC;
+  --brainsait-primary-light: #33DFFF;
+  --brainsait-secondary: #6C5CE7;
+  --brainsait-secondary-dark: #5A4FCF;
+  --brainsait-secondary-light: #8B7EEA;
+  
+  /* === Healthcare Colors === */
+  --medical-green: #00C896;
+  --medical-blue: #2E86DE;
+  --medical-red: #FF6B6B;
+  --medical-orange: #FFA726;
+  --medical-purple: #9C88FF;
+  
+  /* === Clinical Urgency Colors === */
+  --urgency-critical: #FF1744;
+  --urgency-high: #FF6B35;
+  --urgency-medium: #FFA726;
+  --urgency-low: #4CAF50;
+  --urgency-routine: #2196F3;
+  --urgency-emergency: #E91E63;
+  
+  /* === NPHIES Integration Colors === */
+  --nphies-active: #00E676;
+  --nphies-pending: #FF9800;
+  --nphies-error: #F44336;
+  --nphies-processing: #2196F3;
+  --nphies-success: #4CAF50;
+  --nphies-timeout: #9E9E9E;
+  
+  /* === Glass Background Colors === */
+  --glass-white: rgba(255, 255, 255, 0.1);
+  --glass-white-light: rgba(255, 255, 255, 0.05);
+  --glass-white-medium: rgba(255, 255, 255, 0.15);
+  --glass-white-strong: rgba(255, 255, 255, 0.25);
+  
+  /* === Advanced Glass Layers === */
+  --glass-layer-1: rgba(255, 255, 255, 0.03);
+  --glass-layer-2: rgba(255, 255, 255, 0.08);
+  --glass-layer-3: rgba(255, 255, 255, 0.12);
+  --glass-layer-4: rgba(255, 255, 255, 0.18);
+  --glass-layer-5: rgba(255, 255, 255, 0.25);
+  
+  /* === Clinical Glass Variants === */
+  --glass-patient-card: rgba(46, 134, 222, 0.08);
+  --glass-vitals-normal: rgba(76, 175, 80, 0.08);
+  --glass-vitals-critical: rgba(244, 67, 54, 0.12);
+  --glass-medical-alert: rgba(255, 152, 0, 0.1);
+  --glass-nphies-active: rgba(0, 230, 118, 0.08);
+  --glass-ai-processing: rgba(156, 136, 255, 0.1);
+  
+  --glass-dark: rgba(0, 0, 0, 0.1);
+  --glass-dark-light: rgba(0, 0, 0, 0.05);
+  --glass-dark-medium: rgba(0, 0, 0, 0.15);
+  --glass-dark-strong: rgba(0, 0, 0, 0.25);
+  
+  /* === Glass Border Colors === */
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-border-light: rgba(255, 255, 255, 0.1);
+  --glass-border-strong: rgba(255, 255, 255, 0.3);
+  --glass-border-primary: rgba(0, 212, 255, 0.3);
+  --glass-border-secondary: rgba(108, 92, 231, 0.3);
+  
+  /* === Spacing System === */
+  --space-xs: 0.25rem;   /* 4px */
+  --space-sm: 0.5rem;    /* 8px */
+  --space-md: 1rem;      /* 16px */
+  --space-lg: 1.5rem;    /* 24px */
+  --space-xl: 2rem;      /* 32px */
+  --space-2xl: 3rem;     /* 48px */
+  --space-3xl: 4rem;     /* 64px */
+  
+  /* === Typography === */
+  --font-arabic: 'Noto Sans Arabic', 'Cairo', 'Tajawal', sans-serif;
+  --font-english: 'Inter', 'Roboto', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+  
+  /* === Glass Shadows === */
+  --shadow-glass-xs: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-glass-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-glass-md: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --shadow-glass-lg: 0 16px 48px rgba(0, 0, 0, 0.25);
+  --shadow-glass-xl: 0 24px 64px rgba(0, 0, 0, 0.3);
+  
+  /* === Medical Glow Effects === */
+  --glow-primary: 0 0 20px rgba(0, 212, 255, 0.3);
+  --glow-secondary: 0 0 20px rgba(108, 92, 231, 0.3);
+  --glow-success: 0 0 20px rgba(0, 200, 150, 0.3);
+  --glow-warning: 0 0 20px rgba(255, 167, 38, 0.3);
+  --glow-error: 0 0 20px rgba(255, 107, 107, 0.3);
+  
+  /* === Advanced Medical Glow System === */
+  --glow-patient-vitals: 0 0 15px rgba(76, 175, 80, 0.4), inset 0 0 10px rgba(76, 175, 80, 0.1);
+  --glow-critical-alert: 0 0 25px rgba(244, 67, 54, 0.6), 0 0 50px rgba(244, 67, 54, 0.3);
+  --glow-nphies-sync: 0 0 18px rgba(0, 230, 118, 0.4), inset 0 0 8px rgba(0, 230, 118, 0.2);
+  --glow-ai-processing: 0 0 22px rgba(156, 136, 255, 0.5), 0 0 35px rgba(156, 136, 255, 0.2);
+  --glow-emergency-pulse: 0 0 30px rgba(233, 30, 99, 0.8), 0 0 60px rgba(233, 30, 99, 0.4);
+  --glow-neural-network: 0 0 12px rgba(0, 212, 255, 0.3), 0 0 24px rgba(108, 92, 231, 0.2);
+  --glow-biometric: 0 0 16px rgba(0, 200, 150, 0.4), inset 0 0 6px rgba(0, 200, 150, 0.15);
+  
+  /* === Border Radius === */
+  --radius-xs: 0.125rem; /* 2px */
+  --radius-sm: 0.25rem;  /* 4px */
+  --radius-md: 0.5rem;   /* 8px */
+  --radius-lg: 0.75rem;  /* 12px */
+  --radius-xl: 1rem;     /* 16px */
+  --radius-2xl: 1.5rem;  /* 24px */
+  --radius-full: 9999px;
+  
+  /* === Blur Effects === */
+  --blur-xs: blur(2px);
+  --blur-sm: blur(4px);
+  --blur-md: blur(8px);
+  --blur-lg: blur(16px);
+  --blur-xl: blur(24px);
+  
+  /* === Advanced Quantum Blur System === */
+  --blur-quantum-xs: blur(1px) saturate(1.1);
+  --blur-quantum-sm: blur(3px) saturate(1.15);
+  --blur-quantum-md: blur(var(--glass-quantum-blur)) saturate(1.2);
+  --blur-quantum-lg: blur(12px) saturate(1.25) brightness(1.05);
+  --blur-quantum-xl: blur(20px) saturate(1.3) brightness(1.1);
+  --blur-neural: blur(6px) hue-rotate(2deg) saturate(1.15);
+  --blur-clinical: blur(4px) contrast(1.05) brightness(1.02);
+  --blur-emergency: blur(2px) saturate(1.4) brightness(1.2);
+  
+  /* === Animation Timing === */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ===== GLASS MORPHISM BASE CLASSES ===== */
+
+/* Base Glass Effect */
+.glass-base {
+  backdrop-filter: var(--blur-md);
+  -webkit-backdrop-filter: var(--blur-md);
+  border: 1px solid var(--glass-border);
+  transition: all var(--duration-normal) var(--ease-in-out);
+}
+
+/* Glass Card Components */
+.glass-card {
+  @extend .glass-base;
+  background: var(--glass-white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-glass-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    var(--glass-border-strong) 50%, 
+    transparent 100%);
+}
+
+.glass-card-primary {
+  @extend .glass-card;
+  background: linear-gradient(135deg, 
+    rgba(0, 212, 255, 0.1) 0%,
+    rgba(0, 212, 255, 0.05) 100%);
+  border-color: var(--glass-border-primary);
+  box-shadow: var(--shadow-glass-md), var(--glow-primary);
+}
+
+.glass-card-secondary {
+  @extend .glass-card;
+  background: linear-gradient(135deg, 
+    rgba(108, 92, 231, 0.1) 0%,
+    rgba(108, 92, 231, 0.05) 100%);
+  border-color: var(--glass-border-secondary);
+  box-shadow: var(--shadow-glass-md), var(--glow-secondary);
+}
+
+.glass-card-medical {
+  @extend .glass-card;
+  background: linear-gradient(135deg, 
+    rgba(0, 200, 150, 0.1) 0%,
+    rgba(46, 134, 222, 0.1) 50%,
+    rgba(156, 136, 255, 0.1) 100%);
+  border-color: var(--glass-border);
+  box-shadow: var(--shadow-glass-lg), var(--glow-success);
+}
+
+/* Glass Button Components */
+.glass-btn {
+  @extend .glass-base;
+  background: var(--glass-white-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-sm) var(--space-lg);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  min-height: 44px; /* Accessibility requirement */
+}
+
+.glass-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    transparent 100%);
+  transition: left var(--duration-slow) var(--ease-in-out);
+}
+
+.glass-btn:hover::before {
+  left: 100%;
+}
+
+.glass-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glass-lg);
+  border-color: var(--glass-border-strong);
+}
+
+.glass-btn:active {
+  transform: translateY(0);
+}
+
+.glass-btn-primary {
+  @extend .glass-btn;
+  background: linear-gradient(135deg, 
+    rgba(0, 212, 255, 0.2) 0%,
+    rgba(0, 212, 255, 0.1) 100%);
+  border-color: var(--glass-border-primary);
+  color: var(--brainsait-primary);
+  box-shadow: var(--shadow-glass-sm), var(--glow-primary);
+}
+
+.glass-btn-secondary {
+  @extend .glass-btn;
+  background: linear-gradient(135deg, 
+    rgba(108, 92, 231, 0.2) 0%,
+    rgba(108, 92, 231, 0.1) 100%);
+  border-color: var(--glass-border-secondary);
+  color: var(--brainsait-secondary);
+  box-shadow: var(--shadow-glass-sm), var(--glow-secondary);
+}
+
+.glass-btn-success {
+  @extend .glass-btn;
+  background: linear-gradient(135deg, 
+    rgba(0, 200, 150, 0.2) 0%,
+    rgba(0, 200, 150, 0.1) 100%);
+  border-color: rgba(0, 200, 150, 0.3);
+  color: var(--medical-green);
+  box-shadow: var(--shadow-glass-sm), var(--glow-success);
+}
+
+/* Glass Input Components */
+.glass-input {
+  @extend .glass-base;
+  background: var(--glass-white-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  font-size: var(--text-base);
+  width: 100%;
+  outline: none;
+  transition: all var(--duration-normal) var(--ease-in-out);
+}
+
+.glass-input:focus {
+  background: var(--glass-white-medium);
+  border-color: var(--glass-border-primary);
+  box-shadow: var(--shadow-glass-md), var(--glow-primary);
+  transform: scale(1.02);
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Arabic RTL Support */
+.glass-input[dir="rtl"] {
+  text-align: right;
+  font-family: var(--font-arabic);
+}
+
+/* Glass Navigation */
+.glass-nav {
+  @extend .glass-base;
+  background: var(--glass-white);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-sm);
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  box-shadow: var(--shadow-glass-lg);
+}
+
+.glass-nav-item {
+  @extend .glass-base;
+  background: transparent;
+  border-radius: var(--radius-lg);
+  padding: var(--space-sm) var(--space-md);
+  text-decoration: none;
+  transition: all var(--duration-normal) var(--ease-in-out);
+  border: 1px solid transparent;
+}
+
+.glass-nav-item:hover,
+.glass-nav-item.active {
+  background: var(--glass-white-medium);
+  border-color: var(--glass-border);
+  transform: scale(1.05);
+}
+
+/* ===== NEXT-GENERATION GLASS COMPONENTS ===== */
+
+/* Quantum Glass Base */
+.glass-quantum {
+  backdrop-filter: var(--blur-quantum-md);
+  -webkit-backdrop-filter: var(--blur-quantum-md);
+  background: linear-gradient(135deg, 
+    var(--glass-layer-2) 0%,
+    var(--glass-layer-3) 50%,
+    var(--glass-layer-1) 100%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--duration-normal) var(--ease-in-out);
+  transform: var(--perf-gpu-acceleration);
+  will-change: var(--perf-will-change);
+}
+
+.glass-quantum::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%);
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-in-out);
+  pointer-events: none;
+  animation: quantumShimmer 4s ease-in-out infinite;
+}
+
+.glass-quantum:hover::before {
+  opacity: 1;
+}
+
+/* Neural Glass Effect */
+.glass-neural {
+  @extend .glass-quantum;
+  backdrop-filter: var(--blur-neural);
+  background: radial-gradient(circle at 30% 30%, 
+    rgba(0, 212, 255, 0.15) 0%,
+    rgba(108, 92, 231, 0.1) 40%,
+    var(--glass-layer-2) 100%);
+  box-shadow: var(--shadow-glass-lg), var(--glow-neural-network);
+  animation: neuralPulse calc(var(--glass-bio-resonance) * 1s) ease-in-out infinite;
+}
+
+/* ===== HEALTHCARE-SPECIFIC COMPONENTS ===== */
+
+/* Medical Dashboard Widget */
+.glass-medical-widget {
+  @extend .glass-card-medical;
+  padding: var(--space-xl);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.glass-medical-widget::after {
+  content: '';
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--medical-green);
+  box-shadow: var(--glow-success);
+  animation: pulse 2s infinite;
+}
+
+/* Advanced Patient Card */
+.glass-patient-card {
+  @extend .glass-quantum;
+  background: linear-gradient(135deg, 
+    var(--glass-patient-card) 0%,
+    rgba(0, 200, 150, 0.06) 100%);
+  border-left: 4px solid var(--medical-blue);
+  backdrop-filter: var(--blur-clinical);
+  box-shadow: var(--shadow-glass-md), var(--glow-patient-vitals);
+  position: relative;
+}
+
+.glass-patient-card::after {
+  content: '';
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: var(--medical-green);
+  box-shadow: var(--glow-biometric);
+  animation: biometricPulse 2s ease-in-out infinite;
+}
+
+/* Patient Vitals Monitor */
+.glass-vitals-monitor {
+  @extend .glass-neural;
+  background: var(--glass-vitals-normal);
+  padding: var(--space-lg);
+  border-radius: var(--radius-2xl);
+  backdrop-filter: var(--blur-quantum-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-vitals-monitor.critical {
+  background: var(--glass-vitals-critical);
+  border-color: var(--urgency-critical);
+  box-shadow: var(--shadow-glass-xl), var(--glow-critical-alert);
+  animation: emergencyPulse 1s ease-in-out infinite alternate;
+}
+
+.glass-vitals-monitor .vitals-waveform {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--medical-green) 25%,
+    var(--medical-blue) 50%,
+    var(--medical-green) 75%,
+    transparent 100%);
+  opacity: 0.3;
+  animation: vitalWave 3s linear infinite;
+}
+
+/* Advanced NPHIES Integration System */
+.glass-nphies-badge {
+  @extend .glass-quantum;
+  background: linear-gradient(135deg, 
+    rgba(255, 167, 38, 0.2) 0%,
+    rgba(255, 167, 38, 0.1) 100%);
+  border-radius: var(--radius-full);
+  padding: var(--space-xs) var(--space-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--medical-orange);
+  border-color: rgba(255, 167, 38, 0.3);
+  box-shadow: var(--glow-warning);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-nphies-dashboard {
+  @extend .glass-neural;
+  background: var(--glass-nphies-active);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-2xl);
+  backdrop-filter: var(--blur-quantum-xl);
+  box-shadow: var(--shadow-glass-xl), var(--glow-nphies-sync);
+  min-height: 400px;
+  position: relative;
+}
+
+.glass-nphies-dashboard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    var(--nphies-active) 0%,
+    var(--nphies-processing) 50%,
+    var(--nphies-success) 100%);
+  animation: nphiesSync 2s ease-in-out infinite;
+}
+
+/* NPHIES Status Indicators */
+.glass-nphies-status {
+  @extend .glass-quantum;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  position: relative;
+}
+
+.glass-nphies-status.active {
+  background: var(--glass-nphies-active);
+  color: var(--nphies-active);
+  box-shadow: var(--glow-success);
+}
+
+.glass-nphies-status.processing {
+  background: rgba(33, 150, 243, 0.1);
+  color: var(--nphies-processing);
+  box-shadow: var(--glow-primary);
+  animation: processingPulse 1.5s ease-in-out infinite;
+}
+
+.glass-nphies-status.error {
+  background: rgba(244, 67, 54, 0.1);
+  color: var(--nphies-error);
+  box-shadow: var(--glow-error);
+  animation: errorFlash 2s ease-in-out infinite;
+}
+
+/* AI-Powered Analytics Dashboard */
+.glass-chart-container {
+  @extend .glass-neural;
+  background: linear-gradient(135deg, 
+    var(--glass-ai-processing) 0%,
+    rgba(108, 92, 231, 0.08) 50%,
+    var(--glass-layer-3) 100%);
+  padding: var(--space-2xl);
+  min-height: 400px;
+  backdrop-filter: var(--blur-quantum-xl);
+  border-radius: var(--radius-2xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-chart-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    var(--brainsait-primary) 0%,
+    var(--medical-purple) 25%,
+    var(--brainsait-secondary) 50%,
+    var(--medical-green) 75%,
+    var(--brainsait-primary) 100%);
+  background-size: 300% 100%;
+  animation: aiProcessing 3s linear infinite;
+}
+
+/* AI Analytics Widget */
+.glass-ai-widget {
+  @extend .glass-quantum;
+  background: var(--glass-ai-processing);
+  padding: var(--space-xl);
+  border-radius: var(--radius-xl);
+  backdrop-filter: var(--blur-neural);
+  box-shadow: var(--shadow-glass-lg), var(--glow-ai-processing);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-ai-widget.processing {
+  animation: aiThinking 2s ease-in-out infinite alternate;
+}
+
+.glass-ai-widget::after {
+  content: '';
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 10px;
+  height: 10px;
+  background: var(--medical-purple);
+  border-radius: var(--radius-full);
+  box-shadow: var(--glow-ai-processing);
+  animation: aiStatusPulse 1.5s ease-in-out infinite;
+}
+
+/* Predictive Analytics Display */
+.glass-predictive-chart {
+  @extend .glass-chart-container;
+  background: linear-gradient(135deg,
+    rgba(156, 136, 255, 0.12) 0%,
+    rgba(0, 212, 255, 0.08) 50%,
+    var(--glass-layer-2) 100%);
+  min-height: 500px;
+  position: relative;
+}
+
+.glass-predictive-chart .prediction-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    var(--medical-green) 0%,
+    var(--medical-orange) 50%,
+    var(--medical-red) 100%);
+  opacity: 0.6;
+  animation: predictionFlow 4s ease-in-out infinite;
+  transform: translateY(-50%);
+}
+
+/* ===== REVOLUTIONARY OID TREE 3D VISUALIZATION ===== */
+
+/* Next-Gen OID Tree Node */
+.glass-oid-node {
+  @extend .glass-quantum;
+  background: var(--glass-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  position: relative;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-bounce);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* 3D Glass Node Transformation */
+.glass-oid-node-3d {
+  @extend .glass-oid-node;
+  transform: rotateX(5deg) rotateY(2deg) translateZ(0);
+  box-shadow: 
+    var(--shadow-glass-lg),
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  backdrop-filter: var(--blur-quantum-lg);
+}
+
+.glass-oid-node-3d:hover {
+  transform: rotateX(-2deg) rotateY(-5deg) translateZ(20px) scale(1.05);
+  box-shadow: 
+    var(--shadow-glass-xl),
+    0 30px 60px rgba(0, 0, 0, 0.25),
+    var(--glow-neural-network),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  z-index: 100;
+}
+
+/* Healthcare Identity Node */
+.glass-oid-healthcare {
+  @extend .glass-oid-node-3d;
+  background: linear-gradient(135deg,
+    var(--glass-patient-card) 0%,
+    rgba(46, 134, 222, 0.12) 50%,
+    var(--glass-layer-3) 100%);
+  border: 2px solid var(--medical-blue);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-oid-healthcare::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    var(--medical-blue) 90deg,
+    transparent 180deg,
+    var(--medical-green) 270deg,
+    transparent 360deg
+  );
+  opacity: 0.1;
+  animation: healthcareRotate 8s linear infinite;
+  pointer-events: none;
+}
+
+/* NPHIES Node Specialization */
+.glass-oid-nphies {
+  @extend .glass-oid-healthcare;
+  border-color: var(--nphies-active);
+  background: linear-gradient(135deg,
+    var(--glass-nphies-active) 0%,
+    rgba(0, 230, 118, 0.15) 100%);
+  box-shadow: var(--shadow-glass-lg), var(--glow-nphies-sync);
+}
+
+.glass-oid-nphies.syncing {
+  animation: nphiesNodeSync 2s ease-in-out infinite;
+}
+
+.glass-oid-node:hover {
+  transform: scale(1.1) rotate(2deg);
+  box-shadow: var(--shadow-glass-xl), var(--glow-primary);
+  z-index: 10;
+}
+
+.glass-oid-node.active {
+  background: linear-gradient(135deg, 
+    rgba(0, 212, 255, 0.2) 0%,
+    rgba(108, 92, 231, 0.2) 100%);
+  border-color: var(--glass-border-primary);
+  box-shadow: var(--shadow-glass-lg), var(--glow-primary);
+}
+
+/* Arabic Calligraphy-Inspired Connection Lines */
+.glass-oid-connection {
+  position: absolute;
+  background: linear-gradient(90deg, 
+    var(--brainsait-primary) 0%,
+    var(--brainsait-secondary) 100%);
+  height: 3px;
+  border-radius: var(--radius-full);
+  box-shadow: var(--glow-primary);
+  animation: dataFlow 3s linear infinite;
+  filter: blur(0.5px);
+}
+
+/* Arabic Calligraphy Flow Pattern */
+.glass-connection-arabic {
+  @extend .glass-oid-connection;
+  height: 4px;
+  background: linear-gradient(90deg,
+    var(--brainsait-primary) 0%,
+    var(--medical-green) 25%,
+    var(--brainsait-secondary) 50%,
+    var(--medical-purple) 75%,
+    var(--brainsait-primary) 100%);
+  background-size: 200% 100%;
+  border-radius: var(--radius-sm);
+  position: relative;
+}
+
+.glass-connection-arabic::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  background: inherit;
+  border-radius: inherit;
+  filter: blur(2px);
+  opacity: 0.6;
+  z-index: -1;
+}
+
+.glass-connection-arabic::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: var(--brainsait-primary);
+  border-radius: var(--radius-full);
+  transform: translate(-50%, -50%);
+  box-shadow: var(--glow-primary);
+  animation: connectionPulse 2s ease-in-out infinite;
+}
+
+/* Data Flow Visualization */
+.glass-data-stream {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-data-stream::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(0, 212, 255, 0.3) 50%,
+    transparent 100%);
+  animation: dataPacket 2s linear infinite;
+}
+
+/* Quantum OID Tree Root Node */
+.glass-oid-root {
+  @extend .glass-oid-node-3d;
+  background: radial-gradient(circle at center,
+    rgba(0, 212, 255, 0.4) 0%,
+    rgba(108, 92, 231, 0.3) 30%,
+    rgba(156, 136, 255, 0.3) 60%,
+    var(--glass-layer-4) 100%);
+  transform: scale(1.3) rotateX(10deg) rotateY(5deg) translateZ(30px);
+  box-shadow: 
+    var(--shadow-glass-xl), 
+    var(--glow-primary), 
+    var(--glow-secondary),
+    0 40px 80px rgba(0, 0, 0, 0.3),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25);
+  animation: quantumRootPulse 6s ease-in-out infinite;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.glass-oid-root::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: conic-gradient(
+    from 0deg,
+    var(--brainsait-primary) 0deg,
+    var(--brainsait-secondary) 120deg,
+    var(--medical-purple) 240deg,
+    var(--brainsait-primary) 360deg
+  );
+  border-radius: inherit;
+  z-index: -1;
+  animation: rootHalo 4s linear infinite;
+}
+
+/* Healthcare System Core */
+.glass-oid-saudi-core {
+  @extend .glass-oid-root;
+  background: radial-gradient(circle at center,
+    rgba(0, 200, 150, 0.3) 0%,
+    rgba(46, 134, 222, 0.25) 40%,
+    rgba(0, 212, 255, 0.2) 80%,
+    var(--glass-layer-3) 100%);
+  box-shadow: 
+    var(--shadow-glass-xl),
+    var(--glow-success),
+    var(--glow-primary),
+    0 0 60px rgba(0, 200, 150, 0.4);
+  animation: saudiCoreResonance 8s ease-in-out infinite;
+}
+
+/* ===== MOBILE-FIRST CLINICAL INTERFACE ===== */
+
+/* Clinical Touch Targets */
+.glass-clinical-touch {
+  min-height: 48px;
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+
+/* One-Handed Operation Mode */
+.glass-one-handed {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  width: 280px;
+  max-height: 60vh;
+  background: var(--glass-layer-4);
+  backdrop-filter: var(--blur-quantum-xl);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-glass-xl), var(--glow-primary);
+  z-index: 1000;
+  transform: translateY(100%);
+  transition: transform var(--duration-slow) var(--ease-bounce);
+}
+
+.glass-one-handed.active {
+  transform: translateY(0);
+}
+
+[dir="rtl"] .glass-one-handed {
+  right: auto;
+  left: var(--space-lg);
+}
+
+/* Emergency Quick Actions */
+.glass-emergency-panel {
+  @extend .glass-quantum;
+  background: var(--glass-vitals-critical);
+  border: 3px solid var(--urgency-emergency);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  z-index: 2000;
+  backdrop-filter: var(--blur-emergency);
+  box-shadow: 
+    var(--shadow-glass-xl),
+    var(--glow-emergency-pulse),
+    0 0 100px rgba(233, 30, 99, 0.6);
+  transition: all var(--duration-normal) var(--ease-bounce);
+}
+
+.glass-emergency-panel.active {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  animation: emergencyAlert 1s ease-in-out infinite alternate;
+}
+
+/* Haptic Feedback Simulation */
+.glass-haptic {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-haptic::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, var(--brainsait-primary) 0%, transparent 70%);
+  border-radius: var(--radius-full);
+  transform: translate(-50%, -50%);
+  transition: all 150ms ease-out;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.glass-haptic:active::before {
+  width: 100px;
+  height: 100px;
+  opacity: 0.3;
+}
+
+/* Mobile Clinical Workflow */
+.glass-clinical-workflow {
+  @extend .glass-quantum;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  background: var(--glass-patient-card);
+  position: relative;
+}
+
+.glass-workflow-step {
+  @extend .glass-clinical-touch;
+  @extend .glass-haptic;
+  background: var(--glass-layer-2);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-in-out);
+}
+
+.glass-workflow-step.completed {
+  background: var(--glass-vitals-normal);
+  border-color: var(--medical-green);
+  box-shadow: var(--glow-success);
+}
+
+.glass-workflow-step.active {
+  background: var(--glass-ai-processing);
+  border-color: var(--brainsait-primary);
+  box-shadow: var(--glow-primary);
+  animation: workflowActive 2s ease-in-out infinite;
+}
+
+/* Mobile-First Glass Components */
+@media (max-width: 768px) {
+  .glass-card {
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+  }
+  
+  .glass-btn {
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--text-sm);
+    min-height: 48px;
+  }
+  
+  .glass-medical-widget {
+    padding: var(--space-lg);
+    min-height: 150px;
+  }
+  
+  .glass-oid-node {
+    padding: var(--space-sm);
+    min-height: 48px;
+  }
+  
+  .glass-oid-node-3d {
+    transform: rotateX(2deg) rotateY(1deg) translateZ(0);
+  }
+  
+  .glass-oid-node-3d:hover {
+    transform: rotateX(-1deg) rotateY(-2deg) translateZ(10px) scale(1.02);
+  }
+  
+  /* Mobile OID Tree Optimizations */
+  .glass-oid-root {
+    transform: scale(1.1) rotateX(5deg) rotateY(2deg) translateZ(15px);
+  }
+  
+  /* Mobile Clinical Cards */
+  .glass-patient-card {
+    margin-bottom: var(--space-md);
+    border-radius: var(--radius-xl);
+  }
+  
+  .glass-vitals-monitor {
+    padding: var(--space-md);
+    min-height: 120px;
+  }
+  
+  /* Mobile NPHIES Dashboard */
+  .glass-nphies-dashboard {
+    padding: var(--space-lg);
+    min-height: 250px;
+  }
+  
+  /* Mobile AI Analytics */
+  .glass-chart-container {
+    padding: var(--space-lg);
+    min-height: 200px;
+  }
+  
+  .glass-ai-widget {
+    padding: var(--space-md);
+  }
+}
+
+/* Tablet Adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .glass-chart-container {
+    padding: var(--space-xl);
+    min-height: 350px;
+  }
+}
+
+/* Desktop Enhancements */
+@media (min-width: 1025px) {
+  .glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glass-xl);
+  }
+  
+  .glass-medical-widget:hover {
+    transform: translateY(-6px) scale(1.02);
+  }
+}
+
+/* ===== ENHANCED ACCESSIBILITY FEATURES ===== */
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --glass-border: rgba(255, 255, 255, 0.8);
+    --glass-border-strong: rgba(255, 255, 255, 1);
+    --glass-white: rgba(255, 255, 255, 0.3);
+    --glass-quantum-blur: blur(4px); /* Reduced blur for better visibility */
+  }
+  
+  .glass-card,
+  .glass-btn,
+  .glass-input,
+  .glass-quantum,
+  .glass-neural {
+    border-width: 2px;
+    backdrop-filter: var(--blur-sm); /* Reduced blur */
+  }
+  
+  .glass-oid-node,
+  .glass-patient-card,
+  .glass-vitals-monitor {
+    border-width: 3px;
+  }
+  
+  /* Enhanced Medical Emergency Contrast */
+  .glass-vitals-monitor.critical,
+  .glass-emergency-panel {
+    border-width: 4px;
+    box-shadow: 
+      var(--shadow-glass-xl),
+      0 0 20px var(--urgency-critical),
+      inset 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Arabic Screen Reader Optimization */
+.glass-arabic-reader {
+  position: relative;
+}
+
+.glass-arabic-reader::before {
+  content: attr(data-arabic-label);
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  font-family: var(--font-arabic);
+  direction: rtl;
+  speak: always;
+}
+
+[dir="rtl"] .glass-arabic-reader::before {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Emergency Mode Interface */
+.glass-emergency-mode {
+  --glass-quantum-blur: blur(2px);
+  --glass-clinical-urgency: 2;
+}
+
+.glass-emergency-mode .glass-card,
+.glass-emergency-mode .glass-btn,
+.glass-emergency-mode .glass-quantum {
+  background: var(--glass-vitals-critical);
+  border-color: var(--urgency-emergency);
+  border-width: 3px;
+  backdrop-filter: var(--blur-emergency);
+  box-shadow: var(--shadow-glass-lg), var(--glow-emergency-pulse);
+  animation: emergencyInterface 1s ease-in-out infinite alternate;
+}
+
+/* Large Touch Targets for Accessibility */
+.glass-touch-large {
+  min-height: 56px;
+  min-width: 56px;
+  padding: var(--space-lg);
+  font-size: var(--text-lg);
+}
+
+/* Voice Command Visual Feedback */
+.glass-voice-active {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-voice-active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg,
+    transparent 30%,
+    rgba(0, 212, 255, 0.2) 50%,
+    transparent 70%);
+  animation: voiceListening 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Keyboard Navigation Enhancement */
+.glass-keyboard-nav {
+  outline: none;
+  position: relative;
+}
+
+.glass-keyboard-nav:focus {
+  outline: 3px solid var(--brainsait-primary);
+  outline-offset: 3px;
+  box-shadow: 
+    var(--shadow-glass-lg),
+    0 0 20px rgba(0, 212, 255, 0.5),
+    inset 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+[dir="rtl"] .glass-keyboard-nav:focus {
+  box-shadow: 
+    var(--shadow-glass-lg),
+    0 0 20px rgba(0, 212, 255, 0.5),
+    inset 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .glass-btn:hover,
+  .glass-card:hover,
+  .glass-oid-node:hover {
+    transform: none;
+  }
+}
+
+/* Focus Indicators for Keyboard Navigation */
+.glass-btn:focus,
+.glass-input:focus,
+.glass-nav-item:focus {
+  outline: 2px solid var(--brainsait-primary);
+  outline-offset: 2px;
+}
+
+/* ===== RTL (Arabic) LAYOUT SUPPORT ===== */
+
+[dir="rtl"] {
+  .glass-nav {
+    flex-direction: row-reverse;
+  }
+  
+  .glass-patient-card {
+    border-left: none;
+    border-right: 4px solid var(--medical-blue);
+  }
+  
+  .glass-medical-widget::after {
+    right: auto;
+    left: var(--space-md);
+  }
+}
+
+/* Arabic Typography Enhancements */
+.glass-text-arabic {
+  font-family: var(--font-arabic);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+
+/* ===== ANIMATION KEYFRAMES ===== */
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 0.7; 
+    transform: scale(1.2); 
+  }
+}
+
+@keyframes flow {
+  0% { 
+    background-position: 0% 50%; 
+  }
+  100% { 
+    background-position: 100% 50%; 
+  }
+}
+
+@keyframes quantumRootPulse {
+  0%, 100% { 
+    transform: scale(1.3) rotateX(10deg) rotateY(5deg) translateZ(30px);
+    box-shadow: 
+      var(--shadow-glass-xl), 
+      var(--glow-primary), 
+      var(--glow-secondary),
+      0 40px 80px rgba(0, 0, 0, 0.3);
+  }
+  33% {
+    transform: scale(1.35) rotateX(8deg) rotateY(7deg) translateZ(35px);
+    box-shadow: 
+      var(--shadow-glass-xl),
+      0 0 40px rgba(0, 212, 255, 0.6),
+      0 0 40px rgba(108, 92, 231, 0.6),
+      0 45px 90px rgba(0, 0, 0, 0.35);
+  }
+  66% {
+    transform: scale(1.32) rotateX(12deg) rotateY(3deg) translateZ(32px);
+    box-shadow: 
+      var(--shadow-glass-xl),
+      0 0 35px rgba(156, 136, 255, 0.5),
+      0 0 35px rgba(0, 200, 150, 0.5),
+      0 42px 85px rgba(0, 0, 0, 0.32);
+  }
+}
+
+@keyframes rootHalo {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes saudiCoreResonance {
+  0%, 100% {
+    transform: scale(1.3) rotateX(10deg) rotateY(5deg) translateZ(30px);
+    filter: hue-rotate(0deg) saturate(1.2);
+  }
+  25% {
+    transform: scale(1.35) rotateX(12deg) rotateY(7deg) translateZ(35px);
+    filter: hue-rotate(15deg) saturate(1.3);
+  }
+  50% {
+    transform: scale(1.32) rotateX(8deg) rotateY(3deg) translateZ(32px);
+    filter: hue-rotate(30deg) saturate(1.25);
+  }
+  75% {
+    transform: scale(1.34) rotateX(14deg) rotateY(6deg) translateZ(34px);
+    filter: hue-rotate(15deg) saturate(1.28);
+  }
+}
+
+@keyframes shimmer {
+  0% { 
+    background-position: -1000px 0; 
+  }
+  100% { 
+    background-position: 1000px 0; 
+  }
+}
+
+/* ===== ADVANCED ANIMATION KEYFRAMES ===== */
+
+@keyframes quantumShimmer {
+  0%, 100% { 
+    transform: translateX(-100%) skewX(-15deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(100%) skewX(-15deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes neuralPulse {
+  0%, 100% {
+    filter: hue-rotate(0deg) saturate(1.15) brightness(1.02);
+    transform: scale(1);
+  }
+  50% {
+    filter: hue-rotate(10deg) saturate(1.25) brightness(1.08);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes biometricPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+@keyframes emergencyPulse {
+  0% {
+    box-shadow: var(--shadow-glass-xl), var(--glow-critical-alert);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 
+      var(--shadow-glass-xl), 
+      0 0 40px rgba(244, 67, 54, 0.8),
+      0 0 80px rgba(244, 67, 54, 0.6);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes vitalWave {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes nphiesSync {
+  0%, 100% {
+    background-position: 0% 50%;
+    opacity: 0.8;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+}
+
+@keyframes processingPulse {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes errorFlash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes healthcareRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes nphiesNodeSync {
+  0%, 100% {
+    border-color: var(--nphies-active);
+    box-shadow: var(--shadow-glass-lg), var(--glow-nphies-sync);
+  }
+  50% {
+    border-color: var(--nphies-processing);
+    box-shadow: var(--shadow-glass-lg), var(--glow-primary);
+  }
+}
+
+@keyframes dataFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes connectionPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.7;
+  }
+}
+
+@keyframes dataPacket {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes aiProcessing {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+@keyframes aiThinking {
+  0% {
+    filter: hue-rotate(0deg) saturate(1.1);
+    transform: scale(1);
+  }
+  100% {
+    filter: hue-rotate(20deg) saturate(1.3);
+    transform: scale(1.01);
+  }
+}
+
+@keyframes aiStatusPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
+}
+
+@keyframes predictionFlow {
+  0%, 100% {
+    transform: translateY(-50%) scaleX(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-50%) scaleX(1.05);
+    opacity: 0.8;
+  }
+}
+
+/* ===== MOBILE CLINICAL ANIMATIONS ===== */
+
+@keyframes emergencyAlert {
+  0% {
+    box-shadow: 
+      var(--shadow-glass-xl),
+      var(--glow-emergency-pulse),
+      0 0 100px rgba(233, 30, 99, 0.6);
+  }
+  100% {
+    box-shadow: 
+      var(--shadow-glass-xl),
+      0 0 40px rgba(233, 30, 99, 0.9),
+      0 0 120px rgba(233, 30, 99, 0.8);
+  }
+}
+
+@keyframes workflowActive {
+  0%, 100% {
+    border-color: var(--brainsait-primary);
+    box-shadow: var(--glow-primary);
+  }
+  50% {
+    border-color: var(--brainsait-secondary);
+    box-shadow: var(--glow-secondary);
+  }
+}
+
+@keyframes emergencyInterface {
+  0% {
+    filter: brightness(1) saturate(1.2);
+  }
+  100% {
+    filter: brightness(1.1) saturate(1.4);
+  }
+}
+
+@keyframes voiceListening {
+  0%, 100% {
+    transform: translateX(-100%) skewX(-15deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(100%) skewX(-15deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes emergencyOverlay {
+  0% {
+    background: rgba(244, 67, 54, 0.2);
+  }
+  100% {
+    background: rgba(244, 67, 54, 0.3);
+  }
+}
+
+@keyframes criticalPulse {
+  0% {
+    filter: saturate(1.5) brightness(1.2) hue-rotate(10deg);
+    box-shadow: var(--shadow-glass-lg), var(--glow-critical-alert);
+  }
+  100% {
+    filter: saturate(1.7) brightness(1.3) hue-rotate(15deg);
+    box-shadow: 
+      var(--shadow-glass-xl), 
+      0 0 50px rgba(244, 67, 54, 0.8),
+      0 0 100px rgba(244, 67, 54, 0.4);
+  }
+}
+
+/* ===== FINAL OPTIMIZATIONS ===== */
+
+/* Root Performance Optimizations */
+:root {
+  /* Enable hardware acceleration for supported browsers */
+  --gpu-layer-creation: translateZ(0);
+  
+  /* Optimize for different screen densities */
+  --retina-blur-compensation: 0.8;
+  --standard-blur-compensation: 1;
+}
+
+/* Automatic Quality Adjustment */
+@media (max-width: 480px) and (max-resolution: 1.5dppx) {
+  :root {
+    --glass-quality: 'low';
+    --glass-quantum-blur: 4px;
+  }
+}
+
+@media (min-width: 1024px) and (min-resolution: 2dppx) {
+  :root {
+    --glass-quality: 'ultra';
+    --glass-quantum-blur: 12px;
+  }
+}
+
+/* Final Glass Enhancement */
+.glass-ultimate {
+  @extend .glass-quantum;
+  @extend .glass-gpu-optimized;
+  background: linear-gradient(135deg,
+    var(--glass-layer-3) 0%,
+    var(--glass-layer-4) 30%,
+    var(--glass-layer-2) 70%,
+    var(--glass-layer-5) 100%);
+  backdrop-filter: 
+    var(--blur-quantum-lg)
+    saturate(calc(1.2 * var(--glass-clinical-urgency)))
+    brightness(calc(1.02 * var(--glass-clinical-urgency)));
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-ultimate::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg,
+    var(--brainsait-primary) 0%,
+    var(--brainsait-secondary) 25%,
+    var(--medical-green) 50%,
+    var(--medical-purple) 75%,
+    var(--brainsait-primary) 100%);
+  border-radius: inherit;
+  z-index: -1;
+  animation: ultimateHalo 6s linear infinite;
+}
+
+@keyframes ultimateHalo {
+  0% { 
+    filter: hue-rotate(0deg) saturate(1.2);
+    transform: rotate(0deg);
+  }
+  100% { 
+    filter: hue-rotate(360deg) saturate(1.4);
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== ADVANCED UTILITY CLASSES ===== */
+
+/* Intelligent Glass Overlay */
+.glass-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--glass-dark-light);
+  backdrop-filter: var(--blur-lg);
+  -webkit-backdrop-filter: var(--blur-lg);
+  z-index: 1000;
+  transition: all var(--duration-normal) var(--ease-in-out);
+}
+
+.glass-overlay.medical-emergency {
+  background: rgba(244, 67, 54, 0.2);
+  backdrop-filter: var(--blur-emergency);
+  animation: emergencyOverlay 1s ease-in-out infinite alternate;
+}
+
+/* Smart Glass Container */
+.glass-smart-container {
+  @extend .glass-quantum;
+  container-type: inline-size;
+  container-name: glass-container;
+  position: relative;
+}
+
+/* Container Query Optimizations */
+@container glass-container (max-width: 300px) {
+  .glass-patient-card {
+    padding: var(--space-sm);
+    font-size: var(--text-sm);
+  }
+  
+  .glass-vitals-monitor {
+    min-height: 100px;
+  }
+}
+
+@container glass-container (min-width: 500px) {
+  .glass-oid-node-3d {
+    transform: rotateX(8deg) rotateY(4deg) translateZ(15px);
+  }
+}
+
+/* Intersection Observer Optimizations */
+.glass-lazy-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all var(--duration-slow) var(--ease-bounce);
+}
+
+.glass-lazy-animate.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Theme Adaptation Utilities */
+.glass-theme-adaptive {
+  background: color-mix(in srgb, var(--glass-white) 80%, var(--brainsait-primary) 20%);
+  border-color: color-mix(in srgb, var(--glass-border) 70%, var(--brainsait-primary) 30%);
+}
+
+/* Clinical Context Awareness */
+.glass-context-routine {
+  --glass-clinical-urgency: 0.5;
+  filter: saturate(0.9) brightness(0.95);
+}
+
+.glass-context-urgent {
+  --glass-clinical-urgency: 1.5;
+  filter: saturate(1.3) brightness(1.1);
+}
+
+.glass-context-critical {
+  --glass-clinical-urgency: 2;
+  filter: saturate(1.5) brightness(1.2) hue-rotate(10deg);
+  animation: criticalPulse 1s ease-in-out infinite alternate;
+}
+
+/* Glass Loading State */
+.glass-loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    transparent 100%);
+  animation: shimmer 2s infinite linear;
+}
+
+/* Glass Notification */
+.glass-notification {
+  @extend .glass-base;
+  background: var(--glass-white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-glass-lg);
+  position: fixed;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  z-index: 2000;
+  max-width: 400px;
+  animation: slideIn var(--duration-slow) var(--ease-bounce);
+}
+
+[dir="rtl"] .glass-notification {
+  right: auto;
+  left: var(--space-lg);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Glass Status Indicators */
+.glass-status-online {
+  @extend .glass-base;
+  background: linear-gradient(135deg, 
+    rgba(0, 200, 150, 0.2) 0%,
+    rgba(0, 200, 150, 0.1) 100%);
+  border-color: rgba(0, 200, 150, 0.3);
+  color: var(--medical-green);
+  border-radius: var(--radius-full);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  box-shadow: var(--glow-success);
+}
+
+.glass-status-offline {
+  @extend .glass-status-online;
+  background: linear-gradient(135deg, 
+    rgba(255, 107, 107, 0.2) 0%,
+    rgba(255, 107, 107, 0.1) 100%);
+  border-color: rgba(255, 107, 107, 0.3);
+  color: var(--medical-red);
+  box-shadow: var(--glow-error);
+}
+
+/* Glass Progress Bar */
+.glass-progress {
+  @extend .glass-base;
+  background: var(--glass-white-light);
+  border-radius: var(--radius-full);
+  height: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.glass-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, 
+    var(--brainsait-primary) 0%,
+    var(--brainsait-secondary) 100%);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-slow) var(--ease-in-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-progress-fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    transparent 100%);
+  animation: shimmer 2s infinite linear;
+}
+
+/* ===== ENHANCED DARK MODE SUPPORT ===== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-white: rgba(255, 255, 255, 0.05);
+    --glass-white-light: rgba(255, 255, 255, 0.02);
+    --glass-white-medium: rgba(255, 255, 255, 0.08);
+    --glass-white-strong: rgba(255, 255, 255, 0.15);
+    
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border-light: rgba(255, 255, 255, 0.05);
+    --glass-border-strong: rgba(255, 255, 255, 0.2);
+    
+    /* Dark Mode Glass Layers */
+    --glass-layer-1: rgba(255, 255, 255, 0.02);
+    --glass-layer-2: rgba(255, 255, 255, 0.05);
+    --glass-layer-3: rgba(255, 255, 255, 0.08);
+    --glass-layer-4: rgba(255, 255, 255, 0.12);
+    --glass-layer-5: rgba(255, 255, 255, 0.18);
+    
+    /* Dark Mode Healthcare Variants */
+    --glass-patient-card: rgba(46, 134, 222, 0.05);
+    --glass-vitals-normal: rgba(76, 175, 80, 0.05);
+    --glass-vitals-critical: rgba(244, 67, 54, 0.08);
+    --glass-medical-alert: rgba(255, 152, 0, 0.06);
+    --glass-nphies-active: rgba(0, 230, 118, 0.05);
+    --glass-ai-processing: rgba(156, 136, 255, 0.06);
+  }
+  
+  .glass-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+  
+  /* Enhanced Dark Mode Glass Effects */
+  .glass-quantum {
+    background: linear-gradient(135deg, 
+      var(--glass-layer-1) 0%,
+      var(--glass-layer-2) 50%,
+      rgba(0, 0, 0, 0.1) 100%);
+  }
+  
+  .glass-neural {
+    background: radial-gradient(circle at 30% 30%, 
+      rgba(0, 212, 255, 0.08) 0%,
+      rgba(108, 92, 231, 0.05) 40%,
+      var(--glass-layer-1) 100%);
+  }
+  
+  /* Dark Mode OID Tree */
+  .glass-oid-root {
+    background: radial-gradient(circle at center,
+      rgba(0, 212, 255, 0.2) 0%,
+      rgba(108, 92, 231, 0.15) 30%,
+      rgba(156, 136, 255, 0.15) 60%,
+      var(--glass-layer-2) 100%);
+  }
+}
+
+/* ===== PERFORMANCE OPTIMIZATION UTILITIES ===== */
+
+/* GPU-Accelerated Components */
+.glass-gpu-optimized {
+  transform: var(--perf-gpu-acceleration);
+  will-change: var(--perf-will-change);
+  contain: var(--perf-contain);
+  content-visibility: var(--perf-content-visibility);
+}
+
+/* Performance Mode Classes */
+.glass-performance-low {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: var(--glass-white-strong);
+  border: 2px solid var(--glass-border-strong);
+}
+
+.glass-performance-medium {
+  backdrop-filter: var(--blur-sm);
+  -webkit-backdrop-filter: var(--blur-sm);
+}
+
+.glass-performance-high {
+  backdrop-filter: var(--blur-quantum-md);
+  -webkit-backdrop-filter: var(--blur-quantum-md);
+}
+
+.glass-performance-ultra {
+  backdrop-filter: var(--blur-quantum-xl);
+  -webkit-backdrop-filter: var(--blur-quantum-xl);
+  filter: saturate(1.2) brightness(1.05);
+}
+
+/* Adaptive Performance Based on Device */
+@media (max-width: 768px) and (max-resolution: 2dppx) {
+  .glass-quantum,
+  .glass-neural,
+  .glass-oid-node-3d {
+    backdrop-filter: var(--blur-sm);
+    -webkit-backdrop-filter: var(--blur-sm);
+  }
+  
+  .glass-oid-node-3d {
+    transform: translateZ(0);
+  }
+  
+  .glass-oid-root {
+    animation: none;
+    transform: scale(1.1);
+  }
+}
+
+/* High DPI Optimizations */
+@media (min-resolution: 2dppx) {
+  .glass-quantum::before,
+  .glass-neural::before {
+    filter: blur(0.5px);
+  }
+}
+
+/* Prefers Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+  .glass-quantum,
+  .glass-neural,
+  .glass-oid-node,
+  .glass-patient-card,
+  .glass-vitals-monitor {
+    animation: none !important;
+    transition: opacity var(--duration-fast) ease-out,
+                transform var(--duration-fast) ease-out;
+  }
+  
+  .glass-oid-node-3d {
+    transform: translateZ(0);
+  }
+  
+  .glass-oid-root {
+    transform: scale(1.2);
+  }
+  
+  .glass-connection-arabic::after,
+  .glass-data-stream::before {
+    animation: none;
+  }
+}
+
+/* Battery Saving Mode */
+@media (prefers-reduced-motion: reduce) and (max-width: 768px) {
+  .glass-quantum,
+  .glass-neural {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--glass-white-medium);
+    border: 1px solid var(--glass-border);
+  }
+  
+  .glass-oid-node-3d {
+    box-shadow: var(--shadow-glass-sm);
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+
+@media print {
+  .glass-card,
+  .glass-btn,
+  .glass-input,
+  .glass-nav {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  .glass-oid-node,
+  .glass-medical-widget {
+    break-inside: avoid;
+  }
+}

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="BrainSAIT Healthcare Unification Platform - Advanced OID Management and Healthcare Identity Solutions for Saudi Arabia" />
+    <meta name="keywords" content="healthcare, oid management, nphies, rcm, training, saudi arabia, arabic, brainsait" />
+    <meta name="author" content="BrainSAIT" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="BrainSAIT Healthcare Platform" />
+    <meta property="og:description" content="Unified Healthcare Identity and Revenue Cycle Management System" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BrainSAIT Healthcare" />
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Preconnect to improve font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Load Arabic and English fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+    
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#00b4d8" />
+    
+    <!-- Prevent zoom on iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <!-- Title will be dynamically updated by React -->
+    <title>BrainSAIT Healthcare Unification Platform</title>
+    
+    <!-- Inline CSS for loading screen -->
+    <style>
+      /* Loading screen styles */
+      #root {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        font-family: 'Inter', 'Cairo', 'Noto Sans Arabic', sans-serif;
+        z-index: 9999;
+      }
+      
+      .loading-logo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 2rem;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 20px 40px rgba(0, 180, 216, 0.3);
+        animation: pulse 2s ease-in-out infinite;
+      }
+      
+      .loading-logo svg {
+        width: 60px;
+        height: 60px;
+        fill: white;
+      }
+      
+      .loading-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        text-align: center;
+        color: #ffffff;
+      }
+      
+      .loading-subtitle {
+        font-size: 1rem;
+        color: #b0bec5;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+      
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        border-top: 3px solid #00b4d8;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+          box-shadow: 0 20px 40px rgba(0, 180, 216, 0.3);
+        }
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 25px 50px rgba(0, 180, 216, 0.4);
+        }
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Hide loading screen when React loads */
+      .app-loaded .loading-screen {
+        display: none;
+      }
+      
+      /* RTL Support */
+      [dir="rtl"] {
+        direction: rtl;
+      }
+      
+      [dir="rtl"] .loading-title,
+      [dir="rtl"] .loading-subtitle {
+        font-family: 'Cairo', 'Noto Sans Arabic', 'Tajawal', sans-serif;
+      }
+      
+      /* Dark scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: #2b2b2b;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: #6b6b6b;
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: #8b8b8b;
+      }
+      
+      /* Firefox scrollbar */
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: #6b6b6b #2b2b2b;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-Bv1PZY2J.js"></script>
+    <link rel="modulepreload" crossorigin href="/js/chunk-WZv-a8Cg.js">
+    <link rel="modulepreload" crossorigin href="/js/chunk-BUru4sWo.js">
+    <link rel="modulepreload" crossorigin href="/js/chunk-CaWMBJy7.js">
+    <link rel="modulepreload" crossorigin href="/js/chunk-68COqs3p.js">
+    <link rel="modulepreload" crossorigin href="/js/chunk-CcsQjfzM.js">
+    <link rel="modulepreload" crossorigin href="/js/chunk-QtobQ8s7.js">
+    <link rel="stylesheet" crossorigin href="/css/index-Bt4eOG_M.css">
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="root">
+      <div class="loading-screen" id="loading-screen">
+        <div class="loading-logo">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" opacity="0.8"/>
+            <path d="M2 17L12 22L22 17" opacity="0.6"/>
+            <path d="M2 12L12 17L22 12" opacity="0.4"/>
+          </svg>
+        </div>
+        <h1 class="loading-title">BrainSAIT Healthcare Platform</h1>
+        <p class="loading-subtitle">منصة براين سيت الصحية الموحدة</p>
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+    
+    <!-- React App will be mounted here -->
+    
+    <!-- Remove loading screen when React loads -->
+    <script>
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const loadingScreen = document.getElementById('loading-screen');
+          if (loadingScreen) {
+            loadingScreen.style.opacity = '0';
+            loadingScreen.style.transition = 'opacity 0.5s ease-out';
+            setTimeout(function() {
+              loadingScreen.style.display = 'none';
+              document.body.classList.add('app-loaded');
+            }, 500);
+          }
+        }, 1000);
+      });
+      
+      // Handle RTL/LTR direction switching
+      function updateDirection(isRTL) {
+        document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+        document.documentElement.lang = isRTL ? 'ar' : 'en';
+      }
+    </script>
+    
+    <!-- Performance monitoring -->
+    <script>
+      // Simple performance monitoring
+      window.addEventListener('load', function() {
+        if ('performance' in window) {
+          setTimeout(function() {
+            const perfData = window.performance.timing;
+            const loadTime = perfData.loadEventEnd - perfData.navigationStart;
+            console.log('🚀 Page load time:', loadTime + 'ms');
+          }, 0);
+        }
+      });
+    </script>
+  </body>
+</html>
