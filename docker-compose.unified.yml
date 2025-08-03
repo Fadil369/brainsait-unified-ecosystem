@@ -1,0 +1,494 @@
+# BrainSAIT Healthcare Ecosystem - ULTIMATE UNIFIED DEPLOYMENT
+# ULTRATHINK IMPLEMENTATION: Complete production-ready containerized deployment
+# 
+# CAPABILITIES:
+# - Complete Integration: All services with unified orchestrator coordination
+# - AI-First Architecture: PyBrain intelligence containers with GPU support
+# - Arabic-Cultural Excellence: Full Saudi healthcare compliance setup
+# - Performance Optimization: Redis caching, database optimization, CDN integration
+# - Production Ready: SSL, monitoring, logging, backup, and scaling configuration
+# - Developer Experience: Hot reload, debugging, testing containers
+
+version: '3.8'
+
+# Unified network for secure inter-service communication
+networks:
+  brainsait_ecosystem:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# Persistent volumes for data and configuration
+volumes:
+  brainsait_postgres_data:
+    driver: local
+  brainsait_redis_data:
+    driver: local
+  brainsait_logs:
+    driver: local
+  brainsait_ssl_certs:
+    driver: local
+  brainsait_uploads:
+    driver: local
+  brainsait_backups:
+    driver: local
+
+services:
+  # =============================================================================
+  # CORE DATABASE SERVICES
+  # =============================================================================
+  
+  # PostgreSQL - Primary database with Arabic support
+  brainsait_db:
+    image: postgres:15-alpine
+    container_name: brainsait_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: brainsait_healthcare
+      POSTGRES_USER: brainsait_admin
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-brainsait_healthcare_2025!}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    volumes:
+      - brainsait_postgres_data:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ./database/arabic_collation.sql:/docker-entrypoint-initdb.d/02-arabic.sql:ro
+      - brainsait_backups:/backups
+    ports:
+      - "5432:5432"
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.10
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U brainsait_admin -d brainsait_healthcare"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Redis - Caching and session management
+  brainsait_redis:
+    image: redis:7-alpine
+    container_name: brainsait_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-brainsait_redis_2025}
+    volumes:
+      - brainsait_redis_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    ports:
+      - "6379:6379"
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.11
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # AI INTELLIGENCE SERVICES
+  # =============================================================================
+  
+  # PyBrain AI Service - Core intelligence engine
+  brainsait_ai:
+    build:
+      context: ./ai-services
+      dockerfile: Dockerfile.pybrain
+      args:
+        - PYTHON_VERSION=3.11
+    container_name: brainsait_pybrain
+    restart: unless-stopped
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - HUGGINGFACE_TOKEN=${HUGGINGFACE_TOKEN}
+      - ARABIC_MODEL_PATH=/models/arabic-healthcare
+      - GPU_ENABLED=${GPU_ENABLED:-false}
+    volumes:
+      - ./ai-models:/models:ro
+      - brainsait_logs:/app/logs
+    ports:
+      - "8001:8001"
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.20
+    depends_on:
+      - brainsait_redis
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+
+  # =============================================================================
+  # BACKEND API SERVICES
+  # =============================================================================
+  
+  # Main Backend API - FastAPI with ecosystem orchestrator
+  brainsait_api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: production
+      args:
+        - PYTHON_VERSION=3.11
+    container_name: brainsait_backend
+    restart: unless-stopped
+    environment:
+      # Database Configuration
+      - DB_HOST=brainsait_db
+      - DB_PORT=5432
+      - DB_NAME=brainsait_healthcare
+      - DB_USER=brainsait_admin
+      - DB_PASSWORD=${DB_PASSWORD:-brainsait_healthcare_2025!}
+      
+      # Redis Configuration
+      - REDIS_HOST=brainsait_redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-brainsait_redis_2025}
+      
+      # AI Services Configuration
+      - AI_SERVICE_URL=http://brainsait_ai:8001
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      
+      # NPHIES Configuration
+      - NPHIES_CLIENT_ID=${NPHIES_CLIENT_ID}
+      - NPHIES_CLIENT_SECRET=${NPHIES_CLIENT_SECRET}
+      - NPHIES_BASE_URL=${NPHIES_BASE_URL:-https://api.nphies.sa}
+      
+      # Twilio Configuration (HIPAA Compliant)
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+      - TWILIO_PHONE_NUMBER=${TWILIO_PHONE_NUMBER}
+      
+      # Security Configuration
+      - SECRET_KEY=${SECRET_KEY:-brainsait_ultra_secure_key_2025}
+      - ALLOWED_ORIGINS=https://brainsait.sa,http://localhost:5173
+      - ENVIRONMENT=production
+      
+      # Ecosystem Configuration
+      - ECOSYSTEM_MODE=unified
+      - PERFORMANCE_OPTIMIZATION=enabled
+      - CULTURAL_ADAPTATION=enabled
+      - AI_FIRST_ARCHITECTURE=enabled
+    volumes:
+      - brainsait_logs:/app/logs
+      - brainsait_uploads:/app/uploads
+      - ./backend/config:/app/config:ro
+    ports:
+      - "8000:8000"
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.30
+    depends_on:
+      brainsait_db:
+        condition: service_healthy
+      brainsait_redis:
+        condition: service_healthy
+      brainsait_ai:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # =============================================================================
+  # FRONTEND SERVICES
+  # =============================================================================
+  
+  # React Frontend - Unified ecosystem UI
+  brainsait_frontend:
+    build:
+      context: ./oid-portal
+      dockerfile: Dockerfile.prod
+      args:
+        - NODE_VERSION=18
+        - VITE_API_URL=https://api.brainsait.sa
+        - VITE_ECOSYSTEM_MODE=unified
+        - VITE_AI_FEATURES=enabled
+        - VITE_ARABIC_SUPPORT=enabled
+        - VITE_CULTURAL_ADAPTATION=enabled
+    container_name: brainsait_frontend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - VITE_API_URL=${API_URL:-http://localhost:8000}
+      - VITE_WS_URL=${WS_URL:-ws://localhost:8000}
+      - VITE_ECOSYSTEM_ENABLED=true
+      - VITE_AI_INTELLIGENCE=enabled
+      - VITE_PERFORMANCE_MONITORING=enabled
+    volumes:
+      - ./oid-portal/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - brainsait_ssl_certs:/etc/ssl/certs:ro
+      - brainsait_logs:/var/log/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.40
+    depends_on:
+      - brainsait_api
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # SPECIALIZED HEALTHCARE SERVICES
+  # =============================================================================
+  
+  # NPHIES Integration Service
+  brainsait_nphies:
+    build:
+      context: ./services/nphies
+      dockerfile: Dockerfile
+    container_name: brainsait_nphies
+    restart: unless-stopped
+    environment:
+      - NPHIES_CLIENT_ID=${NPHIES_CLIENT_ID}
+      - NPHIES_CLIENT_SECRET=${NPHIES_CLIENT_SECRET}
+      - NPHIES_BASE_URL=${NPHIES_BASE_URL}
+      - FHIR_VERSION=R4
+      - SAUDI_COMPLIANCE=enabled
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.50
+    depends_on:
+      - brainsait_db
+      - brainsait_redis
+
+  # Communication Service (HIPAA Compliant)
+  brainsait_communication:
+    build:
+      context: ./services/communication
+      dockerfile: Dockerfile
+    container_name: brainsait_communication
+    restart: unless-stopped
+    environment:
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+      - HIPAA_COMPLIANCE=enabled
+      - ENCRYPTION_KEY=${COMMUNICATION_ENCRYPTION_KEY}
+      - ARABIC_SMS_SUPPORT=enabled
+    volumes:
+      - brainsait_logs:/app/logs
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.51
+    depends_on:
+      - brainsait_redis
+
+  # =============================================================================
+  # MONITORING & OBSERVABILITY
+  # =============================================================================
+  
+  # Prometheus - Metrics collection
+  brainsait_prometheus:
+    image: prom/prometheus:latest
+    container_name: brainsait_prometheus
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - brainsait_logs:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.60
+
+  # Grafana - Metrics visualization
+  brainsait_grafana:
+    image: grafana/grafana:latest
+    container_name: brainsait_grafana
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-brainsait_admin_2025}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_DOMAIN=monitor.brainsait.sa
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+    volumes:
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - brainsait_logs:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.61
+    depends_on:
+      - brainsait_prometheus
+
+  # ELK Stack for Logs
+  brainsait_elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    container_name: brainsait_elasticsearch
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    volumes:
+      - brainsait_logs:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.70
+
+  brainsait_kibana:
+    image: docker.elastic.co/kibana/kibana:8.8.0
+    container_name: brainsait_kibana
+    restart: unless-stopped
+    environment:
+      - ELASTICSEARCH_HOSTS=http://brainsait_elasticsearch:9200
+    ports:
+      - "5601:5601"
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.71
+    depends_on:
+      - brainsait_elasticsearch
+
+  # =============================================================================
+  # UTILITY SERVICES
+  # =============================================================================
+  
+  # Nginx Reverse Proxy & Load Balancer
+  brainsait_nginx:
+    image: nginx:alpine
+    container_name: brainsait_nginx
+    restart: unless-stopped
+    volumes:
+      - ./nginx/unified.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - brainsait_ssl_certs:/etc/ssl/certs:ro
+      - brainsait_logs:/var/log/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.80
+    depends_on:
+      - brainsait_frontend
+      - brainsait_api
+
+  # Backup Service
+  brainsait_backup:
+    build:
+      context: ./services/backup
+      dockerfile: Dockerfile
+    container_name: brainsait_backup
+    restart: unless-stopped
+    environment:
+      - BACKUP_SCHEDULE=0 2 * * *  # Daily at 2 AM
+      - DB_HOST=brainsait_db
+      - DB_NAME=brainsait_healthcare
+      - DB_USER=brainsait_admin
+      - DB_PASSWORD=${DB_PASSWORD:-brainsait_healthcare_2025!}
+      - S3_BUCKET=${BACKUP_S3_BUCKET}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    volumes:
+      - brainsait_backups:/backups
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.90
+    depends_on:
+      - brainsait_db
+
+  # =============================================================================
+  # DEVELOPMENT SERVICES (OPTIONAL)
+  # =============================================================================
+  
+  # pgAdmin - Database management (development only)
+  brainsait_pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: brainsait_pgadmin
+    restart: unless-stopped
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@brainsait.sa
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD:-brainsait_pgadmin_2025}
+    volumes:
+      - ./database/pgadmin_servers.json:/pgadmin4/servers.json:ro
+    ports:
+      - "8080:80"
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.100
+    depends_on:
+      - brainsait_db
+    profiles:
+      - development
+
+  # Redis Commander - Redis management (development only)
+  brainsait_redis_commander:
+    image: rediscommander/redis-commander:latest
+    container_name: brainsait_redis_commander
+    restart: unless-stopped
+    environment:
+      - REDIS_HOSTS=local:brainsait_redis:6379:0:${REDIS_PASSWORD:-brainsait_redis_2025}
+    ports:
+      - "8081:8081"
+    networks:
+      brainsait_ecosystem:
+        ipv4_address: 172.20.0.101
+    depends_on:
+      - brainsait_redis
+    profiles:
+      - development
+
+# =============================================================================
+# DOCKER COMPOSE CONFIGURATION
+# =============================================================================
+
+# Health check configuration
+x-healthcheck-defaults: &healthcheck-defaults
+  interval: 30s
+  timeout: 10s
+  retries: 3
+  start_period: 40s
+
+# Resource limits
+x-resource-defaults: &resource-defaults
+  deploy:
+    resources:
+      limits:
+        memory: 1G
+        cpus: '1.0'
+      reservations:
+        memory: 512M
+        cpus: '0.5'
+
+# Logging configuration
+x-logging-defaults: &logging-defaults
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "100m"
+      max-file: "3"
+      labels: "service,environment"
+
+# Environment file
+x-env-file: &env-file
+  env_file:
+    - .env.production

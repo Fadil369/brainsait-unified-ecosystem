@@ -1,0 +1,60 @@
+# Production Dockerfile for BrainSAIT Healthcare Platform Frontend
+# Optimized for Arabic RTL support and healthcare compliance
+
+# Build stage
+FROM node:18-alpine AS builder
+
+# Set build arguments
+ARG ENVIRONMENT=production
+ARG VITE_API_URL
+
+# Install build dependencies
+RUN apk add --no-cache git
+
+# Create application directory
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
+
+# Copy source code
+COPY . .
+
+# Build application with Arabic RTL optimizations
+RUN npm run build
+
+# Production stage with nginx
+FROM nginx:alpine
+
+# Install runtime dependencies
+RUN apk add --no-cache curl
+
+# Copy custom nginx configuration for Arabic RTL and healthcare
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copy built application
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Copy entrypoint script and create user in single layer
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh && \
+    addgroup -g 1001 -S appgroup && \
+    adduser -S appuser -u 1001 -G appgroup && \
+    chown -R appuser:appgroup /usr/share/nginx/html /var/cache/nginx /var/run /var/log/nginx
+
+# Switch to non-root user
+USER appuser
+
+# Expose port
+EXPOSE 80
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:80 || exit 1
+
+# Start nginx with entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]

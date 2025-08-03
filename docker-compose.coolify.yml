@@ -1,0 +1,144 @@
+# BrainSAIT Healthcare Platform - Production Deployment
+# Configured for VPS: 82.25.101.65 with Coolify orchestration
+
+version: "3.8"
+
+services:
+  brainsait-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: brainsait-healthcare-backend
+    restart: unless-stopped
+    environment:
+      # Database Configuration (using Coolify's PostgreSQL)
+      - DB_TYPE=postgres
+      - DB_HOST=coolify-db
+      - DB_PORT=5432
+      - DB_NAME=brainsait_healthcare
+      - DB_USER=${DB_USER:-brainsait_admin}
+      - DB_PASS=${DB_PASS:-secure_password_2025}
+
+      # Redis Configuration (using Coolify's Redis)
+      - REDIS_HOST=coolify-redis
+      - REDIS_PORT=6379
+
+      # Application Configuration
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - SECRET_KEY=${SECRET_KEY}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+
+      # Healthcare Compliance & Arabic Support
+      - ALLOWED_ORIGINS=https://${DOMAIN:-82.25.101.65},https://www.${DOMAIN:-82.25.101.65}
+      - ARABIC_SUPPORT=true
+      - RTL_ENABLED=true
+      - PDPL_COMPLIANCE=true
+      - HIPAA_COMPLIANCE=true
+
+      # NPHIES Integration
+      - NPHIES_CLIENT_ID=${NPHIES_CLIENT_ID}
+      - NPHIES_CLIENT_SECRET=${NPHIES_CLIENT_SECRET}
+      - NPHIES_BASE_URL=https://api.nphies.sa
+
+      # AI Analytics
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+
+      # Audit & Security
+      - AUDIT_LOGS_ENABLED=true
+      - CSRF_PROTECTION=true
+      - RATE_LIMITING=true
+
+    ports:
+      - "8001:8000" # Avoid conflict with Coolify on 8000
+
+    volumes:
+      - ./logs:/app/logs
+      - ./uploads:/app/uploads
+      - ./backup:/app/backup
+
+    networks:
+      - coolify
+      - brainsait-network
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    labels:
+      # Coolify labels for automatic management
+      - "coolify.managed=true"
+      - "coolify.name=brainsait-healthcare"
+      - "coolify.type=application"
+      - "coolify.port=8000"
+      - "coolify.domain=${DOMAIN:-82.25.101.65:8001}"
+
+      # Traefik labels for routing
+      - "traefik.enable=true"
+      - "traefik.http.routers.brainsait.rule=Host(`${DOMAIN:-82.25.101.65}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.brainsait.tls=true"
+      - "traefik.http.services.brainsait.loadbalancer.server.port=8000"
+
+      # Healthcare compliance labels
+      - "healthcare.platform=brainsait"
+      - "compliance.pdpl=true"
+      - "compliance.hipaa=true"
+      - "integration.nphies=true"
+      - "language.arabic=true"
+
+  brainsait-frontend:
+    build:
+      context: ./oid-portal
+      dockerfile: Dockerfile.prod
+      args:
+        - VITE_API_URL=https://${DOMAIN:-82.25.101.65}/api
+        - VITE_ENVIRONMENT=production
+    container_name: brainsait-healthcare-frontend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - VITE_API_URL=https://${DOMAIN:-82.25.101.65}/api
+      - VITE_ARABIC_SUPPORT=true
+      - VITE_RTL_ENABLED=true
+      - VITE_NPHIES_INTEGRATION=true
+
+    ports:
+      - "3000:80"
+
+    depends_on:
+      - brainsait-backend
+
+    networks:
+      - brainsait-network
+
+    labels:
+      # Coolify frontend labels
+      - "coolify.managed=true"
+      - "coolify.name=brainsait-frontend"
+      - "coolify.type=static"
+      - "coolify.port=80"
+
+      # Traefik labels for frontend routing
+      - "traefik.enable=true"
+      - "traefik.http.routers.brainsait-frontend.rule=Host(`${DOMAIN:-82.25.101.65}`)"
+      - "traefik.http.routers.brainsait-frontend.tls=true"
+      - "traefik.http.services.brainsait-frontend.loadbalancer.server.port=80"
+
+      # Arabic RTL support labels
+      - "frontend.arabic=true"
+      - "frontend.rtl=true"
+      - "ui.material-ui=v5"
+
+networks:
+  coolify:
+    external: true
+  brainsait-network:
+    driver: bridge
+
+volumes:
+  brainsait_logs:
+  brainsait_uploads:
+  brainsait_backup:
