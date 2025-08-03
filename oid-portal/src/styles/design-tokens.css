@@ -1,0 +1,325 @@
+/**
+ * BrainSAIT Healthcare Design System - Design Tokens
+ * Comprehensive token system for Arabic-first healthcare identity management
+ * Optimized for clinical environments and WCAG 2.1 AA compliance
+ */
+
+:root {
+  /* =================================
+     HEALTHCARE SEMANTIC COLORS
+     ================================= */
+  
+  /* Primary Healthcare Brand Colors */
+  --healthcare-primary: #0066cc;          /* Medical blue - trust, reliability */
+  --healthcare-primary-light: #3385d9;    /* Lighter medical blue */
+  --healthcare-primary-dark: #004d99;     /* Darker medical blue */
+  --healthcare-primary-50: #e6f2ff;       /* Very light blue background */
+  --healthcare-primary-100: #b3d9ff;      /* Light blue background */
+  
+  /* Secondary Healthcare Colors */
+  --healthcare-secondary: #00a86b;        /* Medical green - health, wellness */
+  --healthcare-secondary-light: #33b885;   /* Lighter medical green */
+  --healthcare-secondary-dark: #007a50;    /* Darker medical green */
+  --healthcare-secondary-50: #e6f7f1;     /* Very light green background */
+  --healthcare-secondary-100: #b3f0d1;    /* Light green background */
+  
+  /* Healthcare Status Colors */
+  --healthcare-critical: #d32f2f;         /* Critical/Emergency - high contrast red */
+  --healthcare-critical-light: #f44336;   /* Lighter critical red */
+  --healthcare-critical-dark: #b71c1c;    /* Darker critical red */
+  --healthcare-critical-50: #ffebee;      /* Very light red background */
+  --healthcare-critical-100: #ffcdd2;     /* Light red background */
+  
+  --healthcare-warning: #f57c00;          /* Warning/Caution - amber */
+  --healthcare-warning-light: #ff9800;    /* Lighter warning amber */
+  --healthcare-warning-dark: #e65100;     /* Darker warning amber */
+  --healthcare-warning-50: #fff3e0;       /* Very light amber background */
+  --healthcare-warning-100: #ffe0b2;      /* Light amber background */
+  
+  --healthcare-success: #2e7d32;          /* Success/Healthy - green */
+  --healthcare-success-light: #4caf50;    /* Lighter success green */
+  --healthcare-success-dark: #1b5e20;     /* Darker success green */
+  --healthcare-success-50: #e8f5e8;       /* Very light success background */
+  --healthcare-success-100: #c8e6c9;      /* Light success background */
+  
+  --healthcare-info: #1976d2;             /* Information - blue */
+  --healthcare-info-light: #2196f3;       /* Lighter info blue */
+  --healthcare-info-dark: #0d47a1;        /* Darker info blue */
+  --healthcare-info-50: #e3f2fd;          /* Very light info background */
+  --healthcare-info-100: #bbdefb;         /* Light info background */
+  
+  /* Healthcare Role-Based Colors */
+  --healthcare-doctor: #6a1b9a;           /* Purple for doctors */
+  --healthcare-nurse: #00695c;            /* Teal for nurses */
+  --healthcare-patient: #2e7d32;          /* Green for patients */
+  --healthcare-admin: #455a64;            /* Blue-grey for admin */
+  --healthcare-department: #5d4037;       /* Brown for departments */
+  --healthcare-service: #283593;          /* Indigo for services */
+  --healthcare-security: #b71c1c;         /* Deep red for security */
+  
+  /* =================================
+     DARK THEME FOR CLINICAL USE
+     ================================= */
+  
+  /* Background Colors - Optimized for low light clinical environments */
+  --clinical-bg-primary: #0a0e17;         /* Deep navy - reduces eye strain */
+  --clinical-bg-secondary: #111827;        /* Slightly lighter navy */
+  --clinical-bg-tertiary: #1f2937;        /* Card/panel background */
+  --clinical-bg-interactive: #374151;      /* Interactive elements */
+  --clinical-bg-overlay: rgba(0, 0, 0, 0.8); /* Modal/overlay background */
+  
+  /* Text Colors - High contrast for clinical readability */
+  --clinical-text-primary: #f9fafb;       /* Primary text - WCAG AAA */
+  --clinical-text-secondary: #d1d5db;     /* Secondary text - WCAG AA */
+  --clinical-text-tertiary: #9ca3af;      /* Tertiary text - WCAG AA */
+  --clinical-text-disabled: #6b7280;      /* Disabled text */
+  --clinical-text-inverse: #111827;       /* Inverse text on light backgrounds */
+  
+  /* Border and Divider Colors */
+  --clinical-border-primary: #374151;     /* Primary borders */
+  --clinical-border-secondary: #4b5563;   /* Secondary borders */
+  --clinical-border-interactive: #6b7280; /* Interactive borders */
+  --clinical-border-focus: var(--healthcare-primary); /* Focus indicators */
+  
+  /* =================================
+     TYPOGRAPHY TOKENS
+     ================================= */
+  
+  /* Arabic Font Stack - Optimized for healthcare documentation */
+  --font-arabic-primary: 'Cairo', 'Noto Sans Arabic', 'Tahoma', sans-serif;
+  --font-arabic-secondary: 'Noto Sans Arabic', 'Arial Unicode MS', sans-serif;
+  --font-arabic-monospace: 'Cascadia Code', 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  
+  /* English Font Stack - Clinical clarity */
+  --font-english-primary: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+  --font-english-secondary: 'System UI', '-apple-system', 'BlinkMacSystemFont', sans-serif;
+  --font-english-monospace: 'JetBrains Mono', 'SF Mono', 'Monaco', monospace;
+  
+  /* Font Sizes - Optimized for clinical readability */
+  --text-xs: 0.75rem;      /* 12px - Fine print, labels */
+  --text-sm: 0.875rem;     /* 14px - Secondary text */
+  --text-base: 1rem;       /* 16px - Body text */
+  --text-lg: 1.125rem;     /* 18px - Large body text */
+  --text-xl: 1.25rem;      /* 20px - Small headings */
+  --text-2xl: 1.5rem;      /* 24px - Medium headings */
+  --text-3xl: 1.875rem;    /* 30px - Large headings */
+  --text-4xl: 2.25rem;     /* 36px - Extra large headings */
+  
+  /* Line Heights - Optimized for Arabic and English readability */
+  --leading-tight: 1.25;    /* Tight line height for headings */
+  --leading-normal: 1.5;    /* Normal line height for body text */
+  --leading-relaxed: 1.625; /* Relaxed line height for Arabic text */
+  --leading-loose: 2;       /* Loose line height for annotations */
+  
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  
+  /* =================================
+     SPACING TOKENS
+     ================================= */
+  
+  /* Base spacing unit (4px) */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  
+  /* Healthcare-specific spacing */
+  --space-clinical-xs: var(--space-1);  /* 4px - Tight medical data */
+  --space-clinical-sm: var(--space-2);  /* 8px - Medical labels */
+  --space-clinical-md: var(--space-4);  /* 16px - Standard medical spacing */
+  --space-clinical-lg: var(--space-6);  /* 24px - Section spacing */
+  --space-clinical-xl: var(--space-8);  /* 32px - Major section spacing */
+  
+  /* =================================
+     ELEVATION AND SHADOWS
+     ================================= */
+  
+  /* Shadow system optimized for dark theme */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  
+  /* Healthcare-specific shadows */
+  --shadow-clinical-card: var(--shadow-md);
+  --shadow-clinical-modal: var(--shadow-2xl);
+  --shadow-clinical-tooltip: var(--shadow-sm);
+  --shadow-clinical-dropdown: var(--shadow-lg);
+  
+  /* =================================
+     BORDER RADIUS
+     ================================= */
+  
+  --radius-none: 0;
+  --radius-sm: 0.125rem;    /* 2px */
+  --radius-md: 0.375rem;    /* 6px */
+  --radius-lg: 0.5rem;      /* 8px */
+  --radius-xl: 0.75rem;     /* 12px */
+  --radius-2xl: 1rem;       /* 16px */
+  --radius-3xl: 1.5rem;     /* 24px */
+  --radius-full: 9999px;    /* Fully rounded */
+  
+  /* Healthcare component radius */
+  --radius-clinical-card: var(--radius-lg);
+  --radius-clinical-button: var(--radius-md);
+  --radius-clinical-input: var(--radius-md);
+  --radius-clinical-badge: var(--radius-full);
+  
+  /* =================================
+     TRANSITIONS AND ANIMATIONS
+     ================================= */
+  
+  /* Transition durations */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+  
+  /* Transition timing functions */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-clinical: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth clinical transitions */
+  
+  /* Healthcare-specific transitions */
+  --transition-clinical-fast: all var(--duration-fast) var(--ease-clinical);
+  --transition-clinical-normal: all var(--duration-normal) var(--ease-clinical);
+  --transition-clinical-slow: all var(--duration-slow) var(--ease-clinical);
+  
+  /* =================================
+     Z-INDEX LAYERS
+     ================================= */
+  
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+  
+  /* =================================
+     HEALTHCARE COMPONENT TOKENS
+     ================================= */
+  
+  /* Tree visualization tokens */
+  --tree-node-height: 2.5rem;           /* 40px - Optimal touch target */
+  --tree-indent-size: 1.25rem;          /* 20px - Clear hierarchy */
+  --tree-connector-width: 2px;          /* Connection line thickness */
+  --tree-icon-size: 1rem;               /* 16px - Icon size */
+  --tree-badge-size: 0.75rem;           /* 12px - Status badge size */
+  
+  /* Healthcare badge colors */
+  --badge-medical: var(--healthcare-critical);
+  --badge-administrative: var(--healthcare-info);
+  --badge-patient: var(--healthcare-success);
+  --badge-department: var(--healthcare-secondary);
+  --badge-service: var(--healthcare-primary);
+  --badge-security: var(--healthcare-critical-dark);
+  
+  /* Compliance indicator colors */
+  --compliance-nphies: #00a86b;         /* Saudi NPHIES green */
+  --compliance-fhir: #1976d2;           /* FHIR blue */
+  --compliance-hipaa: #d32f2f;          /* HIPAA red */
+  --compliance-ai: #6a1b9a;             /* AI purple */
+  --compliance-voice: #283593;          /* Voice indigo */
+  
+  /* =================================
+     RESPONSIVE BREAKPOINTS
+     ================================= */
+  
+  --breakpoint-xs: 320px;    /* Small phones */
+  --breakpoint-sm: 640px;    /* Large phones */
+  --breakpoint-md: 768px;    /* Tablets */
+  --breakpoint-lg: 1024px;   /* Small laptops */
+  --breakpoint-xl: 1280px;   /* Large laptops */
+  --breakpoint-2xl: 1536px;  /* Desktop monitors */
+  
+  /* Healthcare-specific breakpoints */
+  --breakpoint-clinical-mobile: 480px;   /* Clinical mobile devices */
+  --breakpoint-clinical-tablet: 768px;   /* Clinical tablets */
+  --breakpoint-clinical-desktop: 1200px; /* Clinical workstations */
+  
+  /* =================================
+     ACCESSIBILITY TOKENS
+     ================================= */
+  
+  /* Focus indicators - High visibility for clinical use */
+  --focus-ring-width: 2px;
+  --focus-ring-color: var(--healthcare-primary);
+  --focus-ring-offset: 2px;
+  --focus-ring-opacity: 0.8;
+  
+  /* High contrast mode support */
+  --high-contrast-border: 2px solid currentColor;
+  --high-contrast-bg: Canvas;
+  --high-contrast-text: CanvasText;
+  
+  /* Motion preferences */
+  --motion-reduce: reduce;
+  --motion-no-preference: no-preference;
+}
+
+/* =================================
+   CLINICAL ENVIRONMENT OPTIMIZATIONS
+   ================================= */
+
+/* Reduced motion support for sensitive users */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+    --duration-slower: 0ms;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --clinical-text-primary: #ffffff;
+    --clinical-text-secondary: #e0e0e0;
+    --clinical-border-primary: #ffffff;
+    --healthcare-primary: #4d9fff;
+    --healthcare-critical: #ff4444;
+    --healthcare-success: #44ff44;
+  }
+}
+
+/* Dark mode preference (already optimized for clinical use) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* Print styles for medical documentation */
+@media print {
+  :root {
+    --clinical-bg-primary: #ffffff;
+    --clinical-bg-secondary: #ffffff;
+    --clinical-bg-tertiary: #ffffff;
+    --clinical-text-primary: #000000;
+    --clinical-text-secondary: #333333;
+    --clinical-text-tertiary: #666666;
+  }
+}

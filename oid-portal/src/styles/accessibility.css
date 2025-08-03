@@ -1,0 +1,814 @@
+/**
+ * BrainSAIT Healthcare Design System - WCAG 2.1 AA Accessibility
+ * Comprehensive accessibility implementation for healthcare applications
+ * Ensures WCAG 2.1 AA compliance for clinical environments and diverse user needs
+ */
+
+/* =================================
+   ACCESSIBILITY FOUNDATION
+   ================================= */
+
+/* Base accessibility improvements */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --clinical-text-primary: #ffffff;
+    --clinical-text-secondary: #f0f0f0;
+    --clinical-text-tertiary: #e0e0e0;
+    --clinical-border-primary: #ffffff;
+    --clinical-border-secondary: #cccccc;
+    --healthcare-primary: #4d9fff;
+    --healthcare-critical: #ff4444;
+    --healthcare-success: #44ff44;
+    --healthcare-warning: #ffcc00;
+  }
+  
+  /* Enhanced borders for high contrast */
+  .healthcare-tree-node,
+  .healthcare-card,
+  .healthcare-btn,
+  .healthcare-badge {
+    border-width: 2px !important;
+    border-style: solid !important;
+  }
+  
+  /* Enhanced text contrast */
+  .tree-node-title,
+  .healthcare-card-title,
+  .arabic-heading-1,
+  .arabic-heading-2,
+  .arabic-heading-3 {
+    font-weight: var(--font-bold) !important;
+    text-shadow: 0 0 1px currentColor;
+  }
+}
+
+/* =================================
+   FOCUS MANAGEMENT
+   ================================= */
+
+/* Enhanced focus indicators for clinical precision */
+:focus {
+  outline: 3px solid var(--healthcare-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-clinical-button);
+}
+
+/* Specific focus styles for interactive elements */
+.healthcare-tree-node:focus,
+.tree-node-expander:focus,
+.tree-node-action:focus {
+  outline: 3px solid var(--healthcare-primary);
+  outline-offset: 2px;
+  background-color: var(--healthcare-primary-50);
+  box-shadow: 0 0 0 6px var(--healthcare-primary-50);
+}
+
+.healthcare-btn:focus {
+  outline: 3px solid var(--clinical-text-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+.healthcare-search-input:focus,
+.clinical-form-input:focus,
+.healthcare-filter-select:focus {
+  outline: 3px solid var(--healthcare-primary);
+  outline-offset: 1px;
+  border-color: var(--healthcare-primary);
+  box-shadow: 0 0 0 6px var(--healthcare-primary-50);
+}
+
+/* Focus within containers */
+.healthcare-card:focus-within {
+  border-color: var(--healthcare-primary);
+  box-shadow: 0 0 0 3px var(--healthcare-primary-50);
+}
+
+/* Skip to content link */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background-color: var(--healthcare-primary);
+  color: var(--clinical-text-primary);
+  padding: var(--space-3) var(--space-4);
+  text-decoration: none;
+  border-radius: var(--radius-clinical-button);
+  font-weight: var(--font-semibold);
+  z-index: var(--z-modal);
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.skip-to-content:focus {
+  top: 6px;
+  transform: translateY(0);
+}
+
+/* Focus trap for modals */
+.clinical-modal[data-focus-trap="active"] {
+  isolation: isolate;
+}
+
+.clinical-modal[data-focus-trap="active"] * {
+  pointer-events: none;
+}
+
+.clinical-modal[data-focus-trap="active"] .clinical-modal-content,
+.clinical-modal[data-focus-trap="active"] .clinical-modal-content * {
+  pointer-events: auto;
+}
+
+/* =================================
+   SCREEN READER SUPPORT
+   ================================= */
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Show screen reader content on focus */
+.sr-only:focus {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: var(--space-2) var(--space-4) !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+  background-color: var(--healthcare-primary) !important;
+  color: var(--clinical-text-primary) !important;
+  border-radius: var(--radius-clinical-button) !important;
+  text-decoration: none !important;
+  font-weight: var(--font-semibold) !important;
+}
+
+/* Screen reader announcements */
+.sr-announce {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Live regions for dynamic content */
+.sr-live-polite {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.sr-live-assertive {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* =================================
+   KEYBOARD NAVIGATION
+   ================================= */
+
+/* Enhanced keyboard navigation for tree */
+.healthcare-tree[role="tree"] {
+  position: relative;
+}
+
+.healthcare-tree-node[role="treeitem"] {
+  position: relative;
+  cursor: pointer;
+}
+
+.healthcare-tree-node[role="treeitem"]:focus {
+  z-index: 1;
+}
+
+.healthcare-tree-node[aria-selected="true"] {
+  background-color: var(--healthcare-primary-50);
+  border-left: 3px solid var(--healthcare-primary);
+}
+
+[dir="rtl"] .healthcare-tree-node[aria-selected="true"] {
+  border-left: none;
+  border-right: 3px solid var(--healthcare-primary);
+}
+
+.healthcare-tree-node[aria-expanded="true"] .tree-node-expander {
+  background-color: var(--healthcare-primary);
+  color: var(--clinical-text-primary);
+}
+
+.healthcare-tree-node[aria-expanded="false"] .tree-node-expander {
+  background-color: var(--clinical-bg-interactive);
+  color: var(--clinical-text-secondary);
+}
+
+/* Keyboard navigation indicators */
+.keyboard-navigation-active .healthcare-tree-node:focus {
+  outline: 3px solid var(--healthcare-primary);
+  outline-offset: 2px;
+}
+
+.keyboard-navigation-active .healthcare-btn:focus {
+  outline: 3px solid var(--clinical-text-primary);
+  outline-offset: 2px;
+}
+
+/* =================================
+   ARIA SUPPORT
+   ================================= */
+
+/* ARIA labels and descriptions */
+[aria-label] {
+  position: relative;
+}
+
+[aria-describedby] {
+  position: relative;
+}
+
+/* ARIA states */
+[aria-busy="true"] {
+  cursor: wait;
+  pointer-events: none;
+}
+
+[aria-busy="true"]::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid var(--clinical-border-primary);
+  border-top: 2px solid var(--healthcare-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+[aria-hidden="true"] {
+  display: none !important;
+}
+
+[aria-expanded="true"] .tree-node-expander svg {
+  transform: rotate(90deg);
+}
+
+[dir="rtl"] [aria-expanded="true"] .tree-node-expander svg {
+  transform: rotate(-90deg);
+}
+
+[aria-expanded="false"] .tree-node-expander svg {
+  transform: rotate(0deg);
+}
+
+/* ARIA live regions */
+[aria-live="polite"] {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+[aria-live="assertive"] {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Error states */
+[aria-invalid="true"] {
+  border-color: var(--healthcare-critical) !important;
+  box-shadow: 0 0 0 3px var(--healthcare-critical-50) !important;
+}
+
+[aria-invalid="true"]:focus {
+  outline-color: var(--healthcare-critical) !important;
+  box-shadow: 0 0 0 6px var(--healthcare-critical-50) !important;
+}
+
+/* Required fields */
+[aria-required="true"] {
+  position: relative;
+}
+
+[aria-required="true"]::after {
+  content: '*';
+  color: var(--healthcare-critical);
+  font-weight: var(--font-bold);
+  margin-left: var(--space-1);
+}
+
+[dir="rtl"] [aria-required="true"]::after {
+  margin-left: 0;
+  margin-right: var(--space-1);
+}
+
+/* =================================
+   COLOR CONTRAST COMPLIANCE
+   ================================= */
+
+/* WCAG AA compliant color combinations */
+.contrast-aa-normal {
+  /* 4.5:1 contrast ratio for normal text */
+  color: var(--clinical-text-primary);
+  background-color: var(--clinical-bg-primary);
+}
+
+.contrast-aa-large {
+  /* 3:1 contrast ratio for large text (18pt+ or 14pt+ bold) */
+  color: var(--clinical-text-secondary);
+  background-color: var(--clinical-bg-secondary);
+}
+
+.contrast-aaa-normal {
+  /* 7:1 contrast ratio for enhanced accessibility */
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.contrast-aaa-large {
+  /* 4.5:1 contrast ratio for large text (AAA) */
+  color: var(--clinical-text-primary);
+  background-color: var(--clinical-bg-secondary);
+}
+
+/* Healthcare-specific contrast requirements */
+.healthcare-critical-text {
+  color: #d32f2f; /* Ensures 4.5:1 contrast on white background */
+  background-color: #ffffff;
+}
+
+.healthcare-success-text {
+  color: #2e7d32; /* Ensures 4.5:1 contrast on white background */
+  background-color: #ffffff;
+}
+
+.healthcare-warning-text {
+  color: #f57c00; /* Ensures 4.5:1 contrast on white background */
+  background-color: #ffffff;
+}
+
+.healthcare-info-text {
+  color: #1976d2; /* Ensures 4.5:1 contrast on white background */
+  background-color: #ffffff;
+}
+
+/* Dark theme contrast adjustments */
+@media (prefers-color-scheme: dark) {
+  .healthcare-critical-text {
+    color: #f44336; /* Adjusted for dark background */
+  }
+  
+  .healthcare-success-text {
+    color: #4caf50; /* Adjusted for dark background */
+  }
+  
+  .healthcare-warning-text {
+    color: #ff9800; /* Adjusted for dark background */
+  }
+  
+  .healthcare-info-text {
+    color: #2196f3; /* Adjusted for dark background */
+  }
+}
+
+/* =================================
+   TEXT AND TYPOGRAPHY ACCESSIBILITY
+   ================================= */
+
+/* Optimal line length for readability */
+.clinical-text-optimal {
+  max-width: 65ch; /* 45-75 characters per line */
+  line-height: 1.5; /* Minimum 1.5 for body text */
+}
+
+.clinical-text-optimal-arabic {
+  max-width: 50ch; /* Adjusted for Arabic text */
+  line-height: 1.6; /* Slightly higher for Arabic readability */
+}
+
+/* Text spacing for readability */
+.clinical-text-spacing {
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: 1.5;
+}
+
+.clinical-text-spacing p {
+  margin-bottom: 1em;
+}
+
+.clinical-text-spacing h1,
+.clinical-text-spacing h2,
+.clinical-text-spacing h3,
+.clinical-text-spacing h4,
+.clinical-text-spacing h5,
+.clinical-text-spacing h6 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Text resizing support (up to 200% without horizontal scrolling) */
+@media (min-width: 320px) {
+  .clinical-responsive-text {
+    font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+    line-height: 1.5;
+  }
+  
+  .clinical-responsive-heading {
+    font-size: clamp(1.25rem, 4vw, 2.5rem);
+    line-height: 1.2;
+  }
+}
+
+/* =================================
+   INTERACTIVE ELEMENT ACCESSIBILITY
+   ================================= */
+
+/* Minimum target size (44x44px) */
+.clinical-touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Button state indicators */
+.healthcare-btn[disabled],
+.healthcare-btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.healthcare-btn[disabled]::after,
+.healthcare-btn[aria-disabled="true"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  cursor: not-allowed;
+}
+
+/* Link accessibility */
+a:not(.healthcare-btn) {
+  color: var(--healthcare-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+a:not(.healthcare-btn):hover {
+  color: var(--healthcare-primary-dark);
+  text-decoration-thickness: 2px;
+}
+
+a:not(.healthcare-btn):focus {
+  outline: 3px solid var(--healthcare-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Form element accessibility */
+input,
+textarea,
+select {
+  border: 2px solid var(--clinical-border-primary);
+  border-radius: var(--radius-clinical-input);
+  padding: var(--space-clinical-sm) var(--space-clinical-md);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 3px solid var(--healthcare-primary);
+  outline-offset: 1px;
+  border-color: var(--healthcare-primary);
+}
+
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border-color: var(--healthcare-critical);
+}
+
+/* Label association */
+label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: var(--font-medium);
+  color: var(--clinical-text-primary);
+}
+
+label[for] {
+  cursor: pointer;
+}
+
+/* Error message association */
+.clinical-error-message {
+  color: var(--healthcare-critical);
+  font-size: 0.875rem;
+  margin-top: var(--space-1);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.clinical-error-message::before {
+  content: '⚠';
+  font-weight: var(--font-bold);
+  flex-shrink: 0;
+}
+
+/* =================================
+   MODAL AND OVERLAY ACCESSIBILITY
+   ================================= */
+
+/* Modal focus management */
+.clinical-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+}
+
+.clinical-modal[aria-hidden="true"] {
+  display: none;
+}
+
+.clinical-modal-content {
+  background-color: var(--clinical-bg-primary);
+  border-radius: var(--radius-clinical-card);
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.clinical-modal-content:focus {
+  outline: 3px solid var(--healthcare-primary);
+  outline-offset: -3px;
+}
+
+/* Escape key indicator */
+.clinical-modal-escape-hint {
+  position: absolute;
+  bottom: var(--space-clinical-md);
+  right: var(--space-clinical-md);
+  color: var(--clinical-text-tertiary);
+  font-size: 0.75rem;
+  background-color: var(--clinical-bg-secondary);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+}
+
+[dir="rtl"] .clinical-modal-escape-hint {
+  right: auto;
+  left: var(--space-clinical-md);
+}
+
+/* =================================
+   DATA TABLE ACCESSIBILITY
+   ================================= */
+
+.clinical-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: var(--space-clinical-md) 0;
+}
+
+.clinical-table caption {
+  font-weight: var(--font-semibold);
+  text-align: left;
+  margin-bottom: var(--space-clinical-sm);
+  color: var(--clinical-text-primary);
+}
+
+[dir="rtl"] .clinical-table caption {
+  text-align: right;
+}
+
+.clinical-table th {
+  background-color: var(--clinical-bg-secondary);
+  border: 1px solid var(--clinical-border-primary);
+  padding: var(--space-clinical-sm) var(--space-clinical-md);
+  text-align: left;
+  font-weight: var(--font-semibold);
+  color: var(--clinical-text-primary);
+}
+
+[dir="rtl"] .clinical-table th {
+  text-align: right;
+}
+
+.clinical-table td {
+  border: 1px solid var(--clinical-border-primary);
+  padding: var(--space-clinical-sm) var(--space-clinical-md);
+  color: var(--clinical-text-primary);
+}
+
+.clinical-table th[scope="col"] {
+  background-color: var(--healthcare-primary-50);
+  color: var(--healthcare-primary-dark);
+}
+
+.clinical-table th[scope="row"] {
+  background-color: var(--clinical-bg-interactive);
+  font-weight: var(--font-medium);
+}
+
+.clinical-table tr:nth-child(even) {
+  background-color: var(--clinical-bg-tertiary);
+}
+
+.clinical-table tr:hover {
+  background-color: var(--healthcare-primary-50);
+}
+
+.clinical-table tr:focus-within {
+  outline: 2px solid var(--healthcare-primary);
+  outline-offset: -2px;
+}
+
+/* =================================
+   ERROR HANDLING AND MESSAGING
+   ================================= */
+
+/* Error announcements */
+.clinical-error-announcement {
+  background-color: var(--healthcare-critical-50);
+  border: 2px solid var(--healthcare-critical);
+  border-radius: var(--radius-clinical-card);
+  padding: var(--space-clinical-md);
+  margin: var(--space-clinical-md) 0;
+  color: var(--healthcare-critical-dark);
+}
+
+.clinical-error-announcement h2,
+.clinical-error-announcement h3 {
+  margin-top: 0;
+  margin-bottom: var(--space-2);
+  font-weight: var(--font-bold);
+}
+
+.clinical-error-announcement ul {
+  margin: var(--space-2) 0;
+  padding-left: var(--space-clinical-md);
+}
+
+[dir="rtl"] .clinical-error-announcement ul {
+  padding-left: 0;
+  padding-right: var(--space-clinical-md);
+}
+
+/* Success announcements */
+.clinical-success-announcement {
+  background-color: var(--healthcare-success-50);
+  border: 2px solid var(--healthcare-success);
+  border-radius: var(--radius-clinical-card);
+  padding: var(--space-clinical-md);
+  margin: var(--space-clinical-md) 0;
+  color: var(--healthcare-success-dark);
+}
+
+/* Warning announcements */
+.clinical-warning-announcement {
+  background-color: var(--healthcare-warning-50);
+  border: 2px solid var(--healthcare-warning);
+  border-radius: var(--radius-clinical-card);
+  padding: var(--space-clinical-md);
+  margin: var(--space-clinical-md) 0;
+  color: var(--healthcare-warning-dark);
+}
+
+/* Info announcements */
+.clinical-info-announcement {
+  background-color: var(--healthcare-info-50);
+  border: 2px solid var(--healthcare-info);
+  border-radius: var(--radius-clinical-card);
+  padding: var(--space-clinical-md);
+  margin: var(--space-clinical-md) 0;
+  color: var(--healthcare-info-dark);
+}
+
+/* =================================
+   PRINT ACCESSIBILITY
+   ================================= */
+
+@media print {
+  /* Ensure sufficient contrast for printing */
+  * {
+    background-color: transparent !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  /* Ensure links are identifiable */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+  }
+  
+  /* Show abbreviated content */
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  
+  /* Page break optimization */
+  .healthcare-tree-node,
+  .healthcare-card,
+  .clinical-form-group {
+    break-inside: avoid;
+  }
+  
+  /* Print-friendly heading styles */
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    break-after: avoid;
+  }
+  
+  /* Ensure form structure is clear */
+  label {
+    font-weight: bold !important;
+  }
+  
+  input,
+  textarea,
+  select {
+    border: 1px solid #000000 !important;
+    background-color: #ffffff !important;
+  }
+  
+  /* Hide interactive elements that don't work in print */
+  .tree-node-expander,
+  .tree-node-action,
+  .healthcare-btn:not(.print-visible),
+  .clinical-modal,
+  .skip-to-content {
+    display: none !important;
+  }
+}

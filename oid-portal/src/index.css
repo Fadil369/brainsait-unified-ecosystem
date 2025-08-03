@@ -1,0 +1,245 @@
+/* Import BrainSAIT Healthcare Design System */
+@import url('./styles/design-tokens.css');
+@import url('./styles/arabic-typography.css');
+@import url('./styles/healthcare-components.css');
+@import url('./styles/enhanced-oid-tree.css');
+@import url('./styles/accessibility.css');
+@import url('./styles/mobile-clinical.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Legacy color mappings for Tailwind compatibility */
+:root {
+  --primary: var(--healthcare-primary);
+  --primary-light: var(--healthcare-primary-light);
+  --secondary: var(--healthcare-secondary);
+  --dark-bg: var(--clinical-bg-primary);
+  --darker-bg: var(--clinical-bg-secondary);
+  --content-bg: var(--clinical-bg-tertiary);
+  --text-primary: var(--clinical-text-primary);
+  --text-secondary: var(--clinical-text-secondary);
+  --danger: var(--healthcare-critical);
+  --success: var(--healthcare-success);
+  --border-color: var(--clinical-border-primary);
+  --card-bg: var(--clinical-bg-tertiary);
+}
+
+body {
+  @apply bg-dark-bg text-text-primary m-0 p-0;
+  font-family: var(--font-english-primary);
+  min-height: 100vh;
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
+}
+
+/* Arabic text support */
+body[dir="rtl"],
+body.arabic {
+  font-family: var(--font-arabic-primary);
+  direction: rtl;
+  text-align: right;
+}
+
+/* Enhanced Healthcare Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--clinical-bg-secondary);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--clinical-border-interactive);
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast) var(--ease-clinical);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--healthcare-primary);
+  box-shadow: 0 0 4px var(--healthcare-primary-50);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--clinical-bg-secondary);
+}
+
+/* Enhanced Healthcare Components */
+@layer components {
+  .card {
+    background-color: var(--clinical-bg-tertiary);
+    border: 1px solid var(--clinical-border-primary);
+    border-radius: var(--radius-clinical-card);
+    box-shadow: var(--shadow-clinical-card);
+    overflow: hidden;
+    transition: var(--transition-clinical-fast);
+  }
+  
+  .card:hover {
+    border-color: var(--clinical-border-interactive);
+    box-shadow: var(--shadow-clinical-dropdown);
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-clinical-sm) var(--space-clinical-md);
+    border-radius: var(--radius-clinical-button);
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    font-family: var(--font-arabic-primary);
+    line-height: 1;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-clinical-fast);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    gap: var(--space-2);
+  }
+  
+  .btn:focus {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+  
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  .btn-primary {
+    background-color: var(--healthcare-primary);
+    color: var(--clinical-text-primary);
+    border: 1px solid var(--healthcare-primary);
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--healthcare-primary-dark);
+    border-color: var(--healthcare-primary-dark);
+  }
+  
+  .btn-secondary {
+    background-color: var(--healthcare-secondary);
+    color: var(--clinical-text-primary);
+    border: 1px solid var(--healthcare-secondary);
+  }
+  
+  .btn-secondary:hover {
+    background-color: var(--healthcare-secondary-dark);
+    border-color: var(--healthcare-secondary-dark);
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    color: var(--clinical-text-primary);
+    border: 1px solid var(--clinical-border-primary);
+  }
+  
+  .btn-outline:hover {
+    background-color: var(--clinical-bg-interactive);
+    border-color: var(--clinical-border-interactive);
+  }
+  
+  .btn-danger {
+    background-color: var(--healthcare-critical);
+    color: var(--clinical-text-primary);
+    border: 1px solid var(--healthcare-critical);
+  }
+  
+  .btn-danger:hover {
+    background-color: var(--healthcare-critical-dark);
+    border-color: var(--healthcare-critical-dark);
+  }
+  
+  .input {
+    background-color: var(--clinical-bg-secondary);
+    border: 1px solid var(--clinical-border-primary);
+    border-radius: var(--radius-clinical-input);
+    padding: var(--space-clinical-sm) var(--space-clinical-md);
+    color: var(--clinical-text-primary);
+    font-size: var(--text-base);
+    font-family: var(--font-arabic-primary);
+    line-height: var(--leading-normal);
+    width: 100%;
+    transition: var(--transition-clinical-fast);
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: var(--healthcare-primary);
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--healthcare-primary-50);
+    background-color: var(--clinical-bg-tertiary);
+  }
+  
+  .input::placeholder {
+    color: var(--clinical-text-tertiary);
+    opacity: 1;
+  }
+  
+  .label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--clinical-text-secondary);
+    margin-bottom: var(--space-1);
+    font-family: var(--font-arabic-primary);
+  }
+  
+  /* Enhanced Healthcare Chat UI Components */
+  .chat-container {
+    background-color: var(--clinical-bg-tertiary);
+    border: 1px solid var(--clinical-border-primary);
+    border-radius: var(--radius-clinical-card);
+    box-shadow: var(--shadow-clinical-card);
+    padding: var(--space-clinical-md);
+    font-family: var(--font-arabic-primary);
+  }
+  
+  .chat-message {
+    padding: var(--space-clinical-sm);
+    border-radius: var(--radius-clinical-card);
+    margin-bottom: var(--space-clinical-sm);
+    max-width: 80%;
+    line-height: var(--leading-relaxed);
+    word-wrap: break-word;
+  }
+  
+  .chat-message-user {
+    background-color: var(--healthcare-primary);
+    color: var(--clinical-text-primary);
+    margin-left: auto;
+    border-bottom-right-radius: var(--radius-sm);
+  }
+  
+  .chat-message-ai {
+    background-color: var(--clinical-bg-secondary);
+    color: var(--clinical-text-primary);
+    border-bottom-left-radius: var(--radius-sm);
+    border: 1px solid var(--clinical-border-primary);
+  }
+  
+  .chat-input {
+    display: flex;
+    align-items: center;
+    background-color: var(--clinical-bg-secondary);
+    border: 1px solid var(--clinical-border-primary);
+    border-radius: var(--radius-clinical-input);
+    overflow: hidden;
+    transition: var(--transition-clinical-fast);
+  }
+  
+  .chat-input:focus-within {
+    border-color: var(--healthcare-primary);
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--healthcare-primary-50);
+  }
+}
