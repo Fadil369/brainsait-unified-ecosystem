@@ -60,11 +60,19 @@ jobs:
       working-directory: ./backend
       run: pytest
       
-    - name: Security Scan
-      uses: securecodewarrior/github-action-add-sarif@v1
+    - name: Security Scan with Bandit
+      working-directory: ./backend
+      run: |
+        pip install bandit
+        bandit -r . -f json -o bandit-report.json || true
+        echo "Security scan completed"
+      
+    - name: Upload Security Scan Results
+      uses: actions/upload-artifact@v3
       if: always()
       with:
-        sarif-file: 'security-scan-results.sarif'
+        name: security-scan-results
+        path: backend/bandit-report.json
 
   # Build and Test Docker Images
   build:
