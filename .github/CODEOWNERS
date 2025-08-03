@@ -1,0 +1,165 @@
+# Code Owners for BrainSAIT Unified Healthcare Ecosystem
+# This file defines who is responsible for reviewing different parts of the codebase
+# 
+# Global rule - these users are the default owners for everything in the repo
+# Unless a later rule takes precedence, these users will be requested for review
+# when someone opens a pull request.
+
+# Global owners (will be requested for review on all PRs unless overridden)
+* @brainsait/core-developers @brainsait/security-team
+
+# Healthcare and Compliance (HIPAA, NPHIES, Medical Data)
+/backend/models/healthcare.py @brainsait/healthcare-team @brainsait/compliance-team @brainsait/security-team
+/backend/services/nphies_service.py @brainsait/nphies-team @brainsait/healthcare-team @brainsait/compliance-team
+/backend/services/enhanced_nphies_service.py @brainsait/nphies-team @brainsait/healthcare-team @brainsait/compliance-team
+/backend/services/compliance_service.py @brainsait/compliance-team @brainsait/security-team @brainsait/healthcare-team
+/backend/services/healthcare_service.py @brainsait/healthcare-team @brainsait/compliance-team
+/backend/middleware/healthcare.py @brainsait/healthcare-team @brainsait/security-team
+
+# Security and Authentication
+/backend/middleware/security.py @brainsait/security-team @brainsait/backend-team
+/backend/core/security/ @brainsait/security-team
+/backend/services/ai_service.py @brainsait/ai-team @brainsait/security-team
+/backend/services/ai_arabic_service.py @brainsait/ai-team @brainsait/arabic-team @brainsait/security-team
+*.env* @brainsait/security-team @brainsait/devops-team
+/ssl/ @brainsait/security-team @brainsait/devops-team
+/backend/keys/ @brainsait/security-team
+/backend/secrets/ @brainsait/security-team
+
+# Database and Core Infrastructure
+/backend/core/database.py @brainsait/backend-team @brainsait/dba-team @brainsait/security-team
+/backend/core/config.py @brainsait/backend-team @brainsait/devops-team
+/backend/models/ @brainsait/backend-team @brainsait/healthcare-team
+/backend/alembic/ @brainsait/backend-team @brainsait/dba-team
+/backend/migrations/ @brainsait/backend-team @brainsait/dba-team
+*.sql @brainsait/dba-team @brainsait/backend-team
+
+# API and Backend Services
+/backend/main.py @brainsait/backend-team @brainsait/api-team
+/backend/api/ @brainsait/api-team @brainsait/backend-team
+/backend/services/ @brainsait/backend-team @brainsait/api-team
+/backend/middleware/ @brainsait/backend-team @brainsait/security-team
+
+# Frontend and UI (with Arabic RTL Support)
+/oid-portal/src/ @brainsait/frontend-team @brainsait/ui-team
+/oid-portal/src/components/ @brainsait/frontend-team @brainsait/ui-team @brainsait/arabic-team
+/oid-portal/src/pages/ @brainsait/frontend-team @brainsait/ui-team
+/oid-portal/src/contexts/ @brainsait/frontend-team @brainsait/state-management-team
+/oid-portal/src/hooks/ @brainsait/frontend-team
+/oid-portal/src/services/ @brainsait/frontend-team @brainsait/api-team
+
+# Arabic Language and Internationalization
+/oid-portal/src/locales/ @brainsait/arabic-team @brainsait/i18n-team @brainsait/frontend-team
+/oid-portal/src/components/*Arabic* @brainsait/arabic-team @brainsait/frontend-team
+/oid-portal/src/utils/arabic* @brainsait/arabic-team @brainsait/frontend-team
+/backend/core/arabic_support.py @brainsait/arabic-team @brainsait/backend-team
+/backend/services/*arabic* @brainsait/arabic-team @brainsait/ai-team
+
+# Styling and Design System
+/oid-portal/src/styles/ @brainsait/ui-team @brainsait/design-team @brainsait/arabic-team
+/oid-portal/src/theme/ @brainsait/ui-team @brainsait/design-team @brainsait/arabic-team
+*.css @brainsait/ui-team @brainsait/frontend-team
+*.scss @brainsait/ui-team @brainsait/frontend-team
+tailwind.config.js @brainsait/ui-team @brainsait/frontend-team @brainsait/arabic-team
+
+# DevOps and Infrastructure
+/docker-compose*.yml @brainsait/devops-team @brainsait/backend-team @brainsait/frontend-team
+/Dockerfile* @brainsait/devops-team @brainsait/security-team
+/kubernetes/ @brainsait/devops-team @brainsait/infrastructure-team @brainsait/security-team
+/helm/ @brainsait/devops-team @brainsait/infrastructure-team
+/terraform/ @brainsait/devops-team @brainsait/infrastructure-team @brainsait/security-team
+/ansible/ @brainsait/devops-team @brainsait/infrastructure-team
+deploy*.sh @brainsait/devops-team @brainsait/deployment-team
+/nginx/ @brainsait/devops-team @brainsait/infrastructure-team
+
+# CI/CD and GitHub Actions
+/.github/workflows/ @brainsait/devops-team @brainsait/security-team @brainsait/ci-cd-team
+/.github/ISSUE_TEMPLATE/ @brainsait/community-team @brainsait/support-team
+/.github/pull_request_template.md @brainsait/community-team @brainsait/qa-team
+/.github/repository-*.json @brainsait/admin-team @brainsait/security-team @brainsait/devops-team
+
+# Testing
+/backend/tests/ @brainsait/qa-team @brainsait/backend-team
+/oid-portal/src/__tests__/ @brainsait/qa-team @brainsait/frontend-team
+/oid-portal/cypress/ @brainsait/qa-team @brainsait/frontend-team
+*test*.py @brainsait/qa-team @brainsait/backend-team
+*test*.js @brainsait/qa-team @brainsait/frontend-team
+*test*.ts @brainsait/qa-team @brainsait/frontend-team
+*spec*.js @brainsait/qa-team @brainsait/frontend-team
+*spec*.ts @brainsait/qa-team @brainsait/frontend-team
+pytest.ini @brainsait/qa-team @brainsait/backend-team
+jest.config.js @brainsait/qa-team @brainsait/frontend-team
+vitest.config.js @brainsait/qa-team @brainsait/frontend-team
+
+# Documentation
+README*.md @brainsait/documentation-team @brainsait/community-team
+CHANGELOG.md @brainsait/documentation-team @brainsait/release-team
+CONTRIBUTING.md @brainsait/community-team @brainsait/documentation-team
+CODE_OF_CONDUCT.md @brainsait/community-team @brainsait/hr-team
+SECURITY*.md @brainsait/security-team @brainsait/documentation-team
+/docs/ @brainsait/documentation-team @brainsait/technical-writers
+
+# Package and Dependency Management
+package*.json @brainsait/frontend-team @brainsait/security-team
+requirements*.txt @brainsait/backend-team @brainsait/security-team
+Pipfile* @brainsait/backend-team @brainsait/security-team
+poetry.lock @brainsait/backend-team @brainsait/security-team
+yarn.lock @brainsait/frontend-team @brainsait/security-team
+package-lock.json @brainsait/frontend-team @brainsait/security-team
+
+# Configuration Files
+vite.config.js @brainsait/frontend-team @brainsait/build-team
+webpack.config.js @brainsait/frontend-team @brainsait/build-team
+tsconfig*.json @brainsait/frontend-team @brainsait/typescript-team
+.eslintrc* @brainsait/frontend-team @brainsait/code-quality-team
+.prettierrc* @brainsait/frontend-team @brainsait/code-quality-team
+.gitignore @brainsait/devops-team @brainsait/security-team
+.dockerignore @brainsait/devops-team @brainsait/security-team
+
+# AI and Machine Learning
+/backend/integrations/brainsait_pybrain.py @brainsait/ai-team @brainsait/ml-team @brainsait/backend-team
+/backend/integrations/brainsait_pyheart.py @brainsait/ai-team @brainsait/health-monitoring-team @brainsait/backend-team
+/backend/services/unified_pybrain_service.py @brainsait/ai-team @brainsait/ml-team
+/backend/models/ai/ @brainsait/ai-team @brainsait/ml-team
+/backend/services/*ai* @brainsait/ai-team @brainsait/backend-team
+
+# Communication and Integrations
+/backend/services/communication* @brainsait/communications-team @brainsait/integration-team
+/backend/services/webhook_service.py @brainsait/integration-team @brainsait/backend-team
+/backend/services/workflow_service.py @brainsait/workflow-team @brainsait/backend-team
+
+# Business Logic and Operations
+/backend/services/bot_service.py @brainsait/bot-team @brainsait/business-team
+/backend/services/operations_service.py @brainsait/operations-team @brainsait/business-team
+/backend/services/rcm_service.py @brainsait/rcm-team @brainsait/healthcare-team @brainsait/business-team
+/backend/services/training_service.py @brainsait/training-team @brainsait/education-team
+
+# High-Risk Files Requiring Multiple Approvals
+# These files affect core security, compliance, or platform stability
+/backend/main.py @brainsait/admin-team @brainsait/backend-team @brainsait/security-team @brainsait/healthcare-team
+/docker-compose.yml @brainsait/admin-team @brainsait/devops-team @brainsait/security-team
+/docker-compose.production.yml @brainsait/admin-team @brainsait/devops-team @brainsait/security-team @brainsait/release-team
+LICENSE @brainsait/admin-team @brainsait/legal-team @brainsait/compliance-team
+SECURITY.md @brainsait/admin-team @brainsait/security-team @brainsait/compliance-team @brainsait/healthcare-team
+
+# Production and Release Management
+/deployment/ @brainsait/release-team @brainsait/devops-team @brainsait/security-team
+/scripts/production* @brainsait/release-team @brainsait/devops-team @brainsait/security-team
+*production* @brainsait/release-team @brainsait/devops-team @brainsait/security-team
+*staging* @brainsait/staging-team @brainsait/devops-team
+deploy-to-vps*.sh @brainsait/deployment-team @brainsait/devops-team @brainsait/security-team
+
+# Emergency and Hotfix Files
+# These require immediate security team approval
+/backend/services/emergency* @brainsait/emergency-team @brainsait/security-team @brainsait/healthcare-team
+/backend/hotfix/ @brainsait/emergency-team @brainsait/security-team @brainsait/admin-team
+*hotfix* @brainsait/emergency-team @brainsait/security-team @brainsait/release-team
+
+# Special Teams for Healthcare Compliance
+# Files that directly impact patient data or healthcare regulations
+/backend/models/patient* @brainsait/healthcare-team @brainsait/compliance-team @brainsait/security-team @brainsait/legal-team
+/backend/services/*patient* @brainsait/healthcare-team @brainsait/compliance-team @brainsait/security-team
+/backend/phi_handling/ @brainsait/healthcare-team @brainsait/compliance-team @brainsait/security-team @brainsait/legal-team
+*hipaa* @brainsait/compliance-team @brainsait/security-team @brainsait/healthcare-team @brainsait/legal-team
+*phi* @brainsait/compliance-team @brainsait/security-team @brainsait/healthcare-team @brainsait/legal-team
+*medical* @brainsait/healthcare-team @brainsait/compliance-team @brainsait/medical-team

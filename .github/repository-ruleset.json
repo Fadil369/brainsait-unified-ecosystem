@@ -1,0 +1,234 @@
+{
+  "name": "BrainSAIT Healthcare Platform Protection Rules",
+  "description": "Comprehensive protection rules for the BrainSAIT Unified Healthcare Ecosystem ensuring HIPAA compliance, security standards, and code quality for patient data safety.",
+  "target": "branch",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "include": [
+        "refs/heads/main",
+        "refs/heads/master",
+        "refs/heads/develop",
+        "refs/heads/staging",
+        "refs/heads/production",
+        "refs/heads/release/*",
+        "refs/heads/hotfix/*"
+      ],
+      "exclude": [
+        "refs/heads/feature/*",
+        "refs/heads/bugfix/*",
+        "refs/heads/chore/*"
+      ]
+    }
+  },
+  "rules": [
+    {
+      "type": "deletion",
+      "parameters": {
+        "restricted_deletions": true
+      }
+    },
+    {
+      "type": "non_fast_forward",
+      "parameters": {
+        "restrict_pushes": true
+      }
+    },
+    {
+      "type": "creation",
+      "parameters": {
+        "restrict_creation": false
+      }
+    },
+    {
+      "type": "update",
+      "parameters": {
+        "update_allows_fetch_and_merge": true
+      }
+    },
+    {
+      "type": "required_linear_history",
+      "parameters": {
+        "required_linear_history": true
+      }
+    },
+    {
+      "type": "required_signatures",
+      "parameters": {
+        "required_signatures": true
+      }
+    },
+    {
+      "type": "pull_request",
+      "parameters": {
+        "dismiss_stale_reviews_on_push": true,
+        "require_code_owner_review": true,
+        "require_last_push_approval": true,
+        "required_approving_review_count": 2,
+        "required_review_thread_resolution": true
+      }
+    },
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "strict_required_status_checks_policy": true,
+        "required_status_checks": [
+          {
+            "context": "🔒 Security & Compliance Scan",
+            "integration_id": null
+          },
+          {
+            "context": "🐍 Backend Tests",
+            "integration_id": null
+          },
+          {
+            "context": "⚛️ Frontend Tests", 
+            "integration_id": null
+          },
+          {
+            "context": "🔄 Integration Tests",
+            "integration_id": null
+          },
+          {
+            "context": "🏥 Healthcare Compliance Validation",
+            "integration_id": null
+          },
+          {
+            "context": "🐳 Docker Build & Security Scan",
+            "integration_id": null
+          },
+          {
+            "context": "🌐 Accessibility & Arabic RTL Testing",
+            "integration_id": null
+          },
+          {
+            "context": "🛡️ Dependency Vulnerability Scan",
+            "integration_id": null
+          },
+          {
+            "context": "🔍 Static Code Security Analysis",
+            "integration_id": null
+          },
+          {
+            "context": "🚨 SAST - CodeQL Analysis (javascript)",
+            "integration_id": null
+          },
+          {
+            "context": "🚨 SAST - CodeQL Analysis (python)",
+            "integration_id": null
+          },
+          {
+            "context": "🏥 Healthcare Security Compliance",
+            "integration_id": null
+          },
+          {
+            "context": "🔐 Secrets & Credential Scanning",
+            "integration_id": null
+          }
+        ]
+      }
+    },
+    {
+      "type": "workflows",
+      "parameters": {
+        "workflows": [
+          {
+            "path": ".github/workflows/ci-cd-healthcare.yml",
+            "ref": "refs/heads/main"
+          },
+          {
+            "path": ".github/workflows/security-audit.yml", 
+            "ref": "refs/heads/main"
+          }
+        ]
+      }
+    },
+    {
+      "type": "commit_message_pattern",
+      "parameters": {
+        "name": "Healthcare Platform Commit Convention",
+        "negate": false,
+        "operator": "regex",
+        "pattern": "^(feat|fix|docs|style|refactor|test|chore|security|healthcare|hipaa|nphies|arabic)(?:\\([a-z0-9-]+\\))?: .{10,100}$"
+      }
+    },
+    {
+      "type": "commit_author_email_pattern",
+      "parameters": {
+        "name": "Approved Email Domains",
+        "negate": false,
+        "operator": "regex",
+        "pattern": "^[a-zA-Z0-9._%+-]+@(brainsait\\.com|github\\.com|users\\.noreply\\.github\\.com)$"
+      }
+    },
+    {
+      "type": "committer_email_pattern",
+      "parameters": {
+        "name": "Approved Committer Email Domains",
+        "negate": false,
+        "operator": "regex",
+        "pattern": "^[a-zA-Z0-9._%+-]+@(brainsait\\.com|github\\.com|users\\.noreply\\.github\\.com|web-flow\\.github\\.com)$"
+      }
+    },
+    {
+      "type": "file_path_restriction",
+      "parameters": {
+        "restricted_file_paths": [
+          "backend/config/production.py",
+          "backend/.env.production",
+          "backend/keys/*",
+          "backend/secrets/*",
+          "oid-portal/.env.production",
+          "ssl/*",
+          "docker-compose.production.yml",
+          "kubernetes/production/*",
+          "deployment/production/*",
+          "*.pem",
+          "*.key",
+          "*.p12",
+          "*.pfx",
+          "*.jks"
+        ]
+      }
+    },
+    {
+      "type": "file_extension_restriction",
+      "parameters": {
+        "restricted_file_extensions": [
+          ".env",
+          ".key",
+          ".pem",
+          ".p12",
+          ".pfx",
+          ".jks",
+          ".keystore",
+          ".secret"
+        ]
+      }
+    },
+    {
+      "type": "max_file_size",
+      "parameters": {
+        "max_file_size": 104857600
+      }
+    },
+    {
+      "type": "max_file_path_length",
+      "parameters": {
+        "max_file_path_length": 255
+      }
+    }
+  ],
+  "bypass_actors": [
+    {
+      "actor_id": 5,
+      "actor_type": "RepositoryRole",
+      "bypass_mode": "always"
+    },
+    {
+      "actor_id": 2,
+      "actor_type": "RepositoryRole", 
+      "bypass_mode": "pull_request"
+    }
+  ]
+}

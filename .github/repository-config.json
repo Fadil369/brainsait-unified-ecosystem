@@ -1,0 +1,454 @@
+{
+  "repository": {
+    "name": "brainsait-unified-ecosystem",
+    "description": "BrainSAIT Unified Healthcare Ecosystem - AI-powered healthcare revenue cycle management platform for Saudi Arabia with NPHIES integration, Arabic language support, and HIPAA compliance.",
+    "visibility": "private",
+    "security_settings": {
+      "vulnerability_alerts": true,
+      "automated_security_fixes": true,
+      "dependency_scanning": true,
+      "code_scanning": true,
+      "secret_scanning": true,
+      "secret_scanning_push_protection": true
+    },
+    "features": {
+      "issues": true,
+      "projects": true,
+      "wiki": false,
+      "pages": false,
+      "discussions": true,
+      "packages": true,
+      "actions": true,
+      "sponsors": false
+    },
+    "merge_settings": {
+      "allow_merge_commits": false,
+      "allow_squash_merging": true,
+      "allow_rebase_merging": true,
+      "delete_head_branches": true,
+      "allow_auto_merge": false,
+      "allow_update_branch": true
+    }
+  },
+  "branch_protection_rules": [
+    {
+      "pattern": "main",
+      "enforce_admins": true,
+      "required_status_checks": {
+        "strict": true,
+        "contexts": [
+          "🔒 Security & Compliance Scan",
+          "🐍 Backend Tests",
+          "⚛️ Frontend Tests",
+          "🔄 Integration Tests", 
+          "🏥 Healthcare Compliance Validation",
+          "🐳 Docker Build & Security Scan",
+          "🌐 Accessibility & Arabic RTL Testing",
+          "🛡️ Dependency Vulnerability Scan",
+          "🔍 Static Code Security Analysis",
+          "🚨 SAST - CodeQL Analysis (javascript)",
+          "🚨 SAST - CodeQL Analysis (python)",
+          "🏥 Healthcare Security Compliance",
+          "🔐 Secrets & Credential Scanning"
+        ]
+      },
+      "required_pull_request_reviews": {
+        "dismiss_stale_reviews": true,
+        "require_code_owner_reviews": true,
+        "required_approving_review_count": 2,
+        "require_last_push_approval": true,
+        "bypass_pull_request_allowances": {
+          "users": [],
+          "teams": ["@brainsait/security-team", "@brainsait/healthcare-compliance"],
+          "apps": []
+        }
+      },
+      "required_signatures": true,
+      "required_linear_history": true,
+      "allow_force_pushes": false,
+      "allow_deletions": false,
+      "restrictions": {
+        "users": [],
+        "teams": ["@brainsait/core-developers", "@brainsait/healthcare-team"],
+        "apps": ["dependabot"]
+      }
+    },
+    {
+      "pattern": "develop",
+      "enforce_admins": false,
+      "required_status_checks": {
+        "strict": true,
+        "contexts": [
+          "🔒 Security & Compliance Scan",
+          "🐍 Backend Tests",
+          "⚛️ Frontend Tests",
+          "🏥 Healthcare Compliance Validation"
+        ]
+      },
+      "required_pull_request_reviews": {
+        "dismiss_stale_reviews": true,
+        "require_code_owner_reviews": false,
+        "required_approving_review_count": 1,
+        "require_last_push_approval": false
+      },
+      "required_signatures": false,
+      "required_linear_history": false,
+      "allow_force_pushes": false,
+      "allow_deletions": false
+    },
+    {
+      "pattern": "release/*",
+      "enforce_admins": true,
+      "required_status_checks": {
+        "strict": true,
+        "contexts": [
+          "🔒 Security & Compliance Scan",
+          "🐍 Backend Tests",
+          "⚛️ Frontend Tests",
+          "🔄 Integration Tests",
+          "🏥 Healthcare Compliance Validation",
+          "🐳 Docker Build & Security Scan",
+          "📊 Performance Testing"
+        ]
+      },
+      "required_pull_request_reviews": {
+        "dismiss_stale_reviews": true,
+        "require_code_owner_reviews": true,
+        "required_approving_review_count": 3,
+        "require_last_push_approval": true
+      },
+      "required_signatures": true,
+      "required_linear_history": true,
+      "allow_force_pushes": false,
+      "allow_deletions": false,
+      "restrictions": {
+        "users": [],
+        "teams": ["@brainsait/release-managers", "@brainsait/security-team"],
+        "apps": []
+      }
+    },
+    {
+      "pattern": "hotfix/*",
+      "enforce_admins": true,
+      "required_status_checks": {
+        "strict": true,
+        "contexts": [
+          "🔒 Security & Compliance Scan",
+          "🐍 Backend Tests",
+          "⚛️ Frontend Tests",
+          "🏥 Healthcare Security Compliance"
+        ]
+      },
+      "required_pull_request_reviews": {
+        "dismiss_stale_reviews": true,
+        "require_code_owner_reviews": true,
+        "required_approving_review_count": 2,
+        "require_last_push_approval": true
+      },
+      "required_signatures": true,
+      "required_linear_history": true,
+      "allow_force_pushes": false,
+      "allow_deletions": false,
+      "restrictions": {
+        "users": [],
+        "teams": ["@brainsait/hotfix-team", "@brainsait/security-team"],
+        "apps": []
+      }
+    }
+  ],
+  "rulesets": [
+    {
+      "name": "Healthcare Data Protection Rules",
+      "target": "push",
+      "enforcement": "active",
+      "conditions": {
+        "ref_name": {
+          "include": ["refs/heads/*"],
+          "exclude": ["refs/heads/feature/*"]
+        }
+      },
+      "rules": [
+        {
+          "type": "file_path_restriction",
+          "parameters": {
+            "restricted_file_paths": [
+              "backend/patient_data/*",
+              "backend/medical_records/*", 
+              "backend/phi_data/*",
+              "backend/hipaa_logs/*",
+              "backend/audit_trails/*",
+              "backend/encryption_keys/*",
+              "backend/nphies_credentials/*"
+            ]
+          }
+        },
+        {
+          "type": "commit_message_pattern",
+          "parameters": {
+            "name": "HIPAA Compliance Commit Pattern",
+            "operator": "regex",
+            "pattern": "^(hipaa|healthcare|patient|medical|phi|audit): .+$",
+            "negate": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Arabic Language Support Requirements",
+      "target": "pull_request",
+      "enforcement": "active",
+      "conditions": {
+        "ref_name": {
+          "include": ["refs/heads/main", "refs/heads/develop"]
+        }
+      },
+      "rules": [
+        {
+          "type": "required_status_checks",
+          "parameters": {
+            "required_status_checks": [
+              {
+                "context": "🌐 Accessibility & Arabic RTL Testing",
+                "integration_id": null
+              },
+              {
+                "context": "Arabic Language Validation",
+                "integration_id": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Security and Compliance Gate",
+      "target": "merge_queue",
+      "enforcement": "active",
+      "conditions": {
+        "ref_name": {
+          "include": ["refs/heads/main"]
+        }
+      },
+      "rules": [
+        {
+          "type": "required_status_checks",
+          "parameters": {
+            "strict_required_status_checks_policy": true,
+            "required_status_checks": [
+              {
+                "context": "🏥 Healthcare Security Compliance",
+                "integration_id": null
+              },
+              {
+                "context": "🔐 Secrets & Credential Scanning",
+                "integration_id": null
+              },
+              {
+                "context": "🛡️ Dependency Vulnerability Scan",
+                "integration_id": null
+              },
+              {
+                "context": "HIPAA Compliance Check",
+                "integration_id": null
+              },
+              {
+                "context": "NPHIES Integration Security",
+                "integration_id": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "collaborator_permissions": {
+    "default_permission": "read",
+    "admin_team": "@brainsait/admin-team",
+    "write_teams": [
+      "@brainsait/core-developers",
+      "@brainsait/healthcare-team",
+      "@brainsait/frontend-team",
+      "@brainsait/backend-team"
+    ],
+    "read_teams": [
+      "@brainsait/qa-team",
+      "@brainsait/documentation-team",
+      "@brainsait/compliance-auditors"
+    ],
+    "triage_teams": [
+      "@brainsait/support-team",
+      "@brainsait/customer-success"
+    ]
+  },
+  "webhook_settings": {
+    "events": [
+      "push",
+      "pull_request",
+      "issues",
+      "issue_comment",
+      "pull_request_review",
+      "pull_request_review_comment",
+      "create",
+      "delete",
+      "deployment",
+      "deployment_status",
+      "status",
+      "check_run",
+      "check_suite",
+      "workflow_run",
+      "security_advisory"
+    ],
+    "content_type": "json",
+    "insecure_ssl": false,
+    "secret": true
+  },
+  "environment_protection_rules": {
+    "production": {
+      "required_reviewers": [
+        "@brainsait/security-team",
+        "@brainsait/healthcare-compliance",
+        "@brainsait/devops-team"
+      ],
+      "deployment_branch_policy": {
+        "protected_branches": true,
+        "custom_branch_policies": false
+      },
+      "wait_timer": 5,
+      "can_admins_bypass": false
+    },
+    "staging": {
+      "required_reviewers": [
+        "@brainsait/qa-team",
+        "@brainsait/healthcare-team"
+      ],
+      "deployment_branch_policy": {
+        "protected_branches": false,
+        "custom_branch_policies": true,
+        "custom_branches": ["develop", "release/*"]
+      },
+      "wait_timer": 2,
+      "can_admins_bypass": true
+    }
+  },
+  "dependabot_configuration": {
+    "version": 2,
+    "updates": [
+      {
+        "package-ecosystem": "pip",
+        "directory": "/backend",
+        "schedule": {
+          "interval": "weekly",
+          "day": "monday",
+          "time": "09:00",
+          "timezone": "Asia/Riyadh"
+        },
+        "labels": [
+          "security",
+          "dependencies",
+          "python",
+          "healthcare"
+        ],
+        "reviewers": [
+          "@brainsait/security-team",
+          "@brainsait/backend-team"
+        ],
+        "assignees": [
+          "@brainsait/security-team"
+        ],
+        "commit-message": {
+          "prefix": "security",
+          "include": "scope"
+        },
+        "open-pull-requests-limit": 5,
+        "target-branch": "develop"
+      },
+      {
+        "package-ecosystem": "npm",
+        "directory": "/oid-portal",
+        "schedule": {
+          "interval": "weekly",
+          "day": "tuesday",
+          "time": "10:00",
+          "timezone": "Asia/Riyadh"
+        },
+        "labels": [
+          "security",
+          "dependencies", 
+          "javascript",
+          "frontend"
+        ],
+        "reviewers": [
+          "@brainsait/security-team",
+          "@brainsait/frontend-team"
+        ],
+        "assignees": [
+          "@brainsait/frontend-team"
+        ],
+        "commit-message": {
+          "prefix": "security",
+          "include": "scope"
+        },
+        "open-pull-requests-limit": 5,
+        "target-branch": "develop"
+      },
+      {
+        "package-ecosystem": "docker",
+        "directory": "/",
+        "schedule": {
+          "interval": "weekly",
+          "day": "wednesday",
+          "time": "11:00",
+          "timezone": "Asia/Riyadh"
+        },
+        "labels": [
+          "security",
+          "dependencies",
+          "docker",
+          "infrastructure"
+        ],
+        "reviewers": [
+          "@brainsait/security-team",
+          "@brainsait/devops-team"
+        ],
+        "assignees": [
+          "@brainsait/devops-team"
+        ],
+        "commit-message": {
+          "prefix": "security",
+          "include": "scope"
+        },
+        "open-pull-requests-limit": 3,
+        "target-branch": "develop"
+      },
+      {
+        "package-ecosystem": "github-actions",
+        "directory": "/",
+        "schedule": {
+          "interval": "weekly",
+          "day": "thursday",
+          "time": "12:00",
+          "timezone": "Asia/Riyadh"
+        },
+        "labels": [
+          "security",
+          "dependencies",
+          "github-actions",
+          "ci-cd"
+        ],
+        "reviewers": [
+          "@brainsait/security-team",
+          "@brainsait/devops-team"
+        ],
+        "assignees": [
+          "@brainsait/devops-team"
+        ],
+        "commit-message": {
+          "prefix": "security",
+          "include": "scope"
+        },
+        "open-pull-requests-limit": 3,
+        "target-branch": "develop"
+      }
+    ]
+  }
+}
