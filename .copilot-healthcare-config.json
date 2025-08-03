@@ -1,0 +1,59 @@
+{
+  "copilot_firewall_config": {
+    "enabled": true,
+    "recommended_allowlist": true,
+    "custom_allowlist": {
+      "domains": [
+        "nphies.sa",
+        "api.nphies.sa",
+        "portal.nphies.sa",
+        "services.nphies.sa",
+        "hl7.org",
+        "fhir.org",
+        "terminology.hl7.org",
+        "build.fhir.org",
+        "moh.gov.sa",
+        "api.moh.gov.sa",
+        "shc.gov.sa",
+        "sfda.gov.sa",
+        "pypi.org",
+        "files.pythonhosted.org",
+        "registry.npmjs.org",
+        "npm.pkg.github.com",
+        "ghcr.io",
+        "api.twilio.com",
+        "voice.twilio.com",
+        "video.twilio.com",
+        "hhs.gov",
+        "hipaa.com",
+        "github.com",
+        "api.github.com",
+        "raw.githubusercontent.com"
+      ],
+      "urls": [
+        "https://api.nphies.sa/eligibility/",
+        "https://api.nphies.sa/preauthorization/",
+        "https://api.nphies.sa/claim/",
+        "https://portal.nphies.sa/provider/",
+        "https://hl7.org/fhir/R4/",
+        "https://terminology.hl7.org/fhir/",
+        "https://build.fhir.org/ig/",
+        "https://api.moh.gov.sa/v1/",
+        "https://moh.gov.sa/en/Ministry/",
+        "https://api.twilio.com/2010-04-01/",
+        "https://voice.twilio.com/v1/",
+        "https://video.twilio.com/v1/",
+        "https://pypi.org/project/fhir/",
+        "https://pypi.org/project/hl7/",
+        "https://pypi.org/project/healthcare/",
+        "https://registry.npmjs.org/@types/fhir"
+      ]
+    },
+    "last_updated": "2025-08-03T11:17:02Z",
+    "compliance": {
+      "hipaa": true,
+      "nphies": true,
+      "saudi_healthcare": true
+    }
+  }
+}

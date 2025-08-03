@@ -1,0 +1,30 @@
+# BrainSAIT MCP Servers Requirements
+# Model Context Protocol integration for healthcare platform
+
+# Core MCP packages
+mcp>=1.0.0
+
+# Healthcare-specific packages
+fhir.resources>=7.0.0
+hl7>=4.0.0
+python-dateutil>=2.8.2
+
+# Arabic language processing
+arabic-reshaper>=3.0.0
+python-bidi>=0.4.2
+pyarabic>=0.6.15
+hijri-converter>=2.3.1
+
+# Medical coding and terminology
+pymedtermino>=0.3.0
+icd10-cm>=0.0.3
+
+# Additional dependencies for MCP servers
+asyncio-mqtt>=0.16.0
+aiohttp>=3.9.0
+pydantic>=2.5.0
+python-jose>=3.3.0
+
+# Development and testing
+pytest-asyncio>=0.23.0
+pytest-mock>=3.12.0
