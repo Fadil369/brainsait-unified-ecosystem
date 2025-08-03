@@ -12,10 +12,10 @@ import rtlPlugin from "stylis-plugin-rtl";
 
 // Import UNIFIED components (ULTRATHINK CONSOLIDATION)
 import Layout from "./components/Layout";
-import OidTree from "./pages/OidTree";  // Now uses optimal modular architecture
-import UnifiedWorkspace from "./components/UnifiedWorkspace";  // Main workspace entry point
-import UnifiedPortalRouter from "./components/UnifiedPortalRouter";
 import RevolutionaryHealthcareDashboard from "./components/RevolutionaryHealthcareDashboard";
+import UnifiedPortalRouter from "./components/UnifiedPortalRouter";
+import UnifiedWorkspace from "./components/UnifiedWorkspace"; // Main workspace entry point
+import OidTree from "./pages/OidTree"; // Now uses optimal modular architecture
 
 // Essential utility pages
 import ChatAssistant from "./pages/ChatAssistant";
@@ -233,8 +233,11 @@ function AppContent() {
             <Layout>
               <Routes>
                 {/* REVOLUTIONARY HEALTHCARE DASHBOARD */}
-                <Route path="/revolutionary" element={<RevolutionaryHealthcareDashboard />} />
-                
+                <Route
+                  path="/revolutionary"
+                  element={<RevolutionaryHealthcareDashboard />}
+                />
+
                 {/* UNIFIED HEALTHCARE WORKSPACE - Single Entry Point */}
                 <Route path="/" element={<UnifiedWorkspace />} />
                 <Route path="/workspace" element={<UnifiedWorkspace />} />
@@ -277,12 +280,21 @@ function AppContent() {
 
                 {/* Legacy Routes - All redirect to Unified Workspace */}
                 <Route path="/legacy/home" element={<UnifiedWorkspace />} />
-                <Route path="/legacy/healthcare" element={<UnifiedWorkspace />} />
+                <Route
+                  path="/legacy/healthcare"
+                  element={<UnifiedWorkspace />}
+                />
                 <Route path="/legacy/nphies" element={<UnifiedWorkspace />} />
                 <Route path="/legacy/rcm" element={<UnifiedWorkspace />} />
-                <Route path="/legacy/ai-analytics" element={<UnifiedWorkspace />} />
+                <Route
+                  path="/legacy/ai-analytics"
+                  element={<UnifiedWorkspace />}
+                />
                 <Route path="/legacy/training" element={<UnifiedWorkspace />} />
-                <Route path="/legacy/bot-dashboard" element={<UnifiedWorkspace />} />
+                <Route
+                  path="/legacy/bot-dashboard"
+                  element={<UnifiedWorkspace />}
+                />
               </Routes>
             </Layout>
           </Router>

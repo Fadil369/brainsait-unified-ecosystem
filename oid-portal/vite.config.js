@@ -203,6 +203,14 @@ export default defineConfig({
     
     // Healthcare-specific optimizations with advanced chunking
     rollupOptions: {
+      external: [],
+      treeshake: {
+        preset: 'smallest',
+        manualPureFunctions: ['console.log', 'console.info'],
+        propertyReadSideEffects: false,
+        tryCatchDeoptimization: false,
+        unknownGlobalSideEffects: false
+      },
       output: {
         // Advanced chunk splitting for optimal caching and loading
         manualChunks: (id) => {
@@ -332,20 +340,7 @@ export default defineConfig({
     
     // Advanced build optimizations
     reportCompressedSize: false, // Disable for faster builds
-    cssCodeSplit: true, // Enable CSS code splitting
-    
-    // Preload critical resources
-    rollupOptions: {
-      ...this.rollupOptions,
-      external: [],
-      treeshake: {
-        preset: 'smallest',
-        manualPureFunctions: ['console.log', 'console.info'],
-        propertyReadSideEffects: false,
-        tryCatchDeoptimization: false,
-        unknownGlobalSideEffects: false
-      }
-    }
+    cssCodeSplit: true // Enable CSS code splitting
   },
   
   optimizeDeps: {

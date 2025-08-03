@@ -1,38 +1,40 @@
-/* Optimized Font Loading for Arabic Typography - Performance First */
-@font-face {
-  font-family: 'Noto Sans Arabic';
-  src: url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
-  font-display: swap;
-  font-weight: 300 700;
-  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
-}
-
-@font-face {
-  font-family: 'Cairo';
-  src: url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap');
-  font-display: swap;
-  font-weight: 300 700;
-  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
-}
-
-@font-face {
-  font-family: 'Inter';
-  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-  font-display: swap;
-  font-weight: 300 700;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
 /* Import BrainSAIT Healthcare Design System */
-@import url('./styles/design-tokens.css');
-@import url('./styles/arabic-typography.css');
-@import url('./styles/healthcare-components.css');
-@import url('./styles/enhanced-oid-tree.css');
-@import url('./styles/accessibility.css');
-@import url('./styles/mobile-clinical.css');
+@import url("./styles/design-tokens.css");
+@import url("./styles/arabic-typography.css");
+@import url("./styles/healthcare-components.css");
+@import url("./styles/enhanced-oid-tree.css");
+@import url("./styles/accessibility.css");
+@import url("./styles/mobile-clinical.css");
 
 /* Import Revolutionary Glass-Morphism System */
-@import url('./styles/glass-morphism-system.css');
+@import url("./styles/glass-morphism-system.css");
+
+/* Optimized Font Loading for Arabic Typography - Performance First */
+@font-face {
+  font-family: "Noto Sans Arabic";
+  src: url("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap");
+  font-display: swap;
+  font-weight: 300 700;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap");
+  font-display: swap;
+  font-weight: 300 700;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+  font-display: swap;
+  font-weight: 300 700;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
 
 /* Legacy color mappings for compatibility */
 :root {
@@ -48,14 +50,14 @@
   --success: #06d6a0;
   --border-color: #2d3748;
   --card-bg: #1a1f2e;
-  
+
   /* Dynamic Theming Variables - Enhanced for Glass-Morphism */
-  --theme-mode: 'dark'; /* 'light' | 'dark' | 'auto' */
+  --theme-mode: "dark"; /* 'light' | 'dark' | 'auto' */
   --theme-intensity: 1; /* 0.5 - 1.5 for theme intensity scaling */
   --theme-blur-preference: 1; /* 0 - 2 for blur intensity preference */
   --theme-motion-preference: 1; /* 0 - 1 for motion preference */
   --theme-contrast-preference: 1; /* 1 - 2 for contrast preference */
-  
+
   /* Adaptive Color System */
   --adaptive-bg-primary: var(--clinical-bg-primary);
   --adaptive-bg-secondary: var(--clinical-bg-secondary);
@@ -63,23 +65,23 @@
   --adaptive-text-primary: var(--clinical-text-primary);
   --adaptive-text-secondary: var(--clinical-text-secondary);
   --adaptive-border-primary: var(--clinical-border-primary);
-  
+
   /* Performance Optimization Variables */
   --perf-gpu-acceleration: translateZ(0);
   --perf-will-change: auto;
   --perf-contain: none;
   --perf-content-visibility: visible;
-  
+
   /* Enhanced Animation Controls */
   --anim-duration-multiplier: 1;
   --anim-easing-primary: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --anim-easing-secondary: cubic-bezier(0.4, 0, 0.2, 1);
   --anim-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  
+
   /* Glass Effect Controls */
   --glass-enabled: 1; /* 0 to disable all glass effects */
-  --glass-quality: 'high'; /* 'low' | 'medium' | 'high' | 'ultra' */
-  --glass-performance-mode: 'auto'; /* 'auto' | 'performance' | 'quality' */
+  --glass-quality: "high"; /* 'low' | 'medium' | 'high' | 'ultra' */
+  --glass-performance-mode: "auto"; /* 'auto' | 'performance' | 'quality' */
 }
 
 body {
@@ -87,7 +89,7 @@ body {
   color: var(--text-primary);
   margin: 0;
   padding: 0;
-  font-family: 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Inter", "Roboto", "Helvetica", "Arial", sans-serif;
   min-height: 100vh;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -98,7 +100,7 @@ body {
 /* Arabic text support */
 body[dir="rtl"],
 body.arabic {
-  font-family: 'Noto Sans Arabic', 'Cairo', 'Tajawal', 'Arial', sans-serif;
+  font-family: "Noto Sans Arabic", "Cairo", "Tajawal", "Arial", sans-serif;
   direction: rtl;
   text-align: right;
 }
