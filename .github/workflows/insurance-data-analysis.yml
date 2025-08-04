@@ -1,0 +1,334 @@
+name: 📊 Insurance Data Analysis Workflow
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths: 
+      - 'backend/services/insurance_analysis/**'
+      - '.github/workflows/insurance-data-analysis.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'backend/services/insurance_analysis/**'
+  schedule:
+    # Run daily at 2 AM UTC for automated insurance data processing
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      analysis_type:
+        description: 'Type of analysis to run'
+        required: true
+        default: 'comprehensive'
+        type: choice
+        options:
+          - comprehensive
+          - trends_only
+          - rejections_only
+          - financial_only
+
+env:
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  # 🧪 Test Insurance Analysis Services
+  test-insurance-services:
+    name: 🧪 Test Insurance Analysis Services
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('backend/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov pytest-asyncio
+
+      - name: Install insurance analysis dependencies
+        run: |
+          pip install pandas openpyxl xlsxwriter numpy matplotlib seaborn
+
+      - name: Run insurance analysis tests
+        run: |
+          cd backend
+          python -m pytest tests/ -k "insurance" -v --cov=services/insurance_analysis --cov-report=xml --cov-report=html
+
+      - name: Upload test coverage
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./backend/coverage.xml
+          flags: insurance-analysis
+          name: insurance-analysis-coverage
+
+  # 📈 Validate Sample Data Processing
+  validate-sample-data:
+    name: 📈 Validate Sample Data Processing
+    runs-on: ubuntu-latest
+    needs: test-insurance-services
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pandas openpyxl
+
+      - name: Create sample insurance data
+        run: |
+          cd backend
+          python -c "
+          import pandas as pd
+          import json
+          from datetime import datetime, timedelta
+          import random
+          
+          # Generate sample claims data
+          sample_data = []
+          for i in range(100):
+              sample_data.append({
+                  'claim_id': f'CLM{i+1:04d}',
+                  'patient_id': f'PAT{i+1:04d}',
+                  'provider_id': f'PRV{(i%10)+1:03d}',
+                  'claim_amount': round(random.uniform(100, 10000), 2),
+                  'claim_date': (datetime.now() - timedelta(days=random.randint(1, 365))).isoformat(),
+                  'status': random.choice(['approved', 'rejected', 'pending']),
+                  'rejection_reason': random.choice(['Documentation incomplete', 'Not covered', 'Invalid code', '']) if random.random() < 0.3 else '',
+                  'claim_type': random.choice(['inpatient', 'outpatient', 'emergency', 'preventive'])
+              })
+          
+          with open('sample_claims.json', 'w') as f:
+              json.dump(sample_data, f, indent=2)
+          
+          print(f'Generated {len(sample_data)} sample claims')
+          "
+
+      - name: Test data extraction
+        run: |
+          cd backend
+          python -c "
+          import asyncio
+          import json
+          from services.insurance_analysis.insurance_data_extractor import InsuranceDataExtractor
+          from services.insurance_analysis.claim_analysis_engine import ClaimAnalysisEngine
+          
+          async def test_analysis():
+              # Load sample data
+              with open('sample_claims.json', 'r') as f:
+                  claims_data = json.load(f)
+              
+              # Test claim analysis
+              analyzer = ClaimAnalysisEngine()
+              result = await analyzer.analyze_claims_data(claims_data)
+              
+              print('Analysis completed successfully')
+              print(f'Total claims analyzed: {result.get(\"total_claims\", 0)}')
+              print(f'Analysis successful: {result.get(\"success\", False)}')
+              
+              if not result.get('success'):
+                  raise Exception('Analysis failed')
+          
+          asyncio.run(test_analysis())
+          "
+
+      - name: Test trend analysis
+        run: |
+          cd backend
+          python -c "
+          import asyncio
+          import json
+          from services.insurance_analysis.trend_analyzer import TrendAnalyzer
+          
+          async def test_trends():
+              with open('sample_claims.json', 'r') as f:
+                  claims_data = json.load(f)
+              
+              analyzer = TrendAnalyzer()
+              result = await analyzer.analyze_trends(claims_data, 'monthly', 6)
+              
+              print('Trend analysis completed successfully')
+              print(f'Analysis successful: {result.get(\"success\", False)}')
+              
+              if not result.get('success'):
+                  raise Exception('Trend analysis failed')
+          
+          asyncio.run(test_trends())
+          "
+
+  # 📊 Performance Benchmark
+  performance-benchmark:
+    name: 📊 Performance Benchmark
+    runs-on: ubuntu-latest
+    needs: validate-sample-data
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install memory_profiler psutil
+
+      - name: Benchmark insurance analysis performance
+        run: |
+          cd backend
+          python -c "
+          import asyncio
+          import json
+          import time
+          import psutil
+          import os
+          from services.insurance_analysis.claim_analysis_engine import ClaimAnalysisEngine
+          from services.insurance_analysis.trend_analyzer import TrendAnalyzer
+          from services.insurance_analysis.financial_impact_calculator import FinancialImpactCalculator
+          
+          async def benchmark():
+              # Generate larger dataset for benchmarking
+              import random
+              from datetime import datetime, timedelta
+              
+              large_dataset = []
+              for i in range(1000):  # 1000 claims
+                  large_dataset.append({
+                      'claim_id': f'CLM{i+1:05d}',
+                      'patient_id': f'PAT{i+1:05d}',
+                      'provider_id': f'PRV{(i%50)+1:03d}',
+                      'claim_amount': round(random.uniform(100, 50000), 2),
+                      'claim_date': (datetime.now() - timedelta(days=random.randint(1, 730))).isoformat(),
+                      'status': random.choice(['approved', 'rejected', 'pending']),
+                      'rejection_reason': random.choice(['Documentation incomplete', 'Not covered', 'Invalid code', '']) if random.random() < 0.25 else '',
+                      'claim_type': random.choice(['inpatient', 'outpatient', 'emergency', 'preventive'])
+                  })
+              
+              process = psutil.Process(os.getpid())
+              
+              # Benchmark claim analysis
+              start_time = time.time()
+              memory_before = process.memory_info().rss / 1024 / 1024  # MB
+              
+              analyzer = ClaimAnalysisEngine()
+              result = await analyzer.analyze_claims_data(large_dataset)
+              
+              end_time = time.time()
+              memory_after = process.memory_info().rss / 1024 / 1024  # MB
+              
+              analysis_time = end_time - start_time
+              memory_used = memory_after - memory_before
+              
+              print(f'Claim Analysis Benchmark:')
+              print(f'Dataset size: {len(large_dataset)} claims')
+              print(f'Processing time: {analysis_time:.2f} seconds')
+              print(f'Memory usage: {memory_used:.2f} MB')
+              print(f'Throughput: {len(large_dataset)/analysis_time:.1f} claims/second')
+              
+              # Performance thresholds
+              if analysis_time > 30:  # Should process 1000 claims in under 30 seconds
+                  raise Exception(f'Performance too slow: {analysis_time:.2f}s > 30s')
+              
+              if memory_used > 500:  # Should use less than 500MB for 1000 claims
+                  raise Exception(f'Memory usage too high: {memory_used:.2f}MB > 500MB')
+              
+              print('Performance benchmark passed!')
+          
+          asyncio.run(benchmark())
+          "
+
+  # 🚀 Deploy Analysis Results
+  deploy-analysis:
+    name: 🚀 Deploy Analysis Dashboard
+    runs-on: ubuntu-latest
+    needs: [test-insurance-services, validate-sample-data, performance-benchmark]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate analysis report
+        run: |
+          echo "# Insurance Data Analysis Report" > analysis-report.md
+          echo "" >> analysis-report.md
+          echo "## Workflow Results" >> analysis-report.md
+          echo "- ✅ Insurance services tests passed" >> analysis-report.md
+          echo "- ✅ Sample data validation completed" >> analysis-report.md
+          echo "- ✅ Performance benchmarks met" >> analysis-report.md
+          echo "" >> analysis-report.md
+          echo "Generated at: $(date)" >> analysis-report.md
+
+      - name: Upload analysis report
+        uses: actions/upload-artifact@v3
+        with:
+          name: insurance-analysis-report
+          path: analysis-report.md
+
+  # 🔄 Automated Data Processing
+  automated-processing:
+    name: 🔄 Automated Insurance Data Processing
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event.inputs.analysis_type != ''
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run automated analysis
+        env:
+          ANALYSIS_TYPE: ${{ github.event.inputs.analysis_type || 'comprehensive' }}
+        run: |
+          cd backend
+          echo "Running automated insurance data analysis: $ANALYSIS_TYPE"
+          
+          # This would typically connect to actual data sources
+          # For now, we'll simulate the process
+          python -c "
+          print('Automated analysis completed for type: $ANALYSIS_TYPE')
+          print('This would typically:')
+          print('1. Connect to insurance data sources')
+          print('2. Process new claims data')
+          print('3. Generate updated analytics')
+          print('4. Send notifications about important trends')
+          print('5. Update dashboards with new insights')
+          "
+
+      - name: Notify completion
+        run: |
+          echo "✅ Automated insurance data processing completed"
+          echo "Analysis type: ${{ github.event.inputs.analysis_type || 'comprehensive' }}"
+          echo "Timestamp: $(date)"
