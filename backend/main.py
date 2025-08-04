@@ -71,6 +71,21 @@ except ImportError:
     def require_auth():
         return {}
 
+# Import new service modules
+try:
+    from services.insurance_analysis import (
+        InsuranceDataExtractor, ClaimAnalysisEngine, TrendAnalyzer,
+        RejectionPatternDetector, FinancialImpactCalculator, RecommendationEngine
+    )
+    from services.code_enhancement import (
+        CodeAnalyzer, PerformanceOptimizer, SecurityScanner,
+        DebugAutomation, QualityMetrics
+    )
+    ENHANCED_SERVICES_AVAILABLE = True
+except ImportError as e:
+    logger.warning(f"Enhanced services not available: {e}")
+    ENHANCED_SERVICES_AVAILABLE = False
+
 # Load environment variables
 load_dotenv()
 
@@ -263,6 +278,58 @@ class CommunicationStatus(str, Enum):
 class Language(str, Enum):
     ARABIC = "ar"
     ENGLISH = "en"
+
+# Enhanced Services Models for Insurance Analysis and Code Enhancement
+class FileUploadRequest(BaseModel):
+    filename: str
+    file_type: Optional[str] = None
+    content: str  # Base64 encoded file content
+
+class ClaimsAnalysisRequest(BaseModel):
+    claims_data: List[Dict[str, Any]]
+    analysis_type: str = "comprehensive"
+    include_trends: bool = True
+    include_recommendations: bool = True
+
+class TrendAnalysisRequest(BaseModel):
+    claims_data: List[Dict[str, Any]]
+    period: str = "monthly"  # daily, weekly, monthly, quarterly, yearly
+    compare_periods: int = 12
+
+class RejectionAnalysisRequest(BaseModel):
+    claims_data: List[Dict[str, Any]]
+    include_patterns: bool = True
+    include_root_causes: bool = True
+
+class FinancialAnalysisRequest(BaseModel):
+    claims_data: List[Dict[str, Any]]
+    include_roi_analysis: bool = True
+    include_opportunities: bool = True
+
+class CodeAnalysisRequest(BaseModel):
+    code: str
+    filename: str = "code.py"
+    project_path: Optional[str] = None
+
+class PerformanceAnalysisRequest(BaseModel):
+    code: str
+    filename: str = "code.py"
+    iterations: int = 100
+
+class SecurityScanRequest(BaseModel):
+    code: str
+    filename: str = "code.py"
+    requirements_content: Optional[str] = None
+
+class DebugAnalysisRequest(BaseModel):
+    error_traceback: Optional[str] = None
+    code: Optional[str] = None
+    problem_description: Optional[str] = None
+
+class QualityMetricsRequest(BaseModel):
+    code: str
+    filename: str = "code.py"
+    compare_versions: Optional[List[Dict[str, str]]] = None
 
 class HealthcareIdentity(BaseModel):
     entity_type: EntityType
@@ -2393,6 +2460,311 @@ async def get_ai_metrics():
     except Exception as e:
         logger.error(f"Failed to get AI metrics: {e}")
         return {"status": "error", "error": str(e)}
+
+# ============================================================================
+# ENHANCED SERVICES API ENDPOINTS - Insurance Analysis & Code Enhancement
+# ============================================================================
+
+# Insurance Analysis Endpoints
+@app.post("/api/v1/insurance/upload")
+async def upload_insurance_file(file_data: FileUploadRequest):
+    """Upload and process insurance data files (Excel/PDF)"""
+    if not ENHANCED_SERVICES_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Enhanced services not available")
+    
+    try:
+        # Decode base64 content
+        import base64
+        file_content = base64.b64decode(file_data.content)
+        
+        # Initialize extractor and process file
+        extractor = InsuranceDataExtractor()
+        result = await extractor.process_uploaded_file(
+            file_content, 
+            file_data.filename, 
+            file_data.file_type
+        )
+        
+        audit_log("insurance_file_upload", "system", "insurance_file", file_data.filename)
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error processing insurance file upload: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"File processing failed: {str(e)}")
+
+@app.post("/api/v1/insurance/analyze")
+async def analyze_claims_data(request: ClaimsAnalysisRequest):
+    """Perform comprehensive claims analysis"""
+    if not ENHANCED_SERVICES_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Enhanced services not available")
+    
+    try:
+        analyzer = ClaimAnalysisEngine()
+        result = await analyzer.analyze_claims_data(request.claims_data)
+        
+        if request.include_trends:
+            trend_analyzer = TrendAnalyzer()
+            trend_result = await trend_analyzer.analyze_trends(request.claims_data)
+            result['trend_analysis'] = trend_result
+        
+        if request.include_recommendations:
+            recommender = RecommendationEngine()
+            recommendations = await recommender.generate_recommendations(result)
+            result['recommendations'] = recommendations
+        
+        audit_log("insurance_claims_analysis", "system", "claims_data", len(request.claims_data))
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error analyzing claims data: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Claims analysis failed: {str(e)}")
+
+@app.post("/api/v1/insurance/trends")
+async def analyze_trends(request: TrendAnalysisRequest):
+    """Analyze trends in insurance claims data"""
+    if not ENHANCED_SERVICES_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Enhanced services not available")
+    
+    try:
+        analyzer = TrendAnalyzer()
+        result = await analyzer.analyze_trends(
+            request.claims_data, 
+            request.period, 
+            request.compare_periods
+        )
+        
+        audit_log("insurance_trend_analysis", "system", "claims_data", len(request.claims_data))
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error analyzing trends: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Trend analysis failed: {str(e)}")
+
+@app.post("/api/v1/insurance/rejections")
+async def analyze_rejections(request: RejectionAnalysisRequest):
+    """Analyze rejection patterns in claims data"""
+    if not ENHANCED_SERVICES_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Enhanced services not available")
+    
+    try:
+        detector = RejectionPatternDetector()
+        result = await detector.detect_rejection_patterns(request.claims_data)
+        
+        audit_log("insurance_rejection_analysis", "system", "claims_data", len(request.claims_data))
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error analyzing rejections: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Rejection analysis failed: {str(e)}")
+
+@app.post("/api/v1/insurance/financial-impact")
+async def calculate_financial_impact(request: FinancialAnalysisRequest):
+    """Calculate financial impact and optimization opportunities"""
+    if not ENHANCED_SERVICES_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Enhanced services not available")
+    
+    try:
+        calculator = FinancialImpactCalculator()
+        result = await calculator.calculate_financial_impact(request.claims_data)
+        
+        audit_log("insurance_financial_analysis", "system", "claims_data", len(request.claims_data))
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error calculating financial impact: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Financial analysis failed: {str(e)}")
+
+@app.post("/api/v1/insurance/recommendations")
+async def generate_insurance_recommendations(request: ClaimsAnalysisRequest):
+    """Generate comprehensive recommendations for insurance operations"""
+    if not ENHANCED_SERVICES_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Enhanced services not available")
+    
+    try:
+        # Run multiple analyses
+        claim_analyzer = ClaimAnalysisEngine()
+        trend_analyzer = TrendAnalyzer()
+        rejection_detector = RejectionPatternDetector()
+        financial_calculator = FinancialImpactCalculator()
+        
+        # Perform analyses
+        claim_results = await claim_analyzer.analyze_claims_data(request.claims_data)
+        trend_results = await trend_analyzer.analyze_trends(request.claims_data)
+        rejection_results = await rejection_detector.detect_rejection_patterns(request.claims_data)
+        financial_results = await financial_calculator.calculate_financial_impact(request.claims_data)
+        
+        # Generate comprehensive recommendations
+        recommender = RecommendationEngine()
+        recommendations = await recommender.generate_recommendations(
+            claim_results, trend_results, rejection_results, financial_results
+        )
+        
+        audit_log("insurance_comprehensive_recommendations", "system", "claims_data", len(request.claims_data))
+        return recommendations
+        
+    except Exception as e:
+        logger.error(f"Error generating recommendations: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Recommendation generation failed: {str(e)}")
+
+# Code Enhancement Endpoints
+@app.post("/api/v1/code/analyze")
+async def analyze_code(request: CodeAnalysisRequest):
+    """Perform comprehensive code analysis"""
+    if not ENHANCED_SERVICES_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Enhanced services not available")
+    
+    try:
+        if request.project_path:
+            analyzer = CodeAnalyzer()
+            result = await analyzer.analyze_codebase(request.project_path)
+        else:
+            analyzer = CodeAnalyzer()
+            result = await analyzer.analyze_code_snippet(request.code, request.filename)
+        
+        audit_log("code_analysis", "system", "code_file", request.filename)
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error analyzing code: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Code analysis failed: {str(e)}")
+
+@app.post("/api/v1/code/performance")
+async def analyze_performance(request: PerformanceAnalysisRequest):
+    """Analyze code performance and optimization opportunities"""
+    if not ENHANCED_SERVICES_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Enhanced services not available")
+    
+    try:
+        optimizer = PerformanceOptimizer()
+        analysis_result = await optimizer.analyze_performance(request.code, request.filename)
+        
+        # Also run profiling for actual performance metrics
+        profile_result = await optimizer.profile_code_execution(request.code, request.iterations)
+        
+        result = {
+            "analysis": analysis_result,
+            "profiling": profile_result
+        }
+        
+        audit_log("code_performance_analysis", "system", "code_file", request.filename)
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error analyzing performance: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Performance analysis failed: {str(e)}")
+
+@app.post("/api/v1/code/security")
+async def scan_security(request: SecurityScanRequest):
+    """Scan code for security vulnerabilities"""
+    if not ENHANCED_SERVICES_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Enhanced services not available")
+    
+    try:
+        scanner = SecurityScanner()
+        
+        # Scan code vulnerabilities
+        scan_result = await scanner.scan_security_vulnerabilities(request.code, request.filename)
+        
+        # If requirements provided, scan dependencies too
+        dependency_result = None
+        if request.requirements_content:
+            dependency_result = await scanner.check_dependency_vulnerabilities(request.requirements_content)
+        
+        result = {
+            "code_scan": scan_result,
+            "dependency_scan": dependency_result
+        }
+        
+        audit_log("code_security_scan", "system", "code_file", request.filename)
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error scanning security: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Security scan failed: {str(e)}")
+
+@app.post("/api/v1/code/debug")
+async def debug_code(request: DebugAnalysisRequest):
+    """Analyze errors and provide debugging assistance"""
+    if not ENHANCED_SERVICES_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Enhanced services not available")
+    
+    try:
+        debugger = DebugAutomation()
+        
+        if request.error_traceback:
+            # Analyze error traceback
+            result = await debugger.analyze_error(request.error_traceback, request.code)
+        elif request.code:
+            # Detect potential bugs in code
+            result = await debugger.detect_potential_bugs(request.code)
+        elif request.problem_description:
+            # Suggest debugging strategy
+            result = await debugger.suggest_debugging_strategy(request.problem_description)
+        else:
+            raise HTTPException(status_code=400, detail="At least one of error_traceback, code, or problem_description must be provided")
+        
+        audit_log("code_debug_analysis", "system", "debug_request", "analysis")
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error debugging code: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Debug analysis failed: {str(e)}")
+
+@app.post("/api/v1/code/quality")
+async def analyze_quality(request: QualityMetricsRequest):
+    """Calculate comprehensive code quality metrics"""
+    if not ENHANCED_SERVICES_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Enhanced services not available")
+    
+    try:
+        quality_analyzer = QualityMetrics()
+        
+        if request.compare_versions:
+            # Compare quality across versions
+            result = await quality_analyzer.compare_quality_metrics(request.compare_versions)
+        else:
+            # Single version analysis
+            result = await quality_analyzer.calculate_quality_metrics(request.code, request.filename)
+        
+        audit_log("code_quality_analysis", "system", "code_file", request.filename)
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error analyzing quality: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Quality analysis failed: {str(e)}")
+
+@app.get("/api/v1/code/health")
+async def get_code_health():
+    """Get overall code health metrics for the platform"""
+    if not ENHANCED_SERVICES_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Enhanced services not available")
+    
+    try:
+        # This would typically analyze the entire codebase
+        # For now, return a summary of available capabilities
+        result = {
+            "status": "operational",
+            "services_available": {
+                "code_analysis": True,
+                "performance_optimization": True,
+                "security_scanning": True,
+                "debug_automation": True,
+                "quality_metrics": True
+            },
+            "platform_health": {
+                "analysis_engine": "ready",
+                "security_scanner": "ready",
+                "performance_optimizer": "ready",
+                "quality_assessor": "ready"
+            },
+            "last_updated": datetime.now().isoformat()
+        }
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error getting code health: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Code health check failed: {str(e)}")
 
 @app.get("/oid-tree")
 async def get_oid_tree(
