@@ -93,7 +93,7 @@ class RejectionPatternDetector:
             
         except Exception as e:
             logger.error(f"Error detecting rejection patterns: {str(e)}")
-            return {'success': False, 'error': str(e)}
+            return {'success': False, 'error': 'An internal error occurred while analyzing rejection patterns.'}
     
     async def _calculate_rejection_statistics(self, all_claims: pd.DataFrame, rejected_claims: pd.DataFrame) -> Dict[str, Any]:
         """Calculate basic rejection statistics."""
