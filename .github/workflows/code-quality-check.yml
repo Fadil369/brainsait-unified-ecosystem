@@ -1,4 +1,6 @@
 name: 🔍 Code Quality Check Workflow
+permissions:
+  contents: read
 
 on:
   push:
