@@ -19,7 +19,7 @@
  * - StateUnifier: Unified state management across all components
  */
 
-import React, { 
+import { 
   createContext, 
   useContext, 
   useReducer, 

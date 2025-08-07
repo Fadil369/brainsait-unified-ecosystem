@@ -108,7 +108,7 @@ const createHealthcareIdentity = async (data) => {
 };
 
 const HealthcareIdentityManagement = ({ data, isLoading: propLoading, error: propError }) => {
-  const { currentLanguage, isRTL } = useLanguage();
+  const { currentLanguage, _isRTL } = useLanguage();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({

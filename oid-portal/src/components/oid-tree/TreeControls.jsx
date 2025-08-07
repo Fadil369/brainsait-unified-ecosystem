@@ -3,7 +3,7 @@
  * Search, filter, and control interface for the OID tree
  */
 
-import React, { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useOidTreeStore, HEALTHCARE_FILTERS } from '../../stores/oid-tree-store';
 

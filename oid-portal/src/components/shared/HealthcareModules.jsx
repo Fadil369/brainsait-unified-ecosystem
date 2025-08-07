@@ -6,7 +6,7 @@
  * used across all contexts, reducing code duplication from 60% to <10%
  */
 
-import React from 'react';
+// React import removed
 import {
   Box,
   Card,

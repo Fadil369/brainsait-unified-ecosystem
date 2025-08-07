@@ -4,7 +4,7 @@
  * Integrated with PyHeart workflow automation and PyBrain AI insights
  */
 
-import React, { memo, useState, useEffect, useCallback } from 'react';
+import { memo, useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Card,

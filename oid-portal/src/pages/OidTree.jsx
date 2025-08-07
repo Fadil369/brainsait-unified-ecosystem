@@ -81,13 +81,63 @@ const OidTree = () => {
   const [nodeMetrics, setNodeMetrics] = useState(new Map());
   const containerRef = useRef(null);
   const animationRef = useRef(null);
+
+  // Mock OID tree data - represents the Saudi Healthcare OID structure
+  const [oidTree] = useState({
+    id: '1.2.840.114494.100.1',
+    name: isRTL ? 'النظام الصحي السعودي' : 'Saudi Healthcare System',
+    description: isRTL ? 'الجذر الرئيسي للنظام الصحي السعودي' : 'Root of Saudi Healthcare System',
+    type: 'root',
+    children: [
+      {
+        id: '1.2.840.114494.100.1.1',
+        name: isRTL ? 'مقدمي الخدمات الصحية' : 'Healthcare Providers',
+        description: isRTL ? 'جميع مقدمي الخدمات الصحية' : 'All healthcare providers',
+        type: 'category',
+        children: [
+          {
+            id: '1.2.840.114494.100.1.1.1',
+            name: isRTL ? 'مستشفى الملك فيصل التخصصي' : 'King Faisal Specialist Hospital',
+            description: isRTL ? 'مستشفى تخصصي رائد' : 'Leading specialized hospital',
+            type: 'provider',
+            patientCount: 15000,
+            children: []
+          },
+          {
+            id: '1.2.840.114494.100.1.1.2',
+            name: isRTL ? 'مستشفى الرياض العسكري' : 'Riyadh Military Hospital',
+            description: isRTL ? 'مستشفى عسكري متخصص' : 'Specialized military hospital',
+            type: 'provider',
+            patientCount: 8500,
+            children: []
+          }
+        ]
+      },
+      {
+        id: '1.2.840.114494.100.1.2',
+        name: isRTL ? 'شركات التأمين الصحي' : 'Health Insurance Companies',
+        description: isRTL ? 'شركات التأمين المرخصة' : 'Licensed insurance companies',
+        type: 'category',
+        children: [
+          {
+            id: '1.2.840.114494.100.1.2.1',
+            name: isRTL ? 'شركة بوبا العربية' : 'Bupa Arabia',
+            description: isRTL ? 'شركة تأمين صحي رائدة' : 'Leading health insurance company',
+            type: 'insurer',
+            memberCount: 500000,
+            children: []
+          }
+        ]
+      }
+    ]
+  });
   
   // Performance optimization with useMemo for large trees
   const filteredNodes = useMemo(() => {
     if (!searchQuery) return oidTree;
     // Implement deep search logic here
     return oidTree;
-  }, [searchQuery]);
+  }, [searchQuery, oidTree]);
   
   // Real-time NPHIES status simulation
   useEffect(() => {
@@ -138,79 +188,10 @@ const OidTree = () => {
       }
     };
     
-    generateMetrics(oidTree);
-  }, []);
-
-  // Mock OID tree data - represents the Saudi Healthcare OID structure
-  const [oidTree] = useState({
-    id: '1.2.840.114494.100.1',
-    name: isRTL ? 'النظام الصحي السعودي' : 'Saudi Healthcare System',
-    description: isRTL ? 'الجذر الرئيسي للنظام الصحي السعودي' : 'Root of Saudi Healthcare System',
-    type: 'root',
-    children: [
-      {
-        id: '1.2.840.114494.100.1.1',
-        name: isRTL ? 'مقدمي الخدمات الصحية' : 'Healthcare Providers',
-        description: isRTL ? 'جميع مقدمي الخدمات الصحية' : 'All healthcare providers',
-        type: 'category',
-        children: [
-          {
-            id: '1.2.840.114494.100.1.1.1',
-            name: isRTL ? 'مستشفى الملك فيصل التخصصي' : 'King Faisal Specialist Hospital',
-            description: isRTL ? 'مستشفى تخصصي رائد' : 'Leading specialized hospital',
-            type: 'provider',
-            status: 'active',
-            children: []
-          },
-          {
-            id: '1.2.840.114494.100.1.1.2',
-            name: isRTL ? 'مجمع الملك عبدالله الطبي' : 'King Abdullah Medical Complex',
-            description: isRTL ? 'مجمع طبي شامل' : 'Comprehensive medical complex',
-            type: 'provider',
-            status: 'active',
-            children: []
-          }
-        ]
-      },
-      {
-        id: '1.2.840.114494.100.1.2',
-        name: isRTL ? 'الأجهزة الطبية' : 'Medical Devices',
-        description: isRTL ? 'جميع الأجهزة الطبية المعتمدة' : 'All certified medical devices',
-        type: 'category',
-        children: [
-          {
-            id: '1.2.840.114494.100.1.2.1',
-            name: isRTL ? 'أجهزة التصوير الطبي' : 'Medical Imaging Devices',
-            description: isRTL ? 'أجهزة الأشعة والتصوير' : 'Radiology and imaging equipment',
-            type: 'device_category',
-            children: []
-          }
-        ]
-      },
-      {
-        id: '1.2.840.114494.100.1.3',
-        name: isRTL ? 'نفيس NPHIES' : 'NPHIES Integration',
-        description: isRTL ? 'تكامل مع نظام نفيس' : 'Integration with NPHIES system',
-        type: 'system',
-        children: [
-          {
-            id: '1.2.840.114494.100.1.3.1',
-            name: isRTL ? 'مطالبات التأمين' : 'Insurance Claims',
-            description: isRTL ? 'معرفات مطالبات التأمين' : 'Insurance claim identifiers',
-            type: 'claims',
-            children: []
-          }
-        ]
-      },
-      {
-        id: '1.2.840.114494.100.1.4',
-        name: isRTL ? 'الذكاء الاصطناعي الطبي' : 'Medical AI Services',
-        description: isRTL ? 'خدمات الذكاء الاصطناعي الطبية' : 'Medical artificial intelligence services',
-        type: 'ai_services',
-        children: []
-      }
-    ]
-  });
+    if (oidTree) {
+      generateMetrics(oidTree);
+    }
+  }, [oidTree]);
 
   const toggleExpand = (nodeId) => {
     const newExpanded = new Set(expandedNodes);
@@ -542,7 +523,7 @@ const OidTree = () => {
         )}
       </Box>
     );
-  }, [expandedNodes, selectedOid, hoveredNode, viewMode, neuralIntensity, nphiesStatus, realTimeSync, nodeMetrics, isRTL]);
+  }, [expandedNodes, selectedOid, hoveredNode, viewMode, neuralIntensity, nphiesStatus, realTimeSync, nodeMetrics, isRTL, getTypeIcon, toggleExpand]);
 
   const handleAddOid = () => {
     setDialogOpen(true);

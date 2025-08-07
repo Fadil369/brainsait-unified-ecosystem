@@ -96,7 +96,7 @@ const RCMDashboard = () => {
   };
 
   const collectionRate = ((totalStats.totalCollected / totalStats.totalRevenue) * 100).toFixed(1);
-  const denialRate = ((totalStats.totalDenials / totalStats.totalRevenue) * 100).toFixed(1);
+  const _denialRate = ((totalStats.totalDenials / totalStats.totalRevenue) * 100).toFixed(1);
 
   return (
     <Box sx={{ p: 3 }}>

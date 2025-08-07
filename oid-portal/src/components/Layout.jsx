@@ -14,8 +14,6 @@ import {
     Security,
     Settings,
     Support,
-    Brightness4,
-    Brightness7,
 } from '@mui/icons-material';
 import {
     AppBar,
@@ -94,7 +92,7 @@ const floatingEffect = keyframes`
 `;
 
 // Glass Drawer with revolutionary glass-morphism
-const GlassDrawer = styled(Drawer)(({ theme, glassintensity = '1' }) => ({
+const _GlassDrawer = styled(Drawer)(({ theme, glassintensity = '1' }) => ({
   '& .MuiDrawer-paper': {
     background: `linear-gradient(
       135deg,
@@ -138,7 +136,7 @@ const GlassDrawer = styled(Drawer)(({ theme, glassintensity = '1' }) => ({
 }));
 
 // Glass App Bar with futuristic styling
-const GlassAppBar = styled(AppBar)(({ theme, glassintensity = '1' }) => ({
+const _GlassAppBar = styled(AppBar)(({ theme, glassintensity = '1' }) => ({
   background: `linear-gradient(
     90deg,
     ${alpha(theme.palette.background.paper, 0.8)} 0%,
@@ -308,7 +306,7 @@ const GlassStatusPanel = styled(Box)(({ theme }) => ({
 }));
 
 // Glass menu with enhanced styling
-const GlassMenu = styled(Menu)(({ theme }) => ({
+const _GlassMenu = styled(Menu)(({ theme }) => ({
   '& .MuiPaper-root': {
     background: `linear-gradient(
       135deg,
@@ -352,12 +350,12 @@ const Layout = ({ children }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileMenuAnchor, setProfileMenuAnchor] = useState(null);
   const [notificationsAnchor, setNotificationsAnchor] = useState(null);
-  const [glassIntensity, setGlassIntensity] = useState(1);
+  const [glassIntensity, _setGlassIntensity] = useState(1);
   const [isHovering, setIsHovering] = useState(false);
   const [ambientLighting, setAmbientLighting] = useState(true);
   
-  const appBarRef = useRef(null);
-  const drawerRef = useRef(null);
+  const _appBarRef = useRef(null);
+  const _drawerRef = useRef(null);
 
   // Dynamic glass intensity based on user interaction
   useEffect(() => {
@@ -478,7 +476,7 @@ const Layout = ({ children }) => {
     setLanguage(language === 'ar' ? 'en' : 'ar');
   };
 
-  const toggleGlassTheme = () => {
+  const _toggleGlassTheme = () => {
     setAmbientLighting(!ambientLighting);
     setGlassIntensity(ambientLighting ? 0.5 : 1.2);
   };

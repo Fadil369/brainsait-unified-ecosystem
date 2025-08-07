@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useFHIR } from '../../hooks/useFHIR';
 import { useAuth } from '../../hooks/useAuth';
 import { useLanguage } from '../../contexts/LanguageContext';

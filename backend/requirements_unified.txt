@@ -134,7 +134,7 @@ dramatiq>=1.15.0  # Alternative workflow engine
 rq>=1.15.1  # Simple job queue for Python
 
 # Enhanced healthcare integrations
-hl7>=0.4.7  # HL7 healthcare message processing
+hl7>=0.4.5  # HL7 healthcare message processing
 python-hl7>=2.0.0  # Additional HL7 support
 fhirpy>=2.0.0  # FHIR client for healthcare data
 python-jose[cryptography]>=3.3.0  # Already included - for JWT tokens

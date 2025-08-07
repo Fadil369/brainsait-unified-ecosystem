@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { Routes } from 'react-router-dom';
 import { useFHIR } from '../../hooks/useFHIR';
 import { useAuth } from '../../hooks/useAuth';
 import { useLanguage } from '../../contexts/LanguageContext';

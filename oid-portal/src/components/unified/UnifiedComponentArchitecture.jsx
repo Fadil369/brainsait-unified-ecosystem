@@ -20,7 +20,7 @@
  * - NPHIES FHIR R4 integration
  */
 
-import React, { 
+import { 
   Suspense, 
   useState, 
   useEffect, 

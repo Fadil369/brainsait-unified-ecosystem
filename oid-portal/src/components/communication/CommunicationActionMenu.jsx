@@ -33,10 +33,10 @@ import {
   History as HistoryIcon,
   Settings as SettingsIcon,
   LocalHospital as EmergencyIcon,
-  Cancel as CancelIcon,
+  Cancel as _CancelIcon,
   Send as SendIcon,
   AccountTree as WorkflowIcon,
-  PlayArrow as StartWorkflowIcon,
+  PlayArrow as _StartWorkflowIcon,
   AutoFixHigh as AutomationIcon,
   Psychology as AIIcon
 } from '@mui/icons-material';
@@ -226,7 +226,7 @@ const CommunicationActionMenu = memo(({
     initiatePatientRegistrationWorkflow,
     initiateEmergencyResponseWorkflow,
     automationEnabled,
-    WORKFLOW_TYPES
+    _WORKFLOW_TYPES
   } = useUnifiedPyHeart({
     enabled: true,
     context: 'communication_menu',
