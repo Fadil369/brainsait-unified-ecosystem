@@ -74,7 +74,7 @@ class FinancialImpactCalculator:
             
         except Exception as e:
             logger.error(f"Error calculating financial impact: {str(e)}")
-            return {'success': False, 'error': str(e)}
+            return {'success': False, 'error': 'Financial impact calculation failed due to an internal error.'}
     
     async def _calculate_basic_metrics(self, df: pd.DataFrame) -> Dict[str, Any]:
         """Calculate basic financial metrics."""
