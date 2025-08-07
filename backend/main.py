@@ -2486,11 +2486,14 @@ async def upload_insurance_file(file_data: FileUploadRequest):
         )
         
         audit_log("insurance_file_upload", "system", "insurance_file", file_data.filename)
+        if not result.get("success", False):
+            logger.error(f"Insurance file upload failed for {file_data.filename}: {result.get('error', 'Unknown error')}")
+            raise HTTPException(status_code=400, detail="File processing failed. Please check your file and try again.")
         return result
         
     except Exception as e:
         logger.error(f"Error processing insurance file upload: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"File processing failed: {str(e)}")
+        raise HTTPException(status_code=500, detail="File processing failed due to an internal error.")
 
 @app.post("/api/v1/insurance/analyze")
 async def analyze_claims_data(request: ClaimsAnalysisRequest):
