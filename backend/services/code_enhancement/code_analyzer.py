@@ -16,6 +16,9 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
+# Define a safe root directory for code analysis
+SAFE_CODE_ROOT = "/srv/code_projects"
+
 class CodeAnalyzer:
     """
     Performs static analysis on Python code to identify issues,
@@ -52,9 +55,18 @@ class CodeAnalyzer:
             Comprehensive analysis results
         """
         try:
+            # Normalize and validate the user-supplied project_path
+            abs_project_path = os.path.abspath(os.path.normpath(project_path))
+            abs_safe_root = os.path.abspath(os.path.normpath(SAFE_CODE_ROOT))
+            if not abs_project_path.startswith(abs_safe_root):
+                return {
+                    'success': False,
+                    'error': 'Invalid project path: access outside allowed directory is not permitted'
+                }
+
             analysis_results = {
                 'analysis_date': datetime.now().isoformat(),
-                'project_path': project_path,
+                'project_path': abs_project_path,
                 'summary': {},
                 'files_analyzed': [],
                 'issues': [],
@@ -63,7 +75,7 @@ class CodeAnalyzer:
             }
             
             # Find Python files to analyze
-            python_files = await self._find_python_files(project_path)
+            python_files = await self._find_python_files(abs_project_path)
             
             if not python_files:
                 return {
