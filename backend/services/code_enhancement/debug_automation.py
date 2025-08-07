@@ -93,7 +93,7 @@ class DebugAutomation:
             
         except Exception as e:
             logger.error(f"Error analyzing error traceback: {str(e)}")
-            return {'success': False, 'error': str(e)}
+            return {'success': False, 'error': 'An internal error occurred during error analysis.'}
     
     async def detect_potential_bugs(self, code: str, filename: str = 'code.py') -> Dict[str, Any]:
         """
