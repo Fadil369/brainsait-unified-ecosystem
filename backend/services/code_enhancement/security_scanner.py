@@ -130,7 +130,7 @@ class SecurityScanner:
             
         except Exception as e:
             logger.error(f"Error scanning security vulnerabilities: {str(e)}")
-            return {'success': False, 'error': str(e)}
+            return {'success': False, 'error': 'An internal error occurred during security scanning.'}
     
     async def check_dependency_vulnerabilities(self, requirements_content: str) -> Dict[str, Any]:
         """
@@ -176,7 +176,7 @@ class SecurityScanner:
             
         except Exception as e:
             logger.error(f"Error checking dependency vulnerabilities: {str(e)}")
-            return {'success': False, 'error': str(e)}
+            return {'success': False, 'error': 'An internal error occurred during dependency vulnerability checking.'}
     
     async def _scan_vulnerability_patterns(self, code: str, filename: str) -> List[Dict[str, Any]]:
         """Scan code for vulnerability patterns using regex."""
