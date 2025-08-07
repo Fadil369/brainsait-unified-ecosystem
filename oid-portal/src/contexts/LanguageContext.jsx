@@ -319,10 +319,10 @@ export const LanguageProvider = ({ children }) => {
     return savedLanguage === 'en' || savedLanguage === 'ar' ? savedLanguage : 'ar'; // Default to Arabic
   });
 
-  const isRTL = language === 'ar';
+  const _isRTL = language === 'ar';
 
   // Enhanced translation function with fallback and namespace support
-  const t = (key, options = {}) => {
+  const _t = (key, options = {}) => {
     const { defaultValue, namespace } = options;
     
     // Support namespace.key format

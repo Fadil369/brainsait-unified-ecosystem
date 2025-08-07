@@ -4,7 +4,7 @@
  * Replaces the monolithic 1,126-line OidTree.jsx component
  */
 
-import React, { useEffect, memo, Suspense } from 'react';
+import { useEffect, memo, Suspense } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useUnifiedHealthcare } from '../../contexts/UnifiedHealthcareContext';
 import { useFHIR } from '../../hooks/useFHIR';

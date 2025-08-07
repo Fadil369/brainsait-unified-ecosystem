@@ -193,7 +193,7 @@ describe('OidTree Communication Features', () => {
 
   describe('Communication Panel Integration', () => {
     it('should display communication panel when patient node is selected', async () => {
-      const mockStore = require('../stores/oid-tree-store').useOidTreeStore;
+      // const mockStore = require../stores/oid-tree-store
       mockStore.mockReturnValue({
         ...mockStore(),
         selectedNode: {
@@ -226,7 +226,7 @@ describe('OidTree Communication Features', () => {
     });
 
     it('should show communication preferences for selected patient', async () => {
-      const mockStore = require('../stores/oid-tree-store').useOidTreeStore;
+      // const mockStore = require../stores/oid-tree-store
       mockStore.mockReturnValue({
         ...mockStore(),
         selectedNode: {
@@ -258,7 +258,7 @@ describe('OidTree Communication Features', () => {
     });
 
     it('should display communication history for patient', async () => {
-      const mockStore = require('../stores/oid-tree-store').useOidTreeStore;
+      // const mockStore = require../stores/oid-tree-store
       mockStore.mockReturnValue({
         ...mockStore(),
         selectedNode: {
@@ -302,7 +302,7 @@ describe('OidTree Communication Features', () => {
 
   describe('Communication Action Menus', () => {
     it('should show SMS send option for SMS-enabled patients', async () => {
-      const mockStore = require('../stores/oid-tree-store').useOidTreeStore;
+      // const mockStore = require../stores/oid-tree-store
       mockStore.mockReturnValue({
         ...mockStore(),
         selectedNode: {
@@ -327,7 +327,7 @@ describe('OidTree Communication Features', () => {
     });
 
     it('should show voice call option for voice-enabled patients', async () => {
-      const mockStore = require('../stores/oid-tree-store').useOidTreeStore;
+      // const mockStore = require../stores/oid-tree-store
       mockStore.mockReturnValue({
         ...mockStore(),
         selectedNode: {
@@ -370,7 +370,7 @@ describe('OidTree Communication Features', () => {
     });
 
     it('should show emergency alert option for providers', async () => {
-      const mockStore = require('../stores/oid-tree-store').useOidTreeStore;
+      // const mockStore = require../stores/oid-tree-store
       mockStore.mockReturnValue({
         ...mockStore(),
         selectedNode: {
@@ -409,8 +409,8 @@ describe('OidTree Communication Features', () => {
       const messageInput = screen.getByLabelText(/message content/i);
       await user.type(messageInput, 'Your appointment is confirmed');
 
-      const languageSelect = screen.getByLabelText(/language/i);
-      await user.selectOptions(languageSelect, 'en');
+      const __languageSelect = screen.getByLabelText(/language/i);
+      await user.selectOptions(_languageSelect, 'en');
 
       const sendButton = screen.getByRole('button', { name: /send message/i });
       await user.click(sendButton);
@@ -516,8 +516,8 @@ describe('OidTree Communication Features', () => {
       await user.selectOptions(callTypeSelect, 'appointment_reminder');
 
       // Select language
-      const languageSelect = screen.getByLabelText(/language/i);
-      await user.selectOptions(languageSelect, 'ar');
+      const __languageSelect = screen.getByLabelText(/language/i);
+      await user.selectOptions(_languageSelect, 'ar');
 
       const callButton = screen.getByRole('button', { name: /start call/i });
       await user.click(callButton);
@@ -637,7 +637,7 @@ describe('OidTree Communication Features', () => {
     it('should send emergency alert for providers', async () => {
       const user = userEvent.setup();
       
-      const mockStore = require('../stores/oid-tree-store').useOidTreeStore;
+      // const mockStore = require../stores/oid-tree-store
       mockStore.mockReturnValue({
         ...mockStore(),
         selectedNode: {
@@ -714,7 +714,7 @@ describe('OidTree Communication Features', () => {
     it('should update communication status in real-time', async () => {
       vi.useFakeTimers();
       
-      const mockStore = require('../stores/oid-tree-store').useOidTreeStore;
+      // const mockStore = require../stores/oid-tree-store
       const mockUpdateHistory = vi.fn();
       
       mockStore.mockReturnValue({
@@ -757,7 +757,7 @@ describe('OidTree Communication Features', () => {
     it('should show live workflow execution progress', async () => {
       vi.useFakeTimers();
       
-      const mockStore = require('../stores/oid-tree-store').useOidTreeStore;
+      // const mockStore = require../stores/oid-tree-store
       mockStore.mockReturnValue({
         ...mockStore(),
         communicationPanel: {
@@ -892,7 +892,7 @@ describe('OidTree Communication Features', () => {
     });
 
     it('should show communication service unavailable state', async () => {
-      const mockStore = require('../stores/oid-tree-store').useOidTreeStore;
+      // const mockStore = require../stores/oid-tree-store
       mockStore.mockReturnValue({
         ...mockStore(),
         error: 'Communication service is temporarily unavailable',
@@ -932,8 +932,8 @@ describe('OidTree Communication Features', () => {
         </TestWrapper>
       );
 
-      const languageToggle = screen.getByRole('button', { name: /switch to arabic/i });
-      await user.click(languageToggle);
+      const __languageToggle = screen.getByRole('button', { name: /switch to arabic/i });
+      await user.click(_languageToggle);
 
       expect(mockSwitchLanguage).toHaveBeenCalledWith('ar');
     });
@@ -974,7 +974,7 @@ describe('OidTree Communication Features', () => {
     });
 
     it('should maintain communication state when switching languages', async () => {
-      const mockStore = require('../stores/oid-tree-store').useOidTreeStore;
+      // const mockStore = require../stores/oid-tree-store
       const mockTrackActivity = vi.fn();
       
       mockStore.mockReturnValue({
@@ -995,8 +995,8 @@ describe('OidTree Communication Features', () => {
       );
 
       // Switch language
-      const languageToggle = screen.getByRole('button', { name: /switch to arabic/i });
-      await user.click(languageToggle);
+      const __languageToggle = screen.getByRole('button', { name: /switch to arabic/i });
+      await user.click(_languageToggle);
 
       // Communication panel should remain open
       await waitFor(() => {
@@ -1086,7 +1086,7 @@ describe('OidTree Performance with Communication Features', () => {
       status: 'delivered'
     }));
 
-    const mockStore = require('../stores/oid-tree-store').useOidTreeStore;
+    // const mockStore = require../stores/oid-tree-store
     mockStore.mockReturnValue({
       ...mockStore(),
       selectedNode: {
