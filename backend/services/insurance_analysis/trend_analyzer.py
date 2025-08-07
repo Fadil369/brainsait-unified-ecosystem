@@ -82,7 +82,7 @@ class TrendAnalyzer:
             
         except Exception as e:
             logger.error(f"Error analyzing trends: {str(e)}")
-            return {'success': False, 'error': str(e)}
+            return {'success': False, 'error': 'Trend analysis failed due to an internal error.'}
     
     async def _prepare_time_series_data(self, df: pd.DataFrame) -> pd.DataFrame:
         """Prepare data for time series analysis."""
