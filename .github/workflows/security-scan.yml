@@ -503,6 +503,8 @@ jobs:
   # 📊 Security Report Generation
   security-report:
     name: 📊 Security Report Generation
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     needs: [vulnerability-scan, custom-security-analysis, hipaa-compliance]
     steps:
