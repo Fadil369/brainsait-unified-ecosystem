@@ -68,7 +68,7 @@ class ClaimAnalysisEngine:
             
         except Exception as e:
             logger.error(f"Error analyzing claims data: {str(e)}")
-            return {'success': False, 'error': str(e)}
+            return {'success': False, 'error': 'An internal error occurred during claims analysis.'}
     
     async def _calculate_basic_statistics(self, df: pd.DataFrame) -> Dict[str, Any]:
         """Calculate basic statistical measures."""
