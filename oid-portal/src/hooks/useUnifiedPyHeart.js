@@ -110,14 +110,14 @@ export const useUnifiedPyHeart = ({
     callUnifiedAPI, 
     systemStatus,
     user,
-    performance 
+    performance: _performance 
   } = useUnifiedHealthcare();
   
   const { 
     isAIReady, 
     getAIInsights,
-    subscribeToAIInsights,
-    processArabicText 
+    subscribeToAIInsights: _subscribeToAIInsights,
+    processArabicText: _processArabicText 
   } = useUnifiedPyBrain({
     enabled: enableAutomation,
     context: 'pyheart_workflows',

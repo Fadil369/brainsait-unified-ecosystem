@@ -8,14 +8,17 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import compression from 'vite-plugin-compression'
 
 // Healthcare-optimized Vite configuration with ultimate performance enhancements
-export default defineConfig({
-  plugins: [
-    // ESLint integration for code quality
-    eslint({
-      cache: false,
-      include: ['src/**/*.{js,jsx,ts,tsx}'],
-      exclude: ['node_modules', 'dist']
-    }),
+export default defineConfig(({ mode }) => {
+  const isTest = mode === 'test' || !!process.env.VITEST
+
+  return {
+    plugins: [
+      // ESLint integration for code quality (skip in tests; CI runs `npm run lint`)
+      !isTest && eslint({
+        cache: false,
+        include: ['src/**/*.{js,jsx}'],
+        exclude: ['node_modules', 'dist']
+      }),
     
     // Enhanced React configuration
     react({
@@ -93,6 +96,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+        globIgnores: ['**/stats.html'],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/api\..*/i,
@@ -152,7 +156,7 @@ export default defineConfig({
       ext: '.br',
       threshold: 1024
     })
-  ],
+    ].filter(Boolean),
   
   server: {
     host: true,
@@ -426,5 +430,6 @@ export default defineConfig({
         'src/tests/setup.js',
       ]
     }
+  }
   }
 })

@@ -65,11 +65,11 @@ class PrescriptionData:
     """Prescription information"""
     prescription_id: str
     medication_name: str
-    medication_name_ar: Optional[str] = None
     dosage: str
     frequency: str
     duration: str
     instructions: str
+    medication_name_ar: Optional[str] = None
     instructions_ar: Optional[str] = None
     pharmacy_name: Optional[str] = None
     pharmacy_phone: Optional[str] = None

@@ -69,9 +69,9 @@ class EmergencyContact:
     """Emergency contact information"""
     contact_id: str
     name: str
+    phone_number: str
     name_ar: Optional[str] = None
     role: ContactRole = ContactRole.EMERGENCY_CONTACT
-    phone_number: str
     backup_phone: Optional[str] = None
     email: Optional[str] = None
     preferred_language: Language = Language.ENGLISH

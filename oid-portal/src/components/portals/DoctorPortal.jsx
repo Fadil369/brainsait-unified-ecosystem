@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Routes } from 'react-router-dom';
 import { useFHIR } from '../../hooks/useFHIR';
 import { useAuth } from '../../hooks/useAuth';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -25,7 +24,7 @@ const DoctorPortal = () => {
     getError
   } = useUnifiedHealthcare();
   
-  const { t, language, isRTL } = useLanguage();
+  const { t, language: currentLanguage, isRTL } = useLanguage();
   const { user } = useAuth();
   const { 
     getPatient, 
@@ -64,19 +63,10 @@ const DoctorPortal = () => {
     };
   }, [unifiedData.operations]);
 
-  // Initialize context and load data on component mount
-  useEffect(() => {
-    // Switch to operations context for doctor portal data
-    if (activeContext !== HEALTHCARE_CONTEXTS.OPERATIONS) {
-      switchContext(HEALTHCARE_CONTEXTS.OPERATIONS);
-    }
-    loadTodaysAppointments();
-  }, [activeContext, switchContext]);
-
   // Load today's appointments using unified API
   const loadTodaysAppointments = useCallback(async () => {
+    const today = new Date().toISOString().split('T')[0];
     try {
-      const today = new Date().toISOString().split('T')[0];
       await callUnifiedAPI(HEALTHCARE_CONTEXTS.OPERATIONS, 'get_today_appointments', {
         doctorId: user?.id,
         date: today
@@ -92,7 +82,7 @@ const DoctorPortal = () => {
         
         if (appointmentData && appointmentData.entry) {
           // Update unified context with fallback data
-          const appointments = appointmentData.entry.map(entry => entry.resource);
+          const _appointments = appointmentData.entry.map(entry => entry.resource);
           // This would need to be implemented in the context
         }
       } catch (fallbackError) {
@@ -100,6 +90,15 @@ const DoctorPortal = () => {
       }
     }
   }, [callUnifiedAPI, user?.id, getPatientAppointments]);
+
+  // Initialize context and load data on component mount
+  useEffect(() => {
+    // Switch to operations context for doctor portal data
+    if (activeContext !== HEALTHCARE_CONTEXTS.OPERATIONS) {
+      switchContext(HEALTHCARE_CONTEXTS.OPERATIONS);
+    }
+    loadTodaysAppointments();
+  }, [activeContext, switchContext, loadTodaysAppointments]);
 
   // Handle patient search with unified API first, FHIR fallback
   const handlePatientSearch = useCallback(async () => {

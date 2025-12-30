@@ -38,7 +38,8 @@ services:
     restart: ${RESTART_POLICY:-unless-stopped}
     environment:
       POSTGRES_USER: ${DB_USER:-brainsait_admin}
-      POSTGRES_PASSWORD: ${DB_PASS:-brainsait_healthcare_2025!}
+      # SECURITY: never use real passwords as defaults in version control
+      POSTGRES_PASSWORD: ${DB_PASS:-CHANGE_ME_DEV_DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME:-brainsait_healthcare}
       # Arabic locale support for production, fallback for development
       POSTGRES_INITDB_ARGS: >-
@@ -116,7 +117,8 @@ services:
       - DB_PORT=5432
       - DB_NAME=${DB_NAME:-brainsait_healthcare}
       - DB_USER=${DB_USER:-brainsait_admin}
-      - DB_PASS=${DB_PASS:-brainsait_healthcare_2025!}
+      # SECURITY: never use real passwords as defaults in version control
+      - DB_PASS=${DB_PASS:-CHANGE_ME_DEV_DB_PASSWORD}
       
       # Redis Configuration
       - REDIS_HOST=redis

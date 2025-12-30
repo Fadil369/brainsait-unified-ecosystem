@@ -337,8 +337,8 @@ export const LanguageProvider = ({ children }) => {
   
   // Pluralization support (basic)
   const tp = (key, count = 1, options = {}) => {
-    const singular = t(key, options);
-    const plural = t(`${key}_plural`, { ...options, defaultValue: singular });
+    const singular = _t(key, options);
+    const plural = _t(`${key}_plural`, { ...options, defaultValue: singular });
     return count === 1 ? singular : plural;
   };
 
@@ -358,19 +358,19 @@ export const LanguageProvider = ({ children }) => {
 
   useEffect(() => {
     // Set initial document direction and language
-    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+    document.documentElement.dir = _isRTL ? 'rtl' : 'ltr';
     document.documentElement.lang = language;
-  }, [language, isRTL]);
+  }, [language, _isRTL]);
 
   // Direction utilities
-  const dir = isRTL ? 'rtl' : 'ltr';
-  const textAlign = isRTL ? 'text-right' : 'text-left';
-  const marginStart = isRTL ? 'ml' : 'mr';
-  const marginEnd = isRTL ? 'mr' : 'ml';
-  const paddingStart = isRTL ? 'pl' : 'pr';
-  const paddingEnd = isRTL ? 'pr' : 'pl';
-  const roundedStart = isRTL ? 'rounded-r' : 'rounded-l';
-  const roundedEnd = isRTL ? 'rounded-l' : 'rounded-r';
+  const dir = _isRTL ? 'rtl' : 'ltr';
+  const textAlign = _isRTL ? 'text-right' : 'text-left';
+  const marginStart = _isRTL ? 'ml' : 'mr';
+  const marginEnd = _isRTL ? 'mr' : 'ml';
+  const paddingStart = _isRTL ? 'pl' : 'pr';
+  const paddingEnd = _isRTL ? 'pr' : 'pl';
+  const roundedStart = _isRTL ? 'rounded-r' : 'rounded-l';
+  const roundedEnd = _isRTL ? 'rounded-l' : 'rounded-r';
   
   // Format utilities for healthcare data
   const formatDate = (date, options = {}) => {
@@ -392,9 +392,9 @@ export const LanguageProvider = ({ children }) => {
 
   const value = {
     language,
-    isRTL,
+    isRTL: _isRTL,
     dir,
-    t,
+    t: _t,
     tp,
     changeLanguage,
     toggleLanguage,
@@ -417,13 +417,13 @@ export const LanguageProvider = ({ children }) => {
     // Healthcare specific utilities
     getPatientName: (patient) => {
       if (!patient) return '';
-      return isRTL ? (patient.nameAr || patient.name) : (patient.name || patient.nameAr);
+      return _isRTL ? (patient.nameAr || patient.name) : (patient.name || patient.nameAr);
     },
     
     getDoctorName: (doctor) => {
       if (!doctor) return '';
-      const prefix = isRTL ? 'د. ' : 'Dr. ';
-      const name = isRTL ? (doctor.nameAr || doctor.name) : (doctor.name || doctor.nameAr);
+      const prefix = _isRTL ? 'د. ' : 'Dr. ';
+      const name = _isRTL ? (doctor.nameAr || doctor.name) : (doctor.name || doctor.nameAr);
       return prefix + name;
     }
   };

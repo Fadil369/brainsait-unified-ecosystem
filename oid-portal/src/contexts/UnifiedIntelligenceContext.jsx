@@ -214,7 +214,7 @@ function intelligenceReducer(state, action) {
         aiError: null
       };
 
-    case INTELLIGENCE_ACTIONS.ADD_INSIGHT:
+    case INTELLIGENCE_ACTIONS.ADD_INSIGHT: {
       const newInsight = {
         ...action.insight,
         id: action.insight.id || `insight_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -227,6 +227,7 @@ function intelligenceReducer(state, action) {
         insights: [newInsight, ...state.insights.slice(0, 99)], // Keep last 100 insights
         lastUpdate: new Date().toISOString()
       };
+    }
 
     case INTELLIGENCE_ACTIONS.UPDATE_INSIGHT:
       return {
@@ -262,7 +263,7 @@ function intelligenceReducer(state, action) {
         }
       };
 
-    case INTELLIGENCE_ACTIONS.ADD_RECOMMENDATION:
+    case INTELLIGENCE_ACTIONS.ADD_RECOMMENDATION: {
       const newRecommendation = {
         ...action.recommendation,
         id: action.recommendation.id || `rec_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -274,6 +275,7 @@ function intelligenceReducer(state, action) {
         ...state,
         recommendations: [newRecommendation, ...state.recommendations.slice(0, 49)] // Keep last 50
       };
+    }
 
     case INTELLIGENCE_ACTIONS.UPDATE_RECOMMENDATION_STATUS:
       return {
@@ -298,21 +300,23 @@ function intelligenceReducer(state, action) {
         }
       };
 
-    case INTELLIGENCE_ACTIONS.SET_SUBSCRIPTION:
+    case INTELLIGENCE_ACTIONS.SET_SUBSCRIPTION: {
       const newSubscriptions = new Map(state.subscriptions);
       newSubscriptions.set(action.key, action.subscription);
       return {
         ...state,
         subscriptions: newSubscriptions
       };
+    }
 
-    case INTELLIGENCE_ACTIONS.REMOVE_SUBSCRIPTION:
+    case INTELLIGENCE_ACTIONS.REMOVE_SUBSCRIPTION: {
       const updatedSubscriptions = new Map(state.subscriptions);
       updatedSubscriptions.delete(action.key);
       return {
         ...state,
         subscriptions: updatedSubscriptions
       };
+    }
 
     case INTELLIGENCE_ACTIONS.UPDATE_PERFORMANCE_METRICS:
       return {
@@ -342,7 +346,7 @@ function intelligenceReducer(state, action) {
         }
       };
 
-    case INTELLIGENCE_ACTIONS.ADD_WORKFLOW_OPTIMIZATION:
+    case INTELLIGENCE_ACTIONS.ADD_WORKFLOW_OPTIMIZATION: {
       const newOptimization = {
         ...action.optimization,
         id: action.optimization.id || `opt_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -354,6 +358,7 @@ function intelligenceReducer(state, action) {
         ...state,
         workflowOptimizations: [newOptimization, ...state.workflowOptimizations.slice(0, 19)] // Keep last 20
       };
+    }
 
     case INTELLIGENCE_ACTIONS.UPDATE_WORKFLOW_STATUS:
       return {
@@ -376,7 +381,7 @@ const UnifiedIntelligenceContext = createContext();
 export const UnifiedIntelligenceProvider = ({ children }) => {
   const [state, dispatch] = useReducer(intelligenceReducer, initialState);
   const { currentLanguage, isRTL } = useLanguage();
-  const { user, systemStatus, unifiedData } = useUnifiedHealthcare();
+  const { user, systemStatus: _systemStatus, unifiedData: _unifiedData } = useUnifiedHealthcare();
   
   // Refs for WebSocket and intervals
   const wsRef = useRef(null);
@@ -733,7 +738,7 @@ export const UnifiedIntelligenceProvider = ({ children }) => {
 
   const unsubscribeFromRealTimeUpdates = useCallback((context) => {
     const subscriptionsToRemove = Array.from(state.subscriptions.entries())
-      .filter(([key, sub]) => sub.context === context);
+      .filter(([_key, sub]) => sub.context === context);
 
     subscriptionsToRemove.forEach(([key]) => {
       dispatch({
@@ -802,7 +807,6 @@ export const UnifiedIntelligenceProvider = ({ children }) => {
 
   const clearInsights = useCallback((context = null) => {
     if (context) {
-      const filteredInsights = state.insights.filter(insight => insight.context !== context);
       // This would require a new action type or modifying existing ones
       dispatch({ type: INTELLIGENCE_ACTIONS.CLEAR_INSIGHTS });
       // Then re-add non-matching insights - this is simplified

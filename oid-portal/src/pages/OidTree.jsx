@@ -20,7 +20,7 @@ import {
     Psychology,
     Science,
     MonitorHeart,
-    Emergency,
+    EmergencyShare as Emergency,
     HealthAndSafety,
 } from '@mui/icons-material';
 import {

@@ -88,7 +88,7 @@ export const useCommunication = () => {
           setTimeout(connectWebSocket, 3000);
         };
 
-        websocketRef.current.onerror = (error) => {
+        websocketRef.current.onerror = (_error) => {
           setError('WebSocket connection error');
           setWebSocketConnected(false);
         };

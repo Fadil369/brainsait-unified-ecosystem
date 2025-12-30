@@ -23,13 +23,13 @@ const PatientPortal = () => {
     getError
   } = useUnifiedHealthcare();
   
-  const { t, language, isRTL } = useLanguage();
+  const { t, language: currentLanguage, isRTL } = useLanguage();
   const { user } = useAuth();
   const { 
     getPatient, 
     getPatientAppointments,
     createFHIRResource,
-    searchPatients,
+    searchPatients: _searchPatients,
     isLoading: fhirLoading,
     error: fhirError 
   } = useFHIR();
@@ -58,15 +58,6 @@ const PatientPortal = () => {
     };
   }, [unifiedData.overview]);
 
-  // Initialize context and load patient data on component mount
-  useEffect(() => {
-    // Switch to overview context for patient portal data
-    if (activeContext !== HEALTHCARE_CONTEXTS.OVERVIEW) {
-      switchContext(HEALTHCARE_CONTEXTS.OVERVIEW);
-    }
-    loadPatientData();
-  }, [activeContext, switchContext]);
-
   // Load patient's own data using unified API
   const loadPatientData = useCallback(async () => {
     try {
@@ -92,6 +83,15 @@ const PatientPortal = () => {
       }
     }
   }, [callUnifiedAPI, user, getPatient]);
+
+  // Initialize context and load patient data on component mount
+  useEffect(() => {
+    // Switch to overview context for patient portal data
+    if (activeContext !== HEALTHCARE_CONTEXTS.OVERVIEW) {
+      switchContext(HEALTHCARE_CONTEXTS.OVERVIEW);
+    }
+    loadPatientData();
+  }, [activeContext, switchContext, loadPatientData]);
 
   // Load appointments using unified API with FHIR fallback
   const loadAppointments = useCallback(async (patientId) => {

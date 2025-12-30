@@ -23,7 +23,8 @@ class Settings(BaseSettings):
     DB_PORT: int = 5432
     DB_NAME: str = "brainsait_healthcare"
     DB_USER: str = "brainsait_admin"
-    DB_PASS: str = "brainsait_healthcare_2025!"
+    # SECURITY: do not ship real passwords as defaults
+    DB_PASS: str = "CHANGE_ME"
     
     # Redis Configuration
     REDIS_ENABLED: bool = False  # Disable for development
@@ -40,8 +41,8 @@ class Settings(BaseSettings):
     
     # NPHIES Integration
     NPHIES_BASE_URL: str = "https://api.nphies.sa"
-    NPHIES_CLIENT_ID: str = "brainsait_client_id"
-    NPHIES_CLIENT_SECRET: str = "brainsait_client_secret"
+    NPHIES_CLIENT_ID: str = "CHANGE_ME"
+    NPHIES_CLIENT_SECRET: str = "CHANGE_ME"
     NPHIES_SCOPE: str = "eligibility preauth claims provider"
     NPHIES_TIMEOUT: int = 30
     
@@ -52,7 +53,7 @@ class Settings(BaseSettings):
     SAUDI_DATA_RESIDENCY: bool = True
     
     # AI Services
-    OPENAI_API_KEY: str = "your-openai-api-key"
+    OPENAI_API_KEY: str = "CHANGE_ME"
     OPENAI_MODEL: str = "gpt-4"
     ARABIC_NLP_MODEL_PATH: str = "./models/arabic_medical_nlp"
     FRAUD_DETECTION_THRESHOLD: float = 0.8

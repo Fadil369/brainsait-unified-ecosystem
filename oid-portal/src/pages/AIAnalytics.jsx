@@ -163,7 +163,7 @@ const TabPanel = ({ children, value, index, ...other }) => (
 );
 
 const AIAnalytics = () => {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL: _isRTL } = useLanguage();
   const [tabValue, setTabValue] = useState(0);
 
   const handleTabChange = (event, newValue) => {

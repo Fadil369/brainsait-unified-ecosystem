@@ -78,8 +78,8 @@ class ProviderNotificationData:
     """Provider notification information"""
     provider_id: str
     name: str
-    name_ar: Optional[str] = None
     phone_number: str
+    name_ar: Optional[str] = None
     email: Optional[str] = None
     department: Optional[str] = None
     preferred_language: Language = Language.ENGLISH
@@ -93,11 +93,11 @@ class ReferralData:
     referring_provider_id: str
     specialist_provider_id: str
     specialist_name: str
-    specialist_name_ar: Optional[str] = None
     specialty: str
+    reason: str
+    specialist_name_ar: Optional[str] = None
     specialty_ar: Optional[str] = None
     urgency: NotificationUrgency = NotificationUrgency.ROUTINE
-    reason: str
     reason_ar: Optional[str] = None
     appointment_required: bool = True
     contact_info: Optional[str] = None

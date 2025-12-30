@@ -1,4 +1,4 @@
-// React import removed
+import React from 'react';
 
 /**
  * Error Boundary Component
@@ -10,7 +10,7 @@ class ErrorBoundary extends React.Component {
     this.state = { hasError: false, error: null, errorInfo: null };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(_error) {
     return { hasError: true };
   }
 
@@ -38,7 +38,7 @@ class ErrorBoundary extends React.Component {
             </h2>
             
             <p className="text-gray-600 mb-6">
-              We're sorry, but something unexpected happened. Please try refreshing the page.
+              We are sorry, but something unexpected happened. Please try refreshing the page.
             </p>
             
             <div className="space-y-3">

@@ -4,7 +4,7 @@ import {
   Biotech,
   Close,
   Dashboard,
-  Emergency,
+  EmergencyShare as Emergency,
   FilterList,
   HealthAndSafety,
   LocalHospital,

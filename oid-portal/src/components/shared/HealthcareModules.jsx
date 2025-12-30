@@ -27,9 +27,7 @@ import {
   Button,
   IconButton,
   Tooltip,
-  Badge,
   CircularProgress,
-  Divider,
   List,
   ListItem,
   ListItemText,
@@ -45,10 +43,8 @@ import {
   Schedule,
   Info,
   Refresh,
-  MoreVert,
   Analytics,
   Assignment,
-  People,
   MonetizationOn,
   HealthAndSafety,
   School,
@@ -238,7 +234,7 @@ export const UnifiedProgressCard = ({
   target,
   details = [],
   actions = [],
-  color = 'primary'
+  color: _color = 'primary'
 }) => {
   return (
     <Card>
@@ -344,11 +340,11 @@ export const UnifiedDataTable = ({
   columns,
   data,
   loading = false,
-  pagination = false,
+  pagination: _pagination = false,
   actions = [],
-  filters = [],
-  searchable = false,
-  exportable = false
+  filters: _filters = [],
+  searchable: _searchable = false,
+  exportable: _exportable = false
 }) => {
   return (
     <Paper>
@@ -423,7 +419,7 @@ export const UnifiedAlert = ({
   dismissible = false,
   onDismiss,
   icon,
-  persistent = false
+  persistent: _persistent = false
 }) => {
   return (
     <Alert
