@@ -656,7 +656,16 @@ class EmergencyWorkflow:
                 "contact_id": contact_id,
                 "timestamp": datetime.now().isoformat(),
                 "message": acknowledgment_message,
-                "response_time_seconds": (datetime.now() - datetime.fromisoformat(workflow["created_at"].isoformat())).total_seconds()
+                # `created_at` is stored as a datetime in-memory; avoid calling `.isoformat()`
+                # and reparsing (which can break if it ever becomes a string).
+                "response_time_seconds": (
+                    datetime.now()
+                    - (
+                        workflow["created_at"]
+                        if isinstance(workflow.get("created_at"), datetime)
+                        else datetime.fromisoformat(workflow["created_at"])
+                    )
+                ).total_seconds()
             }
             
             workflow["acknowledgments_received"].append(acknowledgment)

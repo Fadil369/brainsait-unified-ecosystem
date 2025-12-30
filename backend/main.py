@@ -118,14 +118,35 @@ security = HTTPBearer()
 #     app.add_middleware(SecurityMiddleware)
 
 # Add CORS middleware with enhanced security
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000").split(",")
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["*"],
-)
+try:
+    # Prefer the centralized CORS middleware implementation (normalizes origins and
+    # prevents the unsafe '*' + credentials combination).
+    from middleware.cors import setup_cors_middleware
+
+    allowed_origins = setup_cors_middleware(app)
+except Exception as e:
+    logger.warning(f"Falling back to basic CORS configuration: {e}")
+    allowed_origins = [
+        o.strip().rstrip("/")
+        for o in os.getenv(
+            "ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000"
+        ).split(",")
+        if o.strip()
+    ]
+    allow_credentials = True
+    if "*" in allowed_origins:
+        # Credentials + wildcard is invalid; safest fallback is disabling credentials.
+        allow_credentials = False
+        if len(allowed_origins) > 1:
+            allowed_origins = [o for o in allowed_origins if o != "*"]
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=allowed_origins,
+        allow_credentials=allow_credentials,
+        allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allow_headers=["*"],
+    )
 
 # Constants
 BASE_OID = "1.3.6.1.4.1.61026"  # BrainSAIT IANA registered OID
