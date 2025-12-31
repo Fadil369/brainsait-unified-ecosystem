@@ -363,7 +363,7 @@ class PerformanceMonitor {
     this.maxHistorySize = 100;
   }
 
-  recordRequest(startTime, success, status, error = null) {
+  recordRequest(startTime, success, status, _error = null) {
     const responseTime = Date.now() - startTime;
     
     this.metrics.totalRequests++;

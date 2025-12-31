@@ -20,7 +20,7 @@ import {
     Psychology,
     Science,
     MonitorHeart,
-    Emergency,
+    EmergencyShare as Emergency,
     HealthAndSafety,
 } from '@mui/icons-material';
 import {
@@ -174,34 +174,39 @@ const OidTree = () => {
   
   // Generate node metrics for performance analytics
   useEffect(() => {
+    if (!oidTree) return;
+
+    // Avoid N state updates + mutating previous Map (both are expensive/bug-prone).
+    // Build the full metrics map once, then commit a single state update.
+    const metricsMap = new Map();
     const generateMetrics = (node) => {
-      const metrics = {
+      metricsMap.set(node.id, {
         performance: Math.random() * 100,
         uptime: 95 + Math.random() * 5,
         connections: Math.floor(Math.random() * 1000),
         lastSync: Date.now() - Math.random() * 300000
-      };
-      setNodeMetrics(prev => new Map(prev.set(node.id, metrics)));
-      
+      });
+
       if (node.children) {
         node.children.forEach(generateMetrics);
       }
     };
-    
-    if (oidTree) {
-      generateMetrics(oidTree);
-    }
+
+    generateMetrics(oidTree);
+    setNodeMetrics(metricsMap);
   }, [oidTree]);
 
-  const toggleExpand = (nodeId) => {
-    const newExpanded = new Set(expandedNodes);
-    if (newExpanded.has(nodeId)) {
-      newExpanded.delete(nodeId);
-    } else {
-      newExpanded.add(nodeId);
-    }
-    setExpandedNodes(newExpanded);
-  };
+  const toggleExpand = useCallback((nodeId) => {
+    setExpandedNodes((prev) => {
+      const next = new Set(prev);
+      if (next.has(nodeId)) {
+        next.delete(nodeId);
+      } else {
+        next.add(nodeId);
+      }
+      return next;
+    });
+  }, []);
 
   const handleRefresh = () => {
     setLoading(true);
@@ -210,7 +215,22 @@ const OidTree = () => {
     }, 1000);
   };
 
-  const getTypeIcon = (type) => {
+  const getTypeColor = useCallback((type) => {
+    switch (type) {
+      case 'root': return '#0ea5e9';
+      case 'provider': return '#6366f1';
+      case 'organization': return '#06b6d4';
+      case 'device_category':
+      case 'device': return '#f59e0b';
+      case 'person': return '#10b981';
+      case 'system': return '#ef4444';
+      case 'ai_services': return '#a855f7';
+      case 'claims': return '#ec4899';
+      default: return '#64748b';
+    }
+  }, []);
+
+  const getTypeIcon = useCallback((type) => {
     const iconStyle = { color: getTypeColor(type) };
     switch (type) {
       case 'root':
@@ -233,22 +253,7 @@ const OidTree = () => {
       default:
         return <Assignment sx={iconStyle} />;
     }
-  };
-
-  const getTypeColor = (type) => {
-    switch (type) {
-      case 'root': return '#0ea5e9';
-      case 'provider': return '#6366f1';
-      case 'organization': return '#06b6d4';
-      case 'device_category':
-      case 'device': return '#f59e0b';
-      case 'person': return '#10b981';
-      case 'system': return '#ef4444';
-      case 'ai_services': return '#a855f7';
-      case 'claims': return '#ec4899';
-      default: return '#64748b';
-    }
-  };
+  }, [getTypeColor]);
 
   // Revolutionary 3D Node Renderer with Neural Network Effects
   const renderOidNode = useCallback((node, level = 0) => {
@@ -523,7 +528,7 @@ const OidTree = () => {
         )}
       </Box>
     );
-  }, [expandedNodes, selectedOid, hoveredNode, viewMode, neuralIntensity, nphiesStatus, realTimeSync, nodeMetrics, isRTL, getTypeIcon, toggleExpand]);
+  }, [expandedNodes, selectedOid, hoveredNode, viewMode, neuralIntensity, nphiesStatus, realTimeSync, nodeMetrics, isRTL, getTypeIcon, getTypeColor, toggleExpand]);
 
   const handleAddOid = () => {
     setDialogOpen(true);

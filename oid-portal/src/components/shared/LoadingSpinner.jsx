@@ -121,6 +121,7 @@ export const NPHIESLoadingSpinner = memo((props) => (
     {...props} 
   />
 ));
+NPHIESLoadingSpinner.displayName = 'NPHIESLoadingSpinner';
 
 export const PatientLoadingSpinner = memo((props) => (
   <LoadingSpinner 
@@ -129,6 +130,7 @@ export const PatientLoadingSpinner = memo((props) => (
     {...props} 
   />
 ));
+PatientLoadingSpinner.displayName = 'PatientLoadingSpinner';
 
 export const DoctorLoadingSpinner = memo((props) => (
   <LoadingSpinner 
@@ -137,6 +139,7 @@ export const DoctorLoadingSpinner = memo((props) => (
     {...props} 
   />
 ));
+DoctorLoadingSpinner.displayName = 'DoctorLoadingSpinner';
 
 export const AILoadingSpinner = memo((props) => (
   <LoadingSpinner 
@@ -145,5 +148,6 @@ export const AILoadingSpinner = memo((props) => (
     {...props} 
   />
 ));
+AILoadingSpinner.displayName = 'AILoadingSpinner';
 
 export default LoadingSpinner;

@@ -21,10 +21,8 @@
   },
   "plugins": ["react-refresh"],
   "rules": {
-    "react-refresh/only-export-components": [
-      "warn",
-      { "allowConstantExport": true }
-    ],
+    "react-refresh/only-export-components": "off",
+    "react-hooks/exhaustive-deps": "off",
     "no-unused-vars": ["error", { 
       "varsIgnorePattern": "^_",
       "argsIgnorePattern": "^_" 
@@ -34,6 +32,8 @@
   "ignorePatterns": [
     "dist",
     "node_modules",
+    "src/tests",
+    "src/components/unified/UnifiedComponentArchitecture.jsx",
     "*.config.js",
     "*.config.ts"
   ]

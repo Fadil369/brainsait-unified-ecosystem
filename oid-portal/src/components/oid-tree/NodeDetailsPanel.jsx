@@ -10,7 +10,6 @@ import { useUnifiedHealthcare } from '../../contexts/UnifiedHealthcareContext';
 import { useCommunication } from '../../hooks/useCommunication';
 import CommunicationStatusIndicator from '../communication/CommunicationStatusIndicator';
 import CommunicationPreferencesManager from '../communication/CommunicationPreferencesManager';
-import CommunicationActionMenu from '../communication/CommunicationActionMenu';
 
 const DetailField = memo(({ label, value, isRTL, dir }) => {
   if (!value) return null;
@@ -241,17 +240,29 @@ const NodeDetailsPanel = memo(({ selectedNode }) => {
     activeConnections,
     getCommunicationPreferences,
     getCommunicationHistory,
-    sendMessage,
-    initiateVoiceCall,
-    initiateVideoConsultation
+    sendMessage: _sendMessage,
+    initiateVoiceCall: _initiateVoiceCall,
+    initiateVideoConsultation: _initiateVideoConsultation
   } = useCommunication();
   
   // Communication state
   const [preferencesOpen, setPreferencesOpen] = useState(false);
-  const [historyOpen, setHistoryOpen] = useState(false);
+  const [_historyOpen, setHistoryOpen] = useState(false);
   const [communicationPreferences, setCommunicationPreferences] = useState(null);
   const [communicationHistory, setCommunicationHistory] = useState([]);
   const [isLoadingComm, setIsLoadingComm] = useState(false);
+
+  // Check if node has patient data
+  const hasPatientData = useCallback((node) => {
+    return node && (
+      node.patient_id || 
+      node.national_id || 
+      node.nphies_id ||
+      node.phone_number ||
+      node.healthcareCategory === 'patient' ||
+      node.entityType === 'provider'
+    );
+  }, []);
 
   // Load communication data when node changes
   const loadCommunicationData = useCallback(async () => {
@@ -279,19 +290,7 @@ const NodeDetailsPanel = memo(({ selectedNode }) => {
     } finally {
       setIsLoadingComm(false);
     }
-  }, [selectedNode, getCommunicationPreferences, getCommunicationHistory]);
-  
-  // Check if node has patient data
-  const hasPatientData = useCallback((node) => {
-    return node && (
-      node.patient_id || 
-      node.national_id || 
-      node.nphies_id ||
-      node.phone_number ||
-      node.healthcareCategory === 'patient' ||
-      node.entityType === 'provider'
-    );
-  }, []);
+  }, [selectedNode, hasPatientData, getCommunicationPreferences, getCommunicationHistory]);
   
   // Handle communication actions
   const handleCommunicationAction = useCallback((actionData) => {

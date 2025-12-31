@@ -73,7 +73,7 @@ const TabPanel = ({ children, value, index, ...other }) => (
 );
 
 const NPHIESDashboard = () => {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL: _isRTL } = useLanguage();
   const [tabValue, setTabValue] = useState(0);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({

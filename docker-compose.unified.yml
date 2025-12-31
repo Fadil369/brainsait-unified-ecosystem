@@ -47,7 +47,8 @@ services:
     environment:
       POSTGRES_DB: brainsait_healthcare
       POSTGRES_USER: brainsait_admin
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-brainsait_healthcare_2025!}
+      # SECURITY: never ship real passwords as defaults in version control
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-CHANGE_ME_DEV_DB_PASSWORD}
       POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
     volumes:
       - brainsait_postgres_data:/var/lib/postgresql/data
@@ -147,7 +148,8 @@ services:
       - DB_PORT=5432
       - DB_NAME=brainsait_healthcare
       - DB_USER=brainsait_admin
-      - DB_PASSWORD=${DB_PASSWORD:-brainsait_healthcare_2025!}
+      # SECURITY: never ship real passwords as defaults in version control
+      - DB_PASSWORD=${DB_PASSWORD:-CHANGE_ME_DEV_DB_PASSWORD}
       
       # Redis Configuration
       - REDIS_HOST=brainsait_redis
@@ -403,7 +405,8 @@ services:
       - DB_HOST=brainsait_db
       - DB_NAME=brainsait_healthcare
       - DB_USER=brainsait_admin
-      - DB_PASSWORD=${DB_PASSWORD:-brainsait_healthcare_2025!}
+      # SECURITY: never ship real passwords as defaults in version control
+      - DB_PASSWORD=${DB_PASSWORD:-CHANGE_ME_DEV_DB_PASSWORD}
       - S3_BUCKET=${BACKUP_S3_BUCKET}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}

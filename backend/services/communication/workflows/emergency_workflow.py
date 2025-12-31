@@ -69,9 +69,9 @@ class EmergencyContact:
     """Emergency contact information"""
     contact_id: str
     name: str
+    phone_number: str
     name_ar: Optional[str] = None
     role: ContactRole = ContactRole.EMERGENCY_CONTACT
-    phone_number: str
     backup_phone: Optional[str] = None
     email: Optional[str] = None
     preferred_language: Language = Language.ENGLISH
@@ -656,7 +656,16 @@ class EmergencyWorkflow:
                 "contact_id": contact_id,
                 "timestamp": datetime.now().isoformat(),
                 "message": acknowledgment_message,
-                "response_time_seconds": (datetime.now() - datetime.fromisoformat(workflow["created_at"].isoformat())).total_seconds()
+                # `created_at` is stored as a datetime in-memory; avoid calling `.isoformat()`
+                # and reparsing (which can break if it ever becomes a string).
+                "response_time_seconds": (
+                    datetime.now()
+                    - (
+                        workflow["created_at"]
+                        if isinstance(workflow.get("created_at"), datetime)
+                        else datetime.fromisoformat(workflow["created_at"])
+                    )
+                ).total_seconds()
             }
             
             workflow["acknowledgments_received"].append(acknowledgment)

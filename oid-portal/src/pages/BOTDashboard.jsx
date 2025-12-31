@@ -22,15 +22,12 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  Divider,
 } from '@mui/material';
 import {
   Build,
   Engineering,
   TransferWithinAStation,
   CheckCircle,
-  Schedule,
-  Warning,
   TrendingUp,
   Assignment,
   School,
@@ -40,7 +37,7 @@ import { useState } from 'react';
 import { useLanguage } from '../hooks/useLanguage';
 
 const BOTDashboard = () => {
-  const { t } = useLanguage();
+  const { t: _t } = useLanguage();
   const [activeTab, setActiveTab] = useState(0);
 
   // Sample BOT project data aligned with BOT.md

@@ -95,7 +95,7 @@ export const useUnifiedPyBrain = ({
     callUnifiedAPI, 
     systemStatus,
     user,
-    performance 
+    performance: _performance 
   } = useUnifiedHealthcare();
 
   // AI State Management
@@ -111,7 +111,7 @@ export const useUnifiedPyBrain = ({
   });
 
   // Request Queue and Cache
-  const requestQueue = useRef([]);
+  const _requestQueue = useRef([]);
   const responseCache = useRef(new Map());
   const performanceMetrics = useRef({
     totalRequests: 0,

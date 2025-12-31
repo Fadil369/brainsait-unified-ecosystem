@@ -63,8 +63,8 @@ class ProviderData:
     """Provider communication data"""
     provider_id: str
     name: str
-    name_ar: Optional[str] = None
     phone_number: str
+    name_ar: Optional[str] = None
     email: Optional[str] = None
     provider_type: ProviderType = ProviderType.PRIMARY_PROVIDER
     preferred_language: Language = Language.ENGLISH

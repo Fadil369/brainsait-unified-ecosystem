@@ -350,7 +350,7 @@ const Layout = ({ children }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileMenuAnchor, setProfileMenuAnchor] = useState(null);
   const [notificationsAnchor, setNotificationsAnchor] = useState(null);
-  const [glassIntensity, _setGlassIntensity] = useState(1);
+  const [_glassIntensity, setGlassIntensity] = useState(1);
   const [isHovering, setIsHovering] = useState(false);
   const [ambientLighting, setAmbientLighting] = useState(true);
   

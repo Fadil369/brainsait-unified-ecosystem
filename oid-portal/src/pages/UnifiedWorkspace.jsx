@@ -50,11 +50,11 @@ import {
 import { useLanguage } from '../hooks/useLanguage';
 
 const UnifiedWorkspace = () => {
-  const { t, language, toggleLanguage, isRTL } = useLanguage();
+  const { t: _t, language: _language, toggleLanguage, isRTL } = useLanguage();
   const [activeContext, setActiveContext] = useState('overview');
   const [searchQuery, setSearchQuery] = useState('');
-  const [notifications, setNotifications] = useState([]);
-  const [systemStatus, setSystemStatus] = useState('operational');
+  const [_notifications, _setNotifications] = useState([]);
+  const [systemStatus, _setSystemStatus] = useState('operational');
   
   // Unified State Management - Single source of truth
   const [unifiedData, setUnifiedData] = useState({

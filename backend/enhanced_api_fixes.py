@@ -14,6 +14,7 @@ import psycopg2.extras
 import json
 from datetime import datetime
 import uuid
+import os
 
 # Enhanced logging
 logging.basicConfig(level=logging.INFO)
@@ -35,12 +36,13 @@ app.add_middleware(
 )
 
 # Database configuration
+# SECURITY: never hardcode credentials in source control.
 DB_CONFIG = {
-    "host": "localhost",
-    "port": 5432,
-    "database": "brainsait_healthcare",
-    "user": "brainsait_admin",
-    "password": "brainsait_healthcare_2025!"
+    "host": os.getenv("DB_HOST", "localhost"),
+    "port": int(os.getenv("DB_PORT", "5432")),
+    "database": os.getenv("DB_NAME", "brainsait_healthcare"),
+    "user": os.getenv("DB_USER", "brainsait_admin"),
+    "password": os.getenv("DB_PASS", ""),
 }
 
 BASE_OID = "1.3.6.1.4.1.61026"

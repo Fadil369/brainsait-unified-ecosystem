@@ -27,7 +27,7 @@ import {
   useCallback, 
   useMemo,
   useRef,
-  useState 
+  forwardRef
 } from 'react';
 import { 
   Box, 
@@ -793,13 +793,15 @@ export const useEcosystem = () => {
 
 // Higher-order component for performance measurement
 export const withEcosystemPerformance = (Component, componentName) => {
-  return React.forwardRef((props, ref) => {
+  const Wrapped = forwardRef((props, ref) => {
     const { measureComponentPerformance } = useEcosystem();
     
     return measureComponentPerformance(componentName, () => (
       <Component {...props} ref={ref} />
     ));
   });
+  Wrapped.displayName = `withEcosystemPerformance(${componentName || Component.displayName || Component.name || 'Component'})`;
+  return Wrapped;
 };
 
 // Utility hook for AI-powered component optimization

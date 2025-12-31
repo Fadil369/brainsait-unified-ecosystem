@@ -4,7 +4,7 @@
  * Replaces the monolithic 1,126-line OidTree.jsx component
  */
 
-import { useEffect, memo, Suspense } from 'react';
+import { useEffect, memo, Suspense, lazy } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useUnifiedHealthcare } from '../../contexts/UnifiedHealthcareContext';
 import { useFHIR } from '../../hooks/useFHIR';
@@ -12,9 +12,9 @@ import { useOidTreeStore } from '../../stores/oid-tree-store';
 import { createHealthcareOidTreeData } from '../../constants/healthcare-data';
 
 // Lazy load components for better performance
-const TreeControls = React.lazy(() => import('./TreeControls'));
-const VirtualizedTreeNode = React.lazy(() => import('./VirtualizedTreeNode'));
-const NodeDetailsPanel = React.lazy(() => import('./NodeDetailsPanel'));
+const TreeControls = lazy(() => import('./TreeControls'));
+const VirtualizedTreeNode = lazy(() => import('./VirtualizedTreeNode'));
+const NodeDetailsPanel = lazy(() => import('./NodeDetailsPanel'));
 
 // Loading component for lazy-loaded components
 const ComponentLoader = memo(() => (
@@ -98,7 +98,7 @@ const OidTreeContainer = memo(() => {
         const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
         const response = await fetch(`${apiUrl}/api/oid-tree?language=${currentLanguage}`);
         
-        if (response.ok) {
+        if (response && response.ok) {
           const data = await response.json();
           setTreeData(data.tree_data);
         } else {

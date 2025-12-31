@@ -60,10 +60,10 @@ const createHealthcareIdentity = async (data) => {
 };
 
 const HealthcareDashboard = () => {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL: _isRTL } = useLanguage();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
-  const [selectedIdentity, setSelectedIdentity] = useState(null);
+  const [_selectedIdentity, _setSelectedIdentity] = useState(null);
   const [formData, setFormData] = useState({
     entity_type: 'provider',
     user_id: '',
@@ -284,7 +284,7 @@ const HealthcareDashboard = () => {
                         {getEntityTypeIcon(identity.entity_type)}
                         <Box>
                           <Typography variant="body2" fontWeight="bold">
-                            {isRTL && identity.name_ar ? identity.name_ar : identity.name}
+                            {_isRTL && identity.name_ar ? identity.name_ar : identity.name}
                           </Typography>
                           <Typography variant="caption" color="textSecondary">
                             {identity.full_oid}

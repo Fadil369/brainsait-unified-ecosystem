@@ -79,7 +79,7 @@ const useRealtimeMetrics = () => {
 };
 
 const RealTimeMetrics = ({ compact = false }) => {
-  const { currentLanguage, isRTL } = useLanguage();
+  const { currentLanguage, isRTL: _isRTL } = useLanguage();
   const { realTime } = useUnifiedHealthcare();
   const { metrics, chartData } = useRealtimeMetrics();
   

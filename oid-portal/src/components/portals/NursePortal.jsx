@@ -13,9 +13,9 @@ const NursePortal = () => {
   const { user } = useAuth();
   const { 
     getPatient, 
-    getPatientAppointments,
+    getPatientAppointments: _getPatientAppointments,
     createFHIRResource,
-    updateFHIRResource,
+    updateFHIRResource: _updateFHIRResource,
     searchPatients,
     isLoading,
     error 
@@ -33,27 +33,26 @@ const NursePortal = () => {
     oxygenSaturation: '',
     painLevel: ''
   });
-  const [medicationLog, setMedicationLog] = useState([]);
+  const [_medicationLog, _setMedicationLog] = useState([]);
   const [nursingNotes, setNursingNotes] = useState('');
-  const [careplan, setCareplan] = useState([]);
+  const [_careplan, _setCareplan] = useState([]);
 
   // Load assigned patients on component mount
   useEffect(() => {
-    loadAssignedPatients();
-  }, []);
-
-  // Load patients assigned to this nurse
-  const loadAssignedPatients = async () => {
-    try {
-      // In a real implementation, this would filter by nurse assignment
-      const patients = await searchPatients('', 20);
-      if (patients && patients.entry) {
-        setPatientList(patients.entry.map(entry => entry.resource));
+    const loadAssignedPatients = async () => {
+      try {
+        // In a real implementation, this would filter by nurse assignment
+        const patients = await searchPatients('', 20);
+        if (patients && patients.entry) {
+          setPatientList(patients.entry.map(entry => entry.resource));
+        }
+      } catch (e) {
+        console.error('Failed to load assigned patients:', e);
       }
-    } catch (error) {
-      console.error('Failed to load assigned patients:', error);
-    }
-  };
+    };
+
+    loadAssignedPatients();
+  }, [searchPatients]);
 
   // Select patient for care
   const selectPatientForCare = async (patientId) => {
@@ -67,7 +66,7 @@ const NursePortal = () => {
   };
 
   // Load patient care data (vitals, medications, etc.)
-  const loadPatientCareData = async (patientId) => {
+  const loadPatientCareData = async (_patientId) => {
     try {
       // Load recent vitals, medications, and care plans
       // This would be implemented with proper FHIR queries

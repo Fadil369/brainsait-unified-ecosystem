@@ -3,13 +3,13 @@
  * Search, filter, and control interface for the OID tree
  */
 
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useOidTreeStore, HEALTHCARE_FILTERS } from '../../stores/oid-tree-store';
 
 const SearchInput = memo(({ searchQuery, onSearchChange, isRTL, currentLanguage }) => {
-  const [isFocused, setIsFocused] = React.useState(false);
-  const [_searchSuggestions, _setSearchSuggestions] = React.useState([]);
+  const [_isFocused, setIsFocused] = useState(false);
+  const [_searchSuggestions, _setSearchSuggestions] = useState([]);
   
   const handleSearchChange = useCallback((e) => {
     onSearchChange(e.target.value);
@@ -68,7 +68,7 @@ const SearchInput = memo(({ searchQuery, onSearchChange, isRTL, currentLanguage 
 SearchInput.displayName = 'SearchInput';
 
 const HealthcareFilter = memo(({ healthcareFilter, onFilterChange, currentLanguage }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   
   const handleFilterChange = useCallback((value) => {
     onFilterChange(value);

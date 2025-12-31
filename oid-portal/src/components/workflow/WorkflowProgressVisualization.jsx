@@ -15,11 +15,6 @@ import {
   Tooltip,
   Typography,
   Collapse,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListItemSecondaryAction,
   Avatar,
   Button,
   Dialog,
@@ -39,10 +34,8 @@ import {
   Error as ErrorIcon,
   Hourglass as WaitingIcon,
   Psychology as AIIcon,
-  Speed as PerformanceIcon,
   Timeline as TimelineIcon,
   AutoFixHigh as AutomationIcon,
-  Refresh as RefreshIcon,
   Close as CloseIcon
 } from '@mui/icons-material';
 import { useLanguage } from '../../hooks/useLanguage';
@@ -114,7 +107,7 @@ const AnimatedProgress = memo(({ value, color = "primary", showPercentage = true
 AnimatedProgress.displayName = 'AnimatedProgress';
 
 // Workflow step component
-const WorkflowStep = memo(({ step, index, currentLanguage, isRTL, onStepAction }) => {
+const WorkflowStep = memo(({ step, index: _index, currentLanguage, isRTL, onStepAction }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleToggleExpand = useCallback(() => {

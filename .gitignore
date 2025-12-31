@@ -1,0 +1,33 @@
+.DS_Store
+
+# Node / frontend
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.vite/
+coverage/
+
+# Python / backend
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Environment / secrets (never commit)
+.env
+.env.*
+!.env.template
+!.env.production.template
+!.env.example
+
+# Logs
+*.log
+
+# Local DB / artifacts
+*.sqlite
+*.db
+
