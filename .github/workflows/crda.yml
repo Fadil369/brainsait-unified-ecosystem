@@ -70,12 +70,18 @@ on:
 
 permissions:
   contents: read
+  # CRDA action manages PR labels (labels are part of the Issues API)
+  issues: write
+  # Some CRDA modes also comment/update PRs
+  pull-requests: write
 
 jobs:
   crda-scan:
     permissions:
       contents: read            # for actions/checkout to fetch code
       security-events: write    # for redhat-actions/crda to upload SARIF results
+      issues: write             # for redhat-actions/crda to create/update labels
+      pull-requests: write      # for redhat-actions/crda to comment/update PRs
     name: Scan project vulnerabilities with CRDA
     runs-on: ubuntu-latest
     steps:
